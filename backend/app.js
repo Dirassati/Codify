@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.post('/register', async (req, res) => {
     const { email, matricule, password } = req.body;
 
-    // Step 1: Validate input
+    // Validate input
     if (!email && !matricule) {
         return res.status(400).json({ message: 'Email or matricule is required' });
     }
@@ -31,10 +31,10 @@ app.post('/register', async (req, res) => {
     }
 
     try {
-        // Step 2: Hash the password
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
 
-        // Step 3: Insert the user into the database
+        // Insert the user into the database
         const query = `
             INSERT INTO Users (email, matricule, password) 
             VALUES ($1, $2, $3) 
@@ -43,7 +43,7 @@ app.post('/register', async (req, res) => {
 
         const result = await pool.query(query, values);
 
-        // Step 4: Return success response
+        // Return success response
         res.status(201).json({
             message: 'Account created successfully',
             user: result.rows[0], // Return the created user (without password)
@@ -51,7 +51,7 @@ app.post('/register', async (req, res) => {
     } catch (err) {
         console.error(err);
 
-        // Handle unique constraint violations (e.g., duplicate email or matricule)
+        // Handle unique constraint violations 
         if (err.code === '23505') {
             return res.status(400).json({ message: 'Email or matricule already exists' });
         }
