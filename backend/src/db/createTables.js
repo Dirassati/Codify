@@ -10,9 +10,15 @@ const createTables = async () => {
         matricule VARCHAR(255) UNIQUE,
         password VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status VARCHAR(10) DEFAULT 'active' CHECK (status IN ('active', 'inactive')),
         CHECK (email IS NOT NULL OR matricule IS NOT NULL)
       );
+    `);
+
+    await pool.query(`
+      ALTER TABLE Users
+      ADD COLUMN IF NOT EXISTS new_column_name VARCHAR(255);
     `);
 
     // Create Parents table
@@ -26,6 +32,11 @@ const createTables = async () => {
         profession VARCHAR(255),
         etat_civil VARCHAR(50)
       );
+    `);
+
+    await pool.query(`
+      ALTER TABLE Parents
+      ADD COLUMN IF NOT EXISTS new_column_name VARCHAR(255);
     `);
 
     // Create Enseignant table
@@ -42,6 +53,11 @@ const createTables = async () => {
         level VARCHAR(50),
         employment_date DATE
       );
+    `);
+
+    await pool.query(`
+      ALTER TABLE Enseignant
+      ADD COLUMN IF NOT EXISTS new_column_name VARCHAR(255);
     `);
 
     // Create Elève table
@@ -63,6 +79,11 @@ const createTables = async () => {
       );
     `);
 
+    await pool.query(`
+      ALTER TABLE Eleve
+      ADD COLUMN IF NOT EXISTS new_column_name VARCHAR(255);
+    `);
+
     // Create Admin table
     await pool.query(`
       CREATE TABLE IF NOT EXISTS Admin (
@@ -76,6 +97,11 @@ const createTables = async () => {
       );
     `);
 
+    await pool.query(`
+      ALTER TABLE Admin
+      ADD COLUMN IF NOT EXISTS new_column_name VARCHAR(255);
+    `);
+
     console.log('Tables created successfully!');
   } catch (err) {
     console.error('Error creating tables:', err);
@@ -86,3 +112,13 @@ const createTables = async () => {
 
 // Run the function to create tables
 createTables();
+const testConnection = async () => {
+  try {
+      const res = await pool.query('SELECT NOW()');
+      console.log('Database connection successful:', res.rows[0]);
+  } catch (err) {
+      console.error('Error connecting to the database:', err);
+  }
+};
+
+testConnection();
