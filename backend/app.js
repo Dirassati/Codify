@@ -32,7 +32,7 @@ app.post('/register', async (req, res) => {
 
     try {
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+        const hashedPassword = await bcrypt.hash(password, 10); 
 
         // Insert the user into the database
         const query = `
