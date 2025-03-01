@@ -1,0 +1,135 @@
+.login{
+    height: 100vh;
+    background-image: url(../../../assets/images/background1.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #E7EBF2;
+    display: flex;
+   justify-content: end;
+   align-items: center;
+   padding-right: 161px;
+  
+}
+
+.login{
+    label{
+        display: block;
+    }
+}
+
+.login  p{
+
+    display: inline-block;
+}
+
+.form-container {
+    background-color:  #FFFFFF;
+    width: 500px;
+    border-radius: 10px;
+    padding: 40px 30px;
+}
+
+
+.login .form-container h2{
+
+    font-family: Abhaya Libre;
+font-weight: 700;
+font-size: 45px;
+line-height: 53.09px;
+letter-spacing: 0%;
+margin-bottom: 10px;
+    color: #2A7CC7;
+
+}
+
+.login .form-container h3{
+    font-family: Open Sans;
+font-weight: 400;
+font-size: 45px;
+line-height: 52px;
+letter-spacing: 0%;
+margin-bottom: 10px;
+color: #153060;
+}
+
+.login label,p{
+    font-family: Open Sans;
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+letter-spacing: 0.25px;
+color: #153060;
+}
+
+
+.login .input-field{
+    margin-bottom: 10px;
+}
+
+
+.login .input-field input {
+    padding: 0 5px;
+    width: 440px;
+height: 56px;
+border: none;
+border-radius: 5px;
+border: 1px solid #EAEAEA;
+color: #153060;
+}
+
+.login .input-field input.security-input{
+    width: 250px;
+}
+
+
+.login .input-field input.checkbox{
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    color: #2A7CC7;
+    margin-right: 10px;
+}
+
+.login .login-btn{
+    width: 440px;
+height: 60px;
+border: none;
+border-radius: 5px;
+padding-top: 18px;
+padding-right: 32px;
+padding-bottom: 18px;
+padding-left: 32px;
+gap: 10px;
+background-color: #2A7CC7;
+cursor: pointer;
+transition: background 100ms ease;
+}
+
+.login .login-btn:hover{
+    background-color: #2a7bc7bd;
+}
+
+.login .forgot-password-container{
+    margin-top: 15px;
+   display: flex;
+   justify-content: center;
+}
+ 
+
+.login .forgot-password{
+    font-family: Open Sans;
+    
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+letter-spacing: 0.25px;
+transition: background 100ms ease;
+    text-decoration: none;
+    color: #F2451C;
+}
+
+
+.login .forgot-password:hover{
+    color: #f2431c89;
+}
