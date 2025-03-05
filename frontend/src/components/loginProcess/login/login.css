@@ -110,14 +110,19 @@ transition: background 100ms ease;
     background-color: #2a7bc7bd;
 }
 
+
 .login .forgot-password-link-container{
+
     margin-top: 15px;
    display: flex;
    justify-content: center;
 }
  
 
+
 .login .forgot-password-link{
+
+
     font-family: Open Sans;
     
 font-weight: 400;
@@ -130,6 +135,10 @@ transition: background 100ms ease;
 }
 
 
+
 .login .forgot-password-link:hover{
+
+.
+
     color: #f2431c89;
 }

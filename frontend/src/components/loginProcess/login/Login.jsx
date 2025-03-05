@@ -63,7 +63,11 @@ setRegenerate(prev=>!prev);
                     </div>
 
                     <button className='login-btn'>LOG IN</button>
+
                    <p className='forgot-password-link-container'><Link className='forgot-password-link' to='/forgotpassword'>Forgot Password?</Link></p> 
+
+                   <p className='forgot-password-container'><Link className='forgot-password' to=''>Forgot Password?</Link></p> 
+
 
 
 
