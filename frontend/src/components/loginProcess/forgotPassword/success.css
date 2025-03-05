@@ -1,0 +1,14 @@
+.forgot-password.success h3,p{
+    text-align: center;
+}
+
+.forgot-password.success .image-container{
+    display: flex;
+    justify-content: center;
+}
+
+.forgot-password.success img{
+    width: 164px;
+height: 164px;
+
+}
