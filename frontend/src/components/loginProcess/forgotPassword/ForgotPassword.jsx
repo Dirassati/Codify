@@ -1,7 +1,9 @@
 import './forgotpassword.css'
 import Header from './Header'
+import { useNavigate } from 'react-router-dom'
 
 function ForgotPassword() {
+    const navigate=useNavigate();
     return (
         <div className='forgot-password-container'>
             <Header />
@@ -13,9 +15,9 @@ function ForgotPassword() {
                         proccess,we will send 4 digits code to your email.</p>
                     <div className="input-field">
                         <label htmlFor="email">E mail</label>
-                        <input type="email" />
+                        <input type="email" placeholder='Enter email'/>
                     </div>
-                    <button >Continue</button>
+                    <button onClick={()=>{navigate('/verification')}}>Continue</button>
                 </div>
             </div>
         </div>
