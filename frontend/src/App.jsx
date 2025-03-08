@@ -22,8 +22,8 @@ function App() {
         <Route path='/verification' element={<Verification /> }></Route>
         <Route path='/newpassword' element={<NewPassword /> }></Route>
         <Route path='/success' element={<Success /> }></Route>
-
-
+        </Routes>
+        </BrowserRouter>
   )
 }
 
