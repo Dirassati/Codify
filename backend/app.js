@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const accountRoutes = require('./src/routes/accountRoutes');
+const authRoutes = require("./src/routes/authRoutes");
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api', accountRoutes);
+app.use("/api", authRoutes);
 
 // Test endpoint
 app.get('/', (req, res) => {
