@@ -23,6 +23,8 @@ function App() {
         <Route path='/newpassword' element={<NewPassword /> }></Route>
         <Route path='/success' element={<Success /> }></Route>
 
+        </Routes>
+        </BrowserRouter>
 
   )
 }
