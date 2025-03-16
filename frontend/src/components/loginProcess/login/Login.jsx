@@ -101,9 +101,13 @@ else{
                         <p htmlFor="checkbox">Remember Me</p>
                     </div>
 
+
                     <button className='login-btn' type='submit'>LOG IN</button>
 
+
+
                    <p className='forgot-password-link-container'><Link className='forgot-password-link' to='/forgotpassword'>Forgot Password?</Link></p> 
+
 
 
 
