@@ -4,15 +4,17 @@ import { Link } from 'react-router-dom'
 import CachedIcon from '@mui/icons-material/Cached';
 import { useState } from 'react';
 import axios from 'axios'
+import { useAuth } from '../../../contexts/AuthContext';
 
 function Login() {
 
 const [captchaValue,setCaptchaValue]=useState('');//stock the latest captcha code
 const [captchaInputValue,setCaptchaInputValue]=useState('');
 const [regenerate,setRegenerate]=useState(false);//to regenerate a captcha value
-const [user,setUser]=useState({email:"",password:""});
+const [userInput,setUserInput]=useState({email:"",password:""});
 const [error,setError]=useState("")
-
+const [IsLoading,setIsLoading]=useState(false);
+const {setUser}=useAuth();
 
 function handleCaptchaChange(value){
 setCaptchaValue(value);
@@ -23,29 +25,35 @@ setRegenerate(prev=>!prev);
 }
 
 async function handleSubmit(e){
+    setIsLoading(true);
     e.preventDefault();
 //console.log(captchaInputValue)
 // console.log(captchaValue)
 // console.log(user)
 
 if (captchaInputValue!==captchaValue ){
-setError("Error captcha")
+setError("Error captcha"); setIsLoading(false);
 }
 else{
-
+    setError("");
     try {
-        const response = await axios.post("", {
-         user
-        });
+        const response = await axios.post("http://localhost:5000/api/login", userInput);
   
         console.log(response.data);
   
         // Store the token in localStorage (or context)
-        localStorage.setItem("token", token);
-        // Redirect to dashboard, etc.
+        localStorage.setItem("token", response.data.token);
+      // Store the user infos  in  context
+        setUser(response.data.user)
+
+          // Redirect to dashboard, etc.
       } catch (err) {
         console.error(err);
         setError(err.response?.data?.message || "Login failed");
+        console.log(err.response?.data?.message || "Login failed")
+      }
+      finally{
+        setIsLoading(false);
       }
 
 }
@@ -65,11 +73,11 @@ else{
                     {error&& <div style={{marginBottom:"10px",color:"red"}}>{error}</div>}
                     <div className='input-field'>
                         <label htmlFor="text">User Name</label>
-                        <input type="text" placeholder='Enter email or matricule' onChange={(e)=>{setUser(prev=>({...prev,email:e.target.value}))}}/>
+                        <input type="text" placeholder='Enter email or matricule' onChange={(e)=>{setUserInput(prev=>({...prev,email:e.target.value}))}}/>
                     </div>
                     <div className='input-field'>
                         <label htmlFor="password">Password</label>
-                        <input type="password" placeholder='Enter password' onChange={(e)=>{setUser(prev=>({...prev,password:e.target.value}))}}/>
+                        <input type="password" placeholder='Enter password' onChange={(e)=>{setUserInput(prev=>({...prev,password:e.target.value}))}}/>
                     </div>
                     <div className='input-field'>
                         <label htmlFor="text">Security Text</label>
@@ -102,7 +110,7 @@ else{
                     </div>
 
 
-                    <button className='login-btn' type='submit'>LOG IN</button>
+                    <button className='login-btn' type='submit'>{IsLoading ? "loading..." :" LOG IN"}</button>
 
 
 
