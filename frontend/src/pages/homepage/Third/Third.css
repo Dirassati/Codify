@@ -1,0 +1,163 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Statistics Section */
+.all {
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 50px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.all div {
+  text-align: center;
+}
+
+.all h1 {
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: 58px;
+  line-height: 80px;
+  letter-spacing: 0.2px;
+  color: #2A7CC7;
+}
+
+.all h5 {
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #252B42;
+}
+
+/* Video Section */
+.video-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  padding: 50px 20px;
+  flex-wrap: wrap; 
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 450px;
+}
+
+.red-line {
+  width: 94px;
+  height: 7px;
+  background-color: red;
+  margin-bottom: 30px;
+}
+
+.video-section h2 {
+  margin-bottom: 20px;
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  letter-spacing: 0.2px;
+}
+
+.video-section p {
+  font-family: Montserrat;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  margin-bottom: 20px;
+}
+
+.learn-more {
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #8D5CF6;
+  
+}
+
+.learn-more:hover {
+  text-decoration: underline;
+}
+
+
+.video-container {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.video-thumbnail {
+  width: 100%;
+  max-width: 508px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #8D5CF6;
+  color: white;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 24px;
+}
+
+/*  Mobile Responsive */
+@media (max-width: 768px) {
+  .all {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-section {
+    flex-direction: column;
+    text-align: center;
+    
+  }
+
+  .text-content {
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .video-container {
+    width: 100%;
+  }
+  .learn-more {
+    margin-bottom: 30px;
+  }
+}
