@@ -6,7 +6,7 @@
 }
 
 .container {
-    background-image: url("background.png");
+    background-image: url("../../../assets/images/background.png");
     display: flex;
     align-items: center;
     justify-content: space-between;

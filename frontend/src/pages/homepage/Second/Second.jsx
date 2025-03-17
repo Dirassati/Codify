@@ -1,9 +1,9 @@
 
 import React from "react";
 import "./Second.css";
-import chapeau from './chapeau.png';
-import book from './book.png';
-import clock from './clock.png';
+import chapeau from '../../../assets/icons/chapeau.png'
+import book from '../../../assets/icons/book.png'
+import clock from '../../../assets/icons/clock.png'
 
 
 export default function Second(){
