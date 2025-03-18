@@ -6,6 +6,7 @@ import ForgotPassword from './components/loginProcess/forgotPassword/ForgotPassw
 import Verification from './components/loginProcess/forgotPassword/Verification'
 import NewPassword from './components/loginProcess/forgotPassword/NewPassword'
 import Success from './components/loginProcess/forgotPassword/Success'
+import { AuthContextProvider } from './contexts/AuthContext'
 
 
 
@@ -13,6 +14,7 @@ function App() {
 
 
   return (
+    <AuthContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Homepage />}></Route>
@@ -25,6 +27,7 @@ function App() {
 
         </Routes>
         </BrowserRouter>
+        </AuthContextProvider>
 
   )
 }
