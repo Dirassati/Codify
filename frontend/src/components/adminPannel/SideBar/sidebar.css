@@ -1,0 +1,124 @@
+.side-bar {
+    width: 300px;
+    height: 100vh;
+    background-color: #4D44B5;
+    padding: 20px 0 20px 20px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* overflow-y: auto; for the scroll behaviour*/
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.side-bar .title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.side-bar .title .logo {
+    width: 40px;
+    height: 40px;
+}
+
+.side-bar .title h2 {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: White;
+}
+
+
+.side-bar .links {
+   
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 6px;
+margin: 0;
+
+    
+}
+
+.side-bar .links .link {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    height: 50px;
+
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    padding-top: 5px;
+    padding-right: 24px;
+    cursor: pointer;
+    padding-left: 24px;
+    transition: background 0.1s ease;
+}
+
+.side-bar .links .clicked {
+    background-color: #F3F4FF;
+    color: #4D44B5;
+}
+
+.side-bar .links .link .icon {
+    width: 30px;
+    height: 30px;
+
+    color: #C1BBEB;
+}
+
+.side-bar .links .link .name {
+    font-family: Poppins;
+
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    Color: #C1BBEB;
+
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    height: 100%;
+}
+
+
+.side-bar .footer {
+    background-color: inherit;
+}
+
+.side-bar .footer h5 {
+    font-family: Poppins;
+    color: White;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-bottom: 20px;
+    margin-top: 50px;
+}
+
+.side-bar .footer p{
+    font-family: Poppins;
+font-weight: 400;
+font-size: 14px;
+line-height: 100%;
+letter-spacing: 0%;
+color: white;
+}
+
+
+.side-bar .footer span{
+    color: red;
+}

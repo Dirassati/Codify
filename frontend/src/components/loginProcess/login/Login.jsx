@@ -1,6 +1,6 @@
 import './login.css'
 import { Captcha } from 'navid-react-captcha-generator';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import CachedIcon from '@mui/icons-material/Cached';
 import { useState } from 'react';
 import axios from 'axios'
@@ -15,6 +15,7 @@ const [userInput,setUserInput]=useState({email:"",password:""});
 const [error,setError]=useState("")
 const [IsLoading,setIsLoading]=useState(false);
 const {setUser}=useAuth();
+const navigate=useNavigate();
 
 function handleCaptchaChange(value){
 setCaptchaValue(value);
@@ -47,6 +48,16 @@ else{
         setUser(response.data.user)
 
           // Redirect to dashboard, etc.
+if (user_role==="enseignant") {
+    navigate('/teacher')
+} else if (user_role==="parents") {
+    navigate('/parent')
+} else if (user_role==="eleve") {
+    navigate('/student')
+} else {
+    navigate('/adminpannel')
+}
+
       } catch (err) {
         console.error(err);
         setError(err.response?.data?.message || "Login failed");

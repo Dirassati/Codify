@@ -25,7 +25,7 @@ const Navbar = () => {
  
       <div className="auth">
         <Link to="/login" className="Enter">Login</Link>
-        <Link to="/signup" className="join">JOIN US</Link>
+        <Link to="/signupParent" className="join">JOIN US</Link>
       </div>
     </nav>
   );
