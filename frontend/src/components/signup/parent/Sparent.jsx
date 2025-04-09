@@ -22,8 +22,11 @@ const ParentInformationForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  const handleClick=()=>{
-    navigate('/signupStudent')
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    console.log(formData);
+    navigate('/addchild?')
+   
   }
 
   return (
@@ -42,7 +45,7 @@ Thank you for your interest in joining our school. To help us assist you better,
         </p>
       </header>
 
-      <form className="form-container">
+      <form className="form-container" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>First Name <span>*</span></label>
           <input type="text" name="firstName" placeholder="Enter First Name" required onChange={handleChange} />
@@ -82,7 +85,8 @@ Thank you for your interest in joining our school. To help us assist you better,
           <label>Number of children you want to enroll <span>*</span></label>
           <input type="number" name="childrenCount" placeholder="Enter Number" required onChange={handleChange} />
         </div>
-        <button type="submit" className="submit-btn" onClick={handleClick}>Submit</button>
+        
+        <button type="submit" className="submit-btn" >Submit</button>
       </form>
       <Footer />
     </div>

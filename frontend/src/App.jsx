@@ -20,6 +20,7 @@ import Food from './components/adminPannel/Pages/Food/Food'
 import Finance from './components/adminPannel/Pages/Finance/Finance'
 import Users from './components/adminPannel/Pages/User/Users'
 import Activities from './components/adminPannel/Pages/Activity/Activities'
+import AddChild from './components/signup/student/AddChild'
 
 function App() {
 
@@ -31,6 +32,8 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/signupParent' element={<Sparent />}></Route>
         <Route path='/signupStudent' element={<Sstudent />}></Route>
+        <Route path='/addchild?' element={<AddChild />}></Route>
+
         <Route path='/forgotpassword' element={<ForgotPassword />}></Route>
         <Route path='/verification' element={<Verification />}></Route>
         <Route path='/newpassword' element={<NewPassword />}></Route>

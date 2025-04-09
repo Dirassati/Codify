@@ -23,7 +23,7 @@
     display: inline-block;
 }
 
-.form-container {
+.login .form-container {
     background-color:  #FFFFFF;
     width: 500px;
     border-radius: 10px;

@@ -64,10 +64,10 @@ color: #1A1A1A;
   
  
 
-.form-container {
+  .Holder .form-container {
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, auto);
     gap: 50px;
    width:  90%;
     background: #fff;
@@ -80,12 +80,12 @@ color: #1A1A1A;
 
 }
 
-.form-group {
+.Holder .form-group {
     display: flex;
     flex-direction: column;
 }
 
-.form-group label {
+.Holder .form-group label {
     
 margin-bottom: 2rem;
 font-weight: 600;
@@ -96,12 +96,12 @@ color: #4C4C4C;
 
 }
 
-.form-group label span {
+.Holder .form-group label span {
     color: #e74c3c;
 }
 
-.form-group input,
-.form-group select {
+.Holder .form-group input,
+.Holder .form-group select {
    
 gap: 50px;
 border-radius: 8px;
@@ -114,14 +114,14 @@ padding: 30px;
 }
 
 
-.form-group input:focus,
-.form-group select:focus {
+.Holder .form-group input:focus,
+.Holder .form-group select:focus {
     border-color: #3498db;
     outline: none;
 }
 
 
-.form-group input::placeholder {
+.Holder .form-group input::placeholder {
     
     color: #59595A;
 
@@ -133,7 +133,7 @@ letter-spacing: 0%;
 }
 
 
-.form-group.formgroup select {
+.Holder .form-group.formgroup select {
     appearance: none;
     background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
     background-repeat: no-repeat;
@@ -144,7 +144,7 @@ letter-spacing: 0%;
 
 
 /* Submit Button */
-.submit-btn {
+.Holder .submit-btn {
     cursor: pointer;
     font-weight: 500;
     font-size: 24px;
@@ -156,7 +156,7 @@ height: 96px;
 padding-top: 30px;
 padding-right: 34px;
 padding-bottom: 30px;
-margin-bottom: 4rem;
+margin-bottom: 1rem;
 padding-left: 34px;
 gap: 10px;
 border-radius: 12px;
@@ -167,23 +167,23 @@ border: 2px solid #262626
 
 }
 
-.submit-btn:hover {
+.Holder .submit-btn:hover {
     background-color:#d8956e;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .form-container {
+    .Holder .form-container {
         grid-template-columns: 1fr;
         padding: 20px;
     }
 
-    .submit-btn {
+    .Holder  .submit-btn {
         grid-column: span 1;
         width: 100%;
     }
 
-    .intro-text {
+    .Holder  .intro-text {
         font-size: 16px;
     }
 }
