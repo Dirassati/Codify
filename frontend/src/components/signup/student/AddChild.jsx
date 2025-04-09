@@ -32,7 +32,9 @@ function handleAddChild() {
         <p className="intro-text">
           Welcome to our school!
           <br /> <br />
-          Thank you for your interest in joining our school. To help us assist you better, please fill out the form below with your child's  details. We look forward to supporting your child's learning journey!        </p>
+          Thank you for your interest in joining our school. To help us assist you better, Add Child to start registering Your child or Finish to stop for now . We look forward to supporting your child's learning journey!        
+         <span style={{display:"block", color:"#3498db"}}>Note: once you choose to Finish You can come back to Add your childs when you get your parent account by mail, stay tuned</span> 
+          </p>
       </header>
 
 
