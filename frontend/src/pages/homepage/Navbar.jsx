@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css"; // Keep your existing CSS
@@ -25,7 +26,7 @@ const Navbar = () => {
  
       <div className="auth">
         <Link to="/login" className="Enter">Login</Link>
-        <Link to="/signup" className="join">JOIN US</Link>
+        <Link to="/signupParent" className="join">JOIN US</Link>
       </div>
     </nav>
   );

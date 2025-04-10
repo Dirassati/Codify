@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Testimonials.css";
-import Profile from '../../../assets/images/Profile.png'
+import Profile from "./Profile.png";
 
 const testimonials = [
   {

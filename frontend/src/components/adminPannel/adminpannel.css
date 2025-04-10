@@ -1,0 +1,10 @@
+.admin-pannel{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    overflow: hidden;
+}
+
+.admin-pannel .page {
+    background-color: #F3F4FF;
+    height: 100vh;
+}
