@@ -9,19 +9,21 @@ import { useNavigate } from 'react-router-dom';
 
 function Sstudent() {
 
-const navigate=useNavigate();
-
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [birthCertificateFile, setBirthCertificateFile] = useState(null);
   const [proofOfResidenceFile, setProofOfResidenceFile] = useState(null);
   const [previousSchoolRecords, setPreviousSchoolRecords] = useState(null);
   const [immunizationRecords, setImmunizationRecords] = useState(null);
-let day="";
-let month="";
-let year="";
-let date ="..-..-....";
+const [message,setMessage]=useState("helofvefeb3we");
+
+  let day = "";
+  let month = "";
+  let year = "";
+  let date = "..-..-....";
 
 
-  const [formData, setFormData] = useState({
+  const [studentInfo, setStudentInfo] = useState({
     firstName: "",
     lastName: "",
     address: "",
@@ -32,7 +34,7 @@ let date ="..-..-....";
     placeOfBirth: "",
     dayOfBirth: "",
     monthOfBirth: "",
-    fullDate:"..-..-....",
+
     yearOfBirth: "",
     chronicIllness: "",
     allergies: "",
@@ -49,7 +51,7 @@ let date ="..-..-....";
 
   const [isRegistering, setIsRegistering] = useState(false);
   const currentYear = new Date().getFullYear();
-  
+
 
 
 
@@ -69,6 +71,8 @@ let date ="..-..-....";
 
       })
       .catch(err => console.error('Error:', err));
+      const parentId=localStorage.getItem("parentId");
+      console.log(parentId);
   }, []);
 
 
@@ -86,43 +90,12 @@ let date ="..-..-....";
 
 
 
-// function generateBirthDate() {
-//   const day = String(formData.dayOfBirth).padStart(2, '0');
-//   const month = String(formData.monthOfBirth).padStart(2, '0');
-//   const year = formData.yearOfBirth;
-
- 
-//   const date= `${day}-${month}-${year}`;
-//   setFormData(prev=>({...prev,fullDate:date}))
-  
-// }
 
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    
-     if (e.target.name === 'dayOfBirth' || e.target.name === 'monthOfBirth' || e.target.name === 'yearOfBirth') {
-      if (e.target.name === 'dayOfBirth') {
-        day=String(e.target.value).padStart(2, '0');
-    
-       date = day   + formData.fullDate.slice(2);
-      }
-      else if (e.target.name === 'monthOfBirth') {
-        month=String(e.target.value).padStart(2, '0');
-     
-         date =    formData.fullDate.slice(0 ,3)+month+formData.fullDate.slice(5);
-      }else{
-      year=e.target.value;
-      
-    
-       date =    formData.fullDate.slice(0,6)+year;
-      }
-      
-       
-       
-  setFormData(prev=>({...prev,fullDate:date}))
-       
-     }
+    setStudentInfo({ ...studentInfo, [e.target.name]: e.target.value });
+
+
 
 
 
@@ -134,20 +107,18 @@ let date ="..-..-....";
     const file = e.target.files[0];
 
     if (file && file.type === 'application/pdf') {
-
-      setFormData(prev => ({ ...prev, [e.target.name]: file }));
-
+      setStudentInfo(prev => ({ ...prev, [e.target.name]: file }));
     } else {
       console.log('Please select a PDF file.');
     }
 
-    
+
   };
 
 
 
 
-  const handleClick = (e) => {
+  const handleClick =  (e) => {
 
     if (e.target.name === "birthCertificateFile") {
       fileInputRef1.current.click();
@@ -163,6 +134,63 @@ let date ="..-..-....";
     }
 
 
+  }
+
+
+
+async  function handleSubmit(e) {
+    e.preventDefault();
+    const parentId=localStorage.getItem('parentId');
+    console.log(parentId);
+
+
+
+    
+    const formData = new FormData();
+    formData.append("student_last_name", studentInfo.lastName);
+    formData.append("student_first_name", studentInfo.firstName);
+    formData.append("student_grade", studentInfo.degree);
+    formData.append("student_gender", studentInfo.gender);
+    formData.append("student_nationality", studentInfo.placeOfBirth);
+    formData.append("student_birth_date", `${studentInfo.yearOfBirth}-${studentInfo.monthOfBirth}-${studentInfo.dayOfBirth}`);
+    formData.append("student_blood_type", studentInfo.bloodType);
+    formData.append("student_allergies", studentInfo.allergies);
+    formData.append("student_chronic_illnesses", studentInfo.chronicIllness);
+
+
+    if (!studentInfo.birthCertificateFile || !studentInfo.proofOfResidenceFile || !studentInfo.previousSchoolRecords || !studentInfo.immunizationRecords) {
+      setError("fill the required fields")
+    }
+
+    else {
+      formData.append("birth_certificate", studentInfo.birthCertificateFile);
+      formData.append("residence_proof", studentInfo.proofOfResidenceFile);
+      formData.append("previous_school_records", studentInfo.previousSchoolRecords);
+      formData.append("immunization_records", studentInfo.immunizationRecords);
+      
+    }
+
+
+
+try {
+  
+  const res=axios.post(`http://localhost:5000/api/${parentId}/students`,formData,
+    {
+      headers:{"Content-Type": "multipart/form-data",}
+    },
+  );
+
+  console.log(res.data.student);
+  
+} catch (error) {
+  
+}
+
+
+
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}:`, value);
+    // }
   }
 
   return (
@@ -181,31 +209,24 @@ let date ="..-..-....";
           Thank you for your interest in joining our school. To help us assist you better, please fill out the form below with your child's  details. We look forward to supporting your child's learning journey!        </p>
       </header>
 
-      <form className="form-container" onSubmit={(e) => {
-        e.preventDefault();
-      
-        
-        console.log(formData);
-        
-        navigate('/addchild?');
-      }}>
+      <form className="form-container" onSubmit={handleSubmit}>
 
 
         <div className="form-group">
           <label>First Name <span>*</span></label>
-          <input type="text" name="firstName" placeholder="Enter First Name"  onChange={handleChange} />
+          <input type="text" name="firstName" placeholder="Enter First Name" required onChange={handleChange} />
         </div>
         <div className="form-group">
           <label>Last Name <span>*</span></label>
-          <input type="text" name="lastName" placeholder="Enter Last Name"  onChange={handleChange} />
+          <input type="text" name="lastName" placeholder="Enter Last Name" required onChange={handleChange} />
         </div>
         <div className="form-group">
           <label>Address <span>*</span></label>
-          <input type="text" name="address" placeholder="Enter Phone Number" onChange={handleChange} />
+          <input type="text" name="address" placeholder="Enter Phone Number" required onChange={handleChange} />
         </div>
         <div class="form-group formgroup">
           <label for="degree">Degree <span>*</span></label>
-          <select name="degree" id="civilStatus"  onChange={handleChange}>
+          <select name="degree" id="civilStatus" required onChange={handleChange}>
             <option value="">Select Degree</option>
             <option value="1st">1st</option>
             <option value="2nd">2nd</option>
@@ -217,11 +238,11 @@ let date ="..-..-....";
 
         <div className="form-group">
           <label>Age<span>*</span></label>
-          <input type="text" name="age" placeholder="Enter your Age"  onChange={handleChange} />
+          <input type="text" name="age" placeholder="Enter your Age" onChange={handleChange} />
         </div>
         <div class="form-group formgroup">
           <label for="nationality">Nationality <span>*</span></label>
-          <select name="nationality" id="civilStatus" style={{}} onChange={handleChange}>
+          <select name="nationality" id="civilStatus" required style={{}} onChange={handleChange}>
             <option value="">Select Your Nationality</option>
             {countries.map((country) => (<option value={country}>{country}</option>))}
 
@@ -232,11 +253,11 @@ let date ="..-..-....";
 
         <div className="form-group">
           <label>Blood Type<span>*</span></label>
-          <input type="text" name="bloodType" placeholder="Enter Blood type"  onChange={handleChange} />
+          <input type="text" name="bloodType" placeholder="Enter Blood type" required onChange={handleChange} />
         </div>
         <div class="form-group formgroup">
           <label for="gender">Gender <span>*</span></label>
-          <select name="gender" id="civilStatus"  onChange={handleChange}>
+          <select name="gender" id="civilStatus" required onChange={handleChange}>
             <option value="">Select Your Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -247,14 +268,14 @@ let date ="..-..-....";
 
         <div className="form-group ">
           <label>Place of Birth<span>*</span></label>
-          <input type="text" name="placeOfBirth" placeholder="Enter Place of Birth"  onChange={handleChange} />
+          <input type="text" name="placeOfBirth" placeholder="Enter Place of Birth" required onChange={handleChange} />
         </div>
 
         <div className="form-group formgroup ">
           <label>Date of Birth<span>*</span></label>
           <div className="date-container">
 
-            <select name="dayOfBirth" id="civilStatus" onChange={(e)=>{handleChange(e);}}>
+            <select name="dayOfBirth" id="civilStatus" required onChange={(e) => { handleChange(e); }}>
               <option value="">Day</option>
               {
                 days.map((day) => (<option value={day}>{day}</option>))
@@ -263,7 +284,7 @@ let date ="..-..-....";
 
             </select>
 
-            <select name="monthOfBirth" id="civilStatus"  onChange={(e)=>{handleChange(e);}}>
+            <select name="monthOfBirth" id="civilStatus" required onChange={(e) => { handleChange(e); }}>
               <option value="">Month</option>
               {
                 months.map((month) => (<option value={month}>{month}</option>))
@@ -272,7 +293,7 @@ let date ="..-..-....";
 
             </select>
 
-            <select name="yearOfBirth" id="civilStatus"  onChange={(e)=>{handleChange(e);}}>
+            <select name="yearOfBirth" id="civilStatus" required onChange={(e) => { handleChange(e); }}>
               <option value="">Year</option>
               {
                 years.map((year) => (<option value={year}>{year}</option>))
@@ -300,7 +321,7 @@ let date ="..-..-....";
           >
             <p
               className='place-holder'
-            >{formData.birthCertificateFile ? formData.birthCertificateFile.name : "Upload Birth certificate"}</p>
+            >{studentInfo.birthCertificateFile ? studentInfo.birthCertificateFile.name : "Upload Birth certificate"}</p>
             <button
               type='button'
 
@@ -322,7 +343,7 @@ let date ="..-..-....";
           >
             <p
               className='place-holder'
-            >{formData.proofOfResidenceFile ? formData.proofOfResidenceFile.name : "Upload Proof of residence"}</p>
+            >{studentInfo.proofOfResidenceFile ? studentInfo.proofOfResidenceFile.name : "Upload Proof of residence"}</p>
             <button
               type='button'
 
@@ -344,7 +365,7 @@ let date ="..-..-....";
           >
             <p
               className='place-holder'
-            >{formData.previousSchoolRecords ? formData.previousSchoolRecords.name : "Upload Previous school records"}</p>
+            >{studentInfo.previousSchoolRecords ? studentInfo.previousSchoolRecords.name : "Upload Previous school records"}</p>
             <button
               type='button'
 
@@ -366,7 +387,7 @@ let date ="..-..-....";
           >
             <p
               className='place-holder'
-            >{formData.immunizationRecords ? formData.immunizationRecords.name : "Upload Immunization Records "}</p>
+            >{studentInfo.immunizationRecords ? studentInfo.immunizationRecords.name : "Upload Immunization Records "}</p>
             <button
               type='button'
 
@@ -379,16 +400,16 @@ let date ="..-..-....";
 
         <div className="form-group">
           <label>Chronic illness</label>
-          <input type="text" name="chronicIllness" placeholder="Enter any chronic illnisses you have"  onChange={handleChange} />
+          <input type="text" name="chronicIllness" placeholder="Enter any chronic illnisses you have" onChange={handleChange} />
         </div>  <div className="form-group">
           <label>Allergies </label>
-          <input type="text" name="allergies" placeholder="Enter any kind of allergies you have"  onChange={handleChange} />
+          <input type="text" name="allergies" placeholder="Enter any kind of allergies you have" onChange={handleChange} />
         </div>
 
 
 
         <button type='submit' className="submit-btn"  >Register</button>
-
+{message && <div style={{color:"007AFF",display:"flex",justifyContent:"center",width:"100%"}}>{message}</div>}
 
 
 
