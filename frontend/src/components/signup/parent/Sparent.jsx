@@ -3,11 +3,12 @@ import Footer from "../../../pages/homepage/Footer";
 import "./Sparent.css";
 import logo from '../../../assets/images/logo1.svg'
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ParentInformationForm = () => {
 
   const navigate=useNavigate();
-  const [error,setError]=useState("");
+  const [message,setMessage]=useState("");
   const [parentInfo, setParentInfo] = useState({
     parent_last_name: "",
     parent_first_name: "",
@@ -23,13 +24,26 @@ const ParentInformationForm = () => {
     setParentInfo({ ...parentInfo, [e.target.name]: e.target.value });
   }
 
-  const handleSubmit=(e)=>{
+  const handleSubmit=async (e)=>{
     
     e.preventDefault();
-  localStorage.setItem('parentId',15);
+
+try {
+  const response = await axios.post("http://localhost:5000/api/inscription/parent", parentInfo);
+  
+  console.log(response.data);
+  localStorage.setItem('parentId',response.data.parentInscriptionId);
+
+} catch (err) {
+  console.error(err);
+  setMessage(err.res?.data?.message || "adding parent failed failed");
+  console.log(err.res?.data?.message || "adding parent failed failed")
+}
+
+ 
     
      
-      console.log(parentInfo);
+      
       navigate('/addchild?');
     }
     
@@ -101,7 +115,8 @@ Thank you for your interest in joining our school. To help us assist you better,
         </div>
         
         <button type="submit" className="submit-btn" >Submit</button>
-       
+        {message && <div style={{color:"007AFF",display:"flex",justifyContent:"center",width:"100%"}}>{message}</div>}
+
 
       </form>
       <Footer />

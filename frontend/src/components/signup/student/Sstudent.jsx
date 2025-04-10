@@ -10,12 +10,12 @@ import { useNavigate } from 'react-router-dom';
 function Sstudent() {
 
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  
   const [birthCertificateFile, setBirthCertificateFile] = useState(null);
   const [proofOfResidenceFile, setProofOfResidenceFile] = useState(null);
   const [previousSchoolRecords, setPreviousSchoolRecords] = useState(null);
   const [immunizationRecords, setImmunizationRecords] = useState(null);
-const [message,setMessage]=useState("helofvefeb3we");
+const [message,setMessage]=useState("");
 
   let day = "";
   let month = "";
@@ -71,8 +71,7 @@ const [message,setMessage]=useState("helofvefeb3we");
 
       })
       .catch(err => console.error('Error:', err));
-      const parentId=localStorage.getItem("parentId");
-      console.log(parentId);
+   
   }, []);
 
 
@@ -138,10 +137,9 @@ const [message,setMessage]=useState("helofvefeb3we");
 
 
 
-async  function handleSubmit(e) {
+async function handleSubmit(e) {
     e.preventDefault();
-    const parentId=localStorage.getItem('parentId');
-    console.log(parentId);
+   
 
 
 
@@ -158,19 +156,21 @@ async  function handleSubmit(e) {
     formData.append("student_chronic_illnesses", studentInfo.chronicIllness);
 
 
-    if (!studentInfo.birthCertificateFile || !studentInfo.proofOfResidenceFile || !studentInfo.previousSchoolRecords || !studentInfo.immunizationRecords) {
-      setError("fill the required fields")
-    }
+    // if (!studentInfo.birthCertificateFile || !studentInfo.proofOfResidenceFile || !studentInfo.previousSchoolRecords || !studentInfo.immunizationRecords) {
+    //   setError("fill the required fields")
+    // }
 
-    else {
-      formData.append("birth_certificate", studentInfo.birthCertificateFile);
-      formData.append("residence_proof", studentInfo.proofOfResidenceFile);
-      formData.append("previous_school_records", studentInfo.previousSchoolRecords);
-      formData.append("immunization_records", studentInfo.immunizationRecords);
+    // else {
+    //   formData.append("birth_certificate", studentInfo.birthCertificateFile);
+    //   formData.append("residence_proof", studentInfo.proofOfResidenceFile);
+    //   formData.append("previous_school_records", studentInfo.previousSchoolRecords);
+    //   formData.append("immunization_records", studentInfo.immunizationRecords);
       
-    }
+    // }
 
 
+    const parentId=localStorage.getItem('parentId');
+   
 
 try {
   
@@ -182,8 +182,10 @@ try {
 
   console.log(res.data.student);
   
-} catch (error) {
-  
+} catch (err) {
+  console.error(err);
+  setMessage(err.res?.data?.message || "adding student failed failed");
+  console.log(err.res?.data?.message || "adding student failed failed")
 }
 
 
