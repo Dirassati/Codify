@@ -4,7 +4,7 @@ import uploadIcon from '../../../assets/icons/upload-pdf-icon.svg'
 import logo from '../../../assets/images/logo1.svg'
 import Footer from "../../../pages/homepage/Footer";
 import axios from 'axios'
-import AddChild from './AddChild';
+
 import { useNavigate } from 'react-router-dom';
 
 function Sstudent() {
@@ -17,10 +17,7 @@ function Sstudent() {
   const [immunizationRecords, setImmunizationRecords] = useState(null);
 const [message,setMessage]=useState("");
 
-  let day = "";
-  let month = "";
-  let year = "";
-  let date = "..-..-....";
+
 
 
   const [studentInfo, setStudentInfo] = useState({
@@ -49,7 +46,7 @@ const [message,setMessage]=useState("");
   const fileInputRef3 = useRef(null);
   const fileInputRef4 = useRef(null);
 
-  const [isRegistering, setIsRegistering] = useState(false);
+
   const currentYear = new Date().getFullYear();
 
 
@@ -180,6 +177,7 @@ try {
   );
 
   console.log(res.data.student);
+  navigate('/addchild?')
   
 } catch (err) {
   console.error(err);

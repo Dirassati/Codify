@@ -34,18 +34,19 @@ try {
   
   console.log(response.data);
   localStorage.setItem('parentId',response.data.parentInscriptionId);
+      navigate('/addchild?');
+ 
 
 } catch (err) {
   console.error(err);
-  setMessage(err.response?.data?.message || "adding parent failed failed");
-  console.log(err.response?.data?.message || "adding parent failed failed")
+  setMessage(err.response?.data?.message || "adding parent  failed");
+  console.log(err.response?.data?.message || "adding parent  failed")
 }
 
  
-    
+   
      
-      console.log(parentInfo);
-      navigate('/addchild?');
+      
     }
     
    
