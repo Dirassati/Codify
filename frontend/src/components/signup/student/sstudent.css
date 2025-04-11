@@ -1,0 +1,55 @@
+.Holder .form-container .upload-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    border-radius: 8px;
+
+    
+
+
+    gap: 50px;
+border-radius: 8px;
+padding: 30px;
+ transition: border-color 0.3s;
+ background: #FFFCFA;
+ border: 2px solid #262626;
+ font-size: 20px;
+}
+
+.Holder .form-container .place-holder{
+    font-family: Outfit;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0%;
+    color:#59595A;
+}
+
+.Holder .form-container .upload-btn button{
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.Holder .form-container .upload-btn button img{
+width: 30px;
+height: 30px;
+}
+
+
+.Holder .form-container .form-group.formgroup .date-container{
+    
+    display: flex;
+    justify-content: space-between;
+    gap: 0px;
+    
+}
+
+.Holder .form-container .form-group.formgroup .date-container select{
+
+ width: 160px;
+padding-left: 20px;
+padding-right: 20px;
+ 
+ font-size: 15px;
+}

@@ -1,0 +1,17 @@
+/* .student {
+    width: 100%;
+    display: flex;
+    align-items: center;
+   gap: 30px;
+    padding: 5px 20px;
+}
+
+.student> :first-child {
+    display: flex;
+    align-items: center;
+}
+
+.student .column.contact{
+    display: flex;
+    align-items: center;
+} */
