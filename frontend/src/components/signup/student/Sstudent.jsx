@@ -142,7 +142,6 @@ async function handleSubmit(e) {
    
 
 
-console.log(studentInfo);
     
     const formData = new FormData();
     formData.append("student_last_name", studentInfo.lastName);
@@ -174,7 +173,7 @@ console.log(studentInfo);
 
 try {
   
-  const res=await axios.post(`http://localhost:5000/api/${parentId}/students`,formData,
+  const res=await axios.post(`http://localhost:5000/api/inscription/${parentId}/students`,formData,
     {
       headers:{"Content-Type": "multipart/form-data",}
     },
@@ -184,8 +183,8 @@ try {
   
 } catch (err) {
   console.error(err);
-  setMessage(err.res?.data?.message || "adding student failed failed");
-  console.log(err.res?.data?.message || "adding student failed failed")
+  setMessage(err.response?.data?.message || "adding student failed failed");
+  console.log(err.response?.data?.message || "adding student failed failed")
 }
 
 
