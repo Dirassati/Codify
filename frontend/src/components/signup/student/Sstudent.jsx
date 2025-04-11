@@ -28,7 +28,7 @@ const [message,setMessage]=useState("");
     lastName: "",
     address: "",
     degree: "",
-    age: "",
+    
     bloodType: "",
     gender: "",
     placeOfBirth: "",
@@ -142,7 +142,7 @@ async function handleSubmit(e) {
    
 
 
-
+console.log(studentInfo);
     
     const formData = new FormData();
     formData.append("student_last_name", studentInfo.lastName);
@@ -174,7 +174,7 @@ async function handleSubmit(e) {
 
 try {
   
-  const res=axios.post(`http://localhost:5000/api/${parentId}/students`,formData,
+  const res=await axios.post(`http://localhost:5000/api/${parentId}/students`,formData,
     {
       headers:{"Content-Type": "multipart/form-data",}
     },
@@ -240,7 +240,13 @@ try {
 
         <div className="form-group">
           <label>Age<span>*</span></label>
-          <input type="text" name="age" placeholder="Enter your Age" onChange={handleChange} />
+          <input type="text" name="age" placeholder="Enter your Age" 
+    //       onChange=  {(e) =>{setStudentInfo({
+    //   ...studentInfo,
+    //   age: Number(e.target.value)
+    // })}
+    // } 
+    />
         </div>
         <div class="form-group formgroup">
           <label for="nationality">Nationality <span>*</span></label>

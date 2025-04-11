@@ -13,7 +13,7 @@ const ParentInformationForm = () => {
     parent_last_name: "",
     parent_first_name: "",
     parent_phone_number: "",
-    parent_card_Id: "",
+    parent_carsad_Id: "",
     email_address: "",
     parent_profession: "",
     parent_etat_civil: "",
@@ -28,6 +28,7 @@ const ParentInformationForm = () => {
     
     e.preventDefault();
 
+
 try {
   const response = await axios.post("http://localhost:5000/api/inscription/parent", parentInfo);
   
@@ -36,14 +37,14 @@ try {
 
 } catch (err) {
   console.error(err);
-  setMessage(err.res?.data?.message || "adding parent failed failed");
-  console.log(err.res?.data?.message || "adding parent failed failed")
+  setMessage(err.response?.data?.message || "adding parent failed failed");
+  console.log(err.response?.data?.message || "adding parent failed failed")
 }
 
  
     
      
-      
+      console.log(parentInfo);
       navigate('/addchild?');
     }
     
@@ -111,7 +112,11 @@ Thank you for your interest in joining our school. To help us assist you better,
         </div>
         <div className="form-group">
           <label>Number of children you want to enroll <span>*</span></label>
-          <input type="number" name="number_kids" placeholder="Enter Number" required onChange={handleChange} />
+          <input type="number" name="number_kids" placeholder="Enter Number" required onChange=  {(e) =>
+    setParentInfo({
+      ...parentInfo,
+      number_kids: Number(e.target.value)
+    })} />
         </div>
         
         <button type="submit" className="submit-btn" >Submit</button>
