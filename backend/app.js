@@ -4,11 +4,19 @@ const accountRoutes = require("./src/routes/accountRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const inscriptionRoutes = require("./src/routes/inscriptionRoutes");
 const { testConnection } = require("./testDbConnection"); // import testConnection
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(
+  cors({
+    origin: "http://localhost:5174", // or an array of allowed origins
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
