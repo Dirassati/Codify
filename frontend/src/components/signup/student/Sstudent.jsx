@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function Sstudent() {
 
   const navigate = useNavigate();
-  
+  const [isLoading,setIsLoading]=useState(false);
   const [birthCertificateFile, setBirthCertificateFile] = useState(null);
   const [proofOfResidenceFile, setProofOfResidenceFile] = useState(null);
   const [previousSchoolRecords, setPreviousSchoolRecords] = useState(null);
@@ -138,7 +138,7 @@ async function handleSubmit(e) {
     e.preventDefault();
    
 
-
+setIsLoading(true);
     
     const formData = new FormData();
     formData.append("student_last_name", studentInfo.lastName);
@@ -183,6 +183,10 @@ try {
   console.error(err);
   setMessage(err.response?.data?.message || "adding student failed failed");
   console.log(err.response?.data?.message || "adding student failed failed")
+}
+
+finally{
+  setIsLoading(false);
 }
 
 
@@ -413,7 +417,7 @@ try {
 
 
 
-        <button type='submit' className="submit-btn"  >Register</button>
+        <button disabled={isLoading} type='submit' className="submit-btn"  >{isLoading ? "loading...":"Register"}</button>
 {message && <div style={{color:"007AFF",display:"flex",justifyContent:"center",width:"100%"}}>{message}</div>}
 
 

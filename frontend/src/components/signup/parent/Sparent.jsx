@@ -8,6 +8,7 @@ import axios from "axios";
 const ParentInformationForm = () => {
 
   const navigate=useNavigate();
+  const [isLoading,setIsLoading]=useState(false);
   const [message,setMessage]=useState("");
   const [parentInfo, setParentInfo] = useState({
     parent_last_name: "",
@@ -30,6 +31,7 @@ const ParentInformationForm = () => {
 
 
 try {
+  setIsLoading(true);
   const response = await axios.post("http://localhost:5000/api/inscription/parent", parentInfo);
   
   console.log(response.data);
@@ -41,6 +43,9 @@ try {
   console.error(err);
   setMessage(err.response?.data?.message || "adding parent  failed");
   console.log(err.response?.data?.message || "adding parent  failed")
+}
+finally{
+  setIsLoading(false)
 }
 
  
@@ -120,7 +125,7 @@ Thank you for your interest in joining our school. To help us assist you better,
     })} />
         </div>
         
-        <button type="submit" className="submit-btn" >Submit</button>
+        <button disabled={isLoading} type="submit" className="submit-btn" >{isLoading? "loading ...": "Submit"}</button>
         {message && <div style={{color:"007AFF",display:"flex",justifyContent:"center",width:"100%"}}>{message}</div>}
 
 
