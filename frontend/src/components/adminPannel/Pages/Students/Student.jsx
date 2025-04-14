@@ -7,15 +7,15 @@ import { useNavigate } from 'react-router-dom'
 function Student({student,studentsSelected,changed}) {
     const navigate=useNavigate();
     return (
-      <tr   onClick={()=>{
-        navigate('/adminpannel/Studentcard');
-localStorage.setItem('studentDetails',JSON.stringify(student))
-      }} className={studentsSelected.includes(student.id) ? "clicked" : ""}>
+      <tr    className={studentsSelected.includes(student.id) ? "clicked" : ""}>
                                           <td>
                                               <input type="checkbox" checked={studentsSelected.includes(student.id)} onChange={() => { changed(student.id) }} />
       
                                           </td>
-                                          <td className='name'>
+                                          <td  onClick={()=>{
+        navigate('/adminpannel/Studentcard');
+localStorage.setItem('studentDetails',JSON.stringify(student))
+      }}className='name'>
                                               <div className='photo'></div>
                                               <span> {student.name}</span>
                                           </td>

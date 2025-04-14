@@ -50,12 +50,12 @@ function App() {
 
           <Route path='NewStudent' element={<AddStudentFormule />}></Route>
           <Route path='Studentcard' element={<StudentCard />}></Route>
-          <Route path='Teachers' element={<Teachers />}></Route>
+         
 
           <Route path='Teachers'>
-  <Route index element={<Teachers />} />
-  <Route path='add' element={<NewTeachers />} />
-</Route>
+            <Route index element={<Teachers />} />
+            <Route path='add' element={<NewTeachers />} />
+          </Route>
           <Route path='Teachers/add' element={<NewTeachers />} />
 
           <Route path='Events' element={<Events />}></Route>
