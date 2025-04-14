@@ -1,12 +1,18 @@
-.header{
+.headerdash{
 display: flex;
 justify-content: space-between;
+align-items: center;
 width: 100%;
 padding: 30px 25px;
+margin-top: 2rem;
+margin-bottom: 1rem;
 
 }
+.headerdash .left{
+    margin-left: 25px;
+}
 
-.header .left h2{
+.headerdash .left h2{
     font-family: Poppins;
 font-weight: 700;
 font-size: 28px;
@@ -15,14 +21,15 @@ letter-spacing: 0%;
 color: #303972;
 }
 
-.header .right{
+.headerdash .right{
+    transform: translateX(-25px);
     display: flex;
     align-items: center;
     gap:20px;
     
 }
 
-.header .right .icon{
+.headerdash .right .icon{
     height: 40px;
     width: 40px;
     display: flex;
@@ -35,12 +42,12 @@ color: #303972;
     cursor: pointer;
 }
 
-.header .right .icon img{
+.headerdash .right .icon img{
     height: 25px;
     width: 25px;
 }
 
-.header .right .icon .notification-alert{
+.headerdash .right .icon .notification-alert{
     width: 5px;
     height: 5px;
     background-color: #4D44B5;
@@ -50,7 +57,7 @@ color: #303972;
     left: 30px;
 }
 
-.header .right .info h5{
+.headerdash .right .info h5{
     font-family: Poppins;
     font-weight: 600;
     font-size: 14px;
@@ -60,7 +67,7 @@ color: #303972;
 margin-bottom: 10px;
 }
 
-.header .right .info p{
+.headerdash .right .info p{
     font-family: Poppins;
     font-weight: 400;
     font-size: 14px;
@@ -69,7 +76,7 @@ margin-bottom: 10px;
 color: #A098AE;    
 }
 
-.header .right .profile-picture{
+.headerdash .right .profile-picture{
     width: 40px;
 height: 40px;
 border-radius: 40px;
