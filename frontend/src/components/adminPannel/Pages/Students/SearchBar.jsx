@@ -2,11 +2,7 @@ import './searchbar.css'
 import addIcon from '../../../../assets/icons/+.svg'
 import arrowDownIcon from '../../../../assets/icons/dropdown.svg'
 import searchIcon from '../../../../assets/icons/search.svg'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-function SearchBar({title,clicked}) {
-    const [isAddStudentClicked,setIsAddStudentClicked]=useState(false);
-const navigate=useNavigate();
+function SearchBar(props) {
     return (
         <div className='search-bar'>
             <div className="input-field">
@@ -19,8 +15,7 @@ const navigate=useNavigate();
                     Newest
                     <img src={arrowDownIcon} alt="arrowDown" />
                 </button>
-                <button
-                onClick={()=>{navigate('/adminpannel/NewStudent')}} className='add'>
+                <button className='add'>
                     <img src={addIcon} alt="addIcon" />
                     New {title}
                 </button>
