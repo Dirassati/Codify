@@ -17,11 +17,11 @@ function Sidebar() {
     const [index, setIndex] = useState(1);
 const navigate=useNavigate();
 
-    useEffect(()=>{
-        if (index===1) {
-            navigate('dashboard')
-        }
-    },[])
+    // useEffect(()=>{
+    //     if (index===1) {
+    //         navigate('dashboard')
+    //     }
+    // },[])
     return (
         <div className='side-bar'>
             <div onClick={() => { setIndex(1) }} className="title">

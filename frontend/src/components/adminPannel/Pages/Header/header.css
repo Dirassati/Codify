@@ -3,7 +3,10 @@ display: flex;
 justify-content: space-between;
 width: 100%;
 padding: 30px 25px;
-
+/* position: fixed;
+top:0;
+right: 0;
+z-index: 999; */
 }
 
 .header .left h2{

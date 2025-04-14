@@ -56,7 +56,7 @@ if (response.user.data.user_role==="enseignant") {
 } else if (response.user.data.user_role==="eleve") {
     navigate('/student')
 } else {
-    navigate('/adminpannel')
+    navigate('/adminpannel/dashboard')
 }
 
       } catch (err) {
