@@ -7,9 +7,29 @@ import CircularProgress from '@mui/material/CircularProgress';
 function StudentCard() {
 const [isLoading,setIsLoading]=useState(false);
 const [message,setMessage]=useState("")
+const [parentData,setParentData]=useState({});
+const [studentData,setStudentData]=useState({});
 useEffect(()=>{
-console.log(localStorage.getItem('studentDetails'))
-},[true])
+    setStudentData(localStorage.getItem('studentDetails'))
+    const fetchParentData= async ()=>{
+        try {
+            const response = await axios.get(`http://localhost:5000/api/inscription/parents/${student.parent_inscription_id}`);
+            console.log(response.data);
+            setParentData(response.data.parent)
+        } catch (error) {
+            console.error(error);
+            setMessage(error.response?.data?.message || "getting parent details failed  failed");
+            console.log(err.response?.data?.message || " getting parent details failed failed")
+        }
+     
+    }
+
+    fetchParentData();
+    },[])
+
+
+
+
 
 
 
@@ -20,11 +40,11 @@ const handleValidation=async (e)=>{
 
 try {
   setIsLoading(true);
-  const response = await axios.post("http://localhost:5000/api/", );
+  const response = await axios.post(`http://localhost:5000/api/inscriptions/validate/${studentData.parent_inscription_id}/${studentData.id}`, );
   
   console.log(response.data);
 
-      navigate('/adminpannel/Students');
+    //   navigate('/adminpannel/Students');
  
 
 } catch (err) {
@@ -46,23 +66,23 @@ finally{
         e.preventDefault();
     
     
-    try {
-      setIsLoading(true);
-      const response = await axios.post("http://localhost:5000/api/", );
-      
-      console.log(response.data);
-    
-          navigate('/adminpannel/Students');
-     
-    
-    } catch (err) {
-      console.error(err);
-      setMessage(err.response?.data?.message || "fail");
-      console.log(err.response?.data?.message || "fail")
-    }
-    finally{
-      setIsLoading(false)
-    }
+        try {
+            setIsLoading(true);
+            const response = await axios.post(`http://localhost:5000/api/inscriptions/refuse/${studentData.parent_inscription_id}/${studentData.id}`, );
+            
+            console.log(response.data);
+          
+              //   navigate('/adminpannel/Students');
+           
+          
+          } catch (err) {
+            console.error(err);
+            setMessage(err.response?.data?.message || "fail");
+            console.log(err.response?.data?.message || "fail")
+          }
+          finally{
+            setIsLoading(false)
+          }
     
     
           
@@ -83,33 +103,33 @@ finally{
 
                             <div className='input-container'>
                                 <label>First Name *</label>
-                                <input type="text" name="parent_firstName" value="aaa" placeholder="Enter First Name" required onChange="" />
+                                <input type="text" name="parent_firstName" value={parentData.parent_first_name} placeholder="Enter First Name" required onChange="" />
                             </div>
                             <div className='input-container'>
                                 <label>Last Name *</label>
-                                <input type="text" name="lastName" value="aaa" placeholder="Enter Last Name" required onChange="" />
+                                <input type="text" name="lastName" value={parentData.parent_last_name} placeholder="Enter Last Name" required onChange="" />
                             </div>
 
                             <div className='input-container'>
                                 <label for="email">Email </label>
-                                <input type="text" name="parent_email" value="aaa@" placeholder='Enter the email' />
+                                <input type="text" name="parent_email" value={parentData.email_address} placeholder='Enter the email' />
                             </div>
 
                             <div className='input-container'>
                                 <label for="phone">Phone </label>
-                                <input type="text" name="parent_phone" value="aaa" placeholder='Enter the phone number' />
+                                <input type="text" name="parent_phone" value={parentData.parent_phone_number} placeholder='Enter the phone number' />
                             </div>
 
                             <div className='input-container'>
                                 <label>Profession</label>
-                                <input type="text" name="parent_profession" value="aaa" placeholder="Enter the profession" required onChange="" />
+                                <input type="text" name="parent_profession" value={parentData.parent_profession} placeholder="Enter the profession" required onChange="" />
                             </div>
 
 
 
                             <div className='input-container'>
                                 <label for="status">Status </label>
-                                <select name="parent_status" required onChange="">
+                                <select name="parent_status" value={parentData.parent_etat_civil} required onChange="">
                                     <option value="">Select Civil Status</option>
                                     <option value="single">Single</option>
                                     <option value="married">Married</option>
@@ -120,10 +140,7 @@ finally{
 
 
 
-                            <div className='input-container'>
-                                <label>Address *</label>
-                                <textarea type="text" name="parent_adress" rows="10" cols="50" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " className='adress' required onChange="" />
-                            </div>
+                           
 
                             <div className='input-container'>
                                 <label for="payment">Payment </label>
@@ -162,29 +179,29 @@ finally{
 
                             <div className='input-container'>
                                 <label>First Name *</label>
-                                <input type="text" name="student_firstName" placeholder="Enter First Name" required onChange="" />
+                                <input type="text" name="student_firstName" value={studentData.student_first_name} placeholder="Enter First Name" required onChange="" />
                             </div>
                             <div className='input-container'>
                                 <label>Last Name *</label>
-                                <input type="text" name="student_lastName" placeholder="Enter Last Name" required onChange="" />
+                                <input type="text" name="student_lastName" value={studentData.student_last_name} placeholder="Enter Last Name" required onChange="" />
                             </div>
 
                             <div className='input-container'>
                                 <label>Place of birth *</label>
-                                <input type="text" name="student_adress" placeholder="Enter Phone Number" required onChange="" />
+                                <input type="text" name="student_adress"  value={studentData.student_birth_place} placeholder="Enter Phone Number" required onChange="" />
                             </div>
                             <div className='input-container'>
                                 <label>Date of birth *</label>
-                                <input type="text" name="address" placeholder="Enter Phone Number" required onChange="" />
+                                <input type="text" name="address" value={studentData.student_birth_date} placeholder="Enter Phone Number" required onChange="" />
                             </div>
                             <div className='input-container'>
                                 <label for="degree">Degree </label>
-                                <input type="text" name="student_degree" placeholder='Enter the degree' />
+                                <input type="text" name="student_degree" value={studentData.student_grade} placeholder='Enter the degree' />
                             </div>
 
                             <div className='input-container'>
-                                <label for="gender">Gender </label>
-                                <select name="student_gender" required onChange="">
+                                <label for="gender" >Gender </label>
+                                <select name="student_gender" value={studentData.student_gender} required onChange="">
                                     <option value="">Select Civil Status</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -194,21 +211,21 @@ finally{
 
                             <div className='input-container'>
                                 <label for="nationality">Nationality </label>
-                                <input type="text" name="student_nationality" placeholder='Enter nationality' />
+                                <input type="text" value={studentData.student_nationality} name="student_nationality" placeholder='Enter nationality' />
                             </div>
 
                             <div className='input-container'>
                                 <label>Blood Type</label>
-                                <input type="text" name="student_bloodType" placeholder="Enter Blood type" required onChange="" />
+                                <input type="text" name="student_bloodType" value={studentData.student_blood_type} placeholder="Enter Blood type" required onChange="" />
                             </div>
 
                             <div className='input-container' >
                                 <label>Chronic illness</label>
-                                <input type="text" name="student_chronicIllness" placeholder="Enter any chronic illnisses you have" onChange="" />
+                                <input type="text" name="student_chronicIllness" value={studentData.student_chronic_illnesses} placeholder="Enter any chronic illnisses you have" onChange="" />
                             </div>
                             <div className='input-container'>
                                 <label>Allergies </label>
-                                <input type="text" name="student_allergies" placeholder="Enter any kind of allergies you have" onChange="" />
+                                <input type="text" name="student_allergies" value={studentData.student_allergies} placeholder="Enter any kind of allergies you have" onChange="" />
                             </div>
 
 
@@ -216,10 +233,10 @@ finally{
 
 
 
-                            <div className='input-container'>
+                            {/* <div className='input-container'>
                                 <label>Address *</label>
                                 <textarea type="text" name="student_address" rows="10" cols="50" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " className='adress' required onChange="" />
-                            </div>
+                            </div> */}
 
 
 

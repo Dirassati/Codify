@@ -282,7 +282,7 @@ color: white;
 }
 
 
- .valide{
+ .validated{
   background-color: #0CEF26;
 }
 
@@ -291,9 +291,7 @@ color: white;
 }
 
 
- .untreated{
+ .pending{
   background-color: #12DDEB;
 }
- .unpaied{
-  background-color: rgb(58, 58, 58);
-}
+ 

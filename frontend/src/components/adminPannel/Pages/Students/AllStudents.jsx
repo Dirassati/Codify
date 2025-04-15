@@ -1,5 +1,5 @@
 import './allstudents.css'
-import Student from './student'
+import Student from './Student'
 import phoneIcon from '../../../../assets/icons/phone.svg'
 import messageIcon from '../../../../assets/icons/message.svg'
 import leftArrowIcon from '../../../../assets/icons/leftArrow.svg'
@@ -8,218 +8,58 @@ import threedotsIcons from '../../../../assets/icons/threedots.svg'
 import { useState, useEffect } from 'react'
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
 
 function AllStudents({ filter }) {
+    const [message, setMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false)
     const [studentsSelected, setStudentsSelected] = useState([]);
     const [allChecked, setAllChecked] = useState(false);
     const [studentsDisplayed, setStudentsDisplayed] = useState([]);
     const [studentsPageSelected, setStudentsPageSelected] = useState(1);
     const [studentsPages, setStudentsPages] = useState([]);
     const [studentsPagesStart, setStudentsPagesStart] = useState(1);
-const navigate =useNavigate();
-    const students = [
-        
-        {
-            name: "Senouci Abdeldjalil",
-            id: 6666,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"refused"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 77777,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"untreated"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88888,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88889,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88881,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88882,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88883,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88884,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88885,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88886,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-
-        ,
-
-
-        
+    const [filteredStudents, setFilteredStudents] = useState([]);
     
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88887,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"refused"
-        }
-    
-        
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88899,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"valide"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88879,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"valide"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88869,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"untreated"
-        }
-        ,
-        {
-            name: "Senouci Abdeldjalil",
-            id: 88859,
-            parentName: "senouci benaoumeur",
-            grade: "vi",
-            city: "Oran",
-            date: "2024-03-14",
-            phoneNumber: "0555855016",
-            email: "abdeldjalil.sen@gmail.com",
-            status:"unpaied"
-        }
-
-
-
+    const navigate = useNavigate();
+    const students = [ //students 
     ]
 
-    const filteredStudents = students.filter(student => student.status === filter);
+
     const itemsPerPage = 5;
     const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
 
+
+    useEffect(() => {
+        const fetchStudents = async () => {
+            try {
+                setIsLoading(true);
+                const response = await axios.get(`http://localhost:5000/api/inscription/students/status/${filter}`);
+                console.log(response.data);
+                setFilteredStudents(response.data.students);
+            } catch (err) {
+                console.error(err);
+                setMessage(err.response?.data?.message || "getting students failed  failed");
+                console.log(err.response?.data?.message || " getting students failed failed")
+            }
+            finally{
+                setIsLoading(false);
+            }
+
+        }
+
+        fetchStudents();
+    }, [filter])
+
     useEffect(() => {
         // Set displayed students based on current page and filter
+        console.log(filter);
+
         const start = (studentsPageSelected - 1) * itemsPerPage;
         const end = start + itemsPerPage;
         setStudentsDisplayed(filteredStudents.slice(start, end));
-    }, [filter, studentsPageSelected]);
+    }, [filter, studentsPageSelected, filteredStudents]);
 
     useEffect(() => {
         // Update page numbers whenever filter changes
@@ -245,7 +85,7 @@ const navigate =useNavigate();
         if (allChecked) {
             setStudentsSelected([]);
         } else {
-            setStudentsSelected(students.map(student => student.id));
+            setStudentsSelected(filteredStudents.map(student => student.id));
         }
         setAllChecked(prev => !prev);
     }
@@ -271,15 +111,16 @@ const navigate =useNavigate();
                         </tr>
                     </thead>
                     <tbody>
-                        {studentsDisplayed.map(student => (
-                            <Student
-                           
-                                student={student}
-                                studentsSelected={studentsSelected}
-                                changed={handleCheckClick}
-                                key={student.id}
-                            />
-                        ))}
+                        {
+                            studentsDisplayed.map(student => (
+                                <Student
+
+                                    student={student}
+                                    studentsSelected={studentsSelected}
+                                    changed={handleCheckClick}
+                                    key={student.id}
+                                />
+                            ))}
                     </tbody>
                 </table>
 

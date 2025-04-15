@@ -17,10 +17,10 @@ function Students() {
 // },[filter]))
 
 const navigate=useNavigate();
-const [filter,setFilter]=useState("valide");
+const [filter,setFilter]=useState("validated");
 function handleChange(e) {
   if(!e.target.value){
-setFilter("valide");
+setFilter("validated");
   }
   else{
     setFilter(e.target.value);
@@ -51,10 +51,10 @@ setFilter("valide");
                 </button>
                <select name="" id="" value={filter} onChange={handleChange}>
                <option value="">Filter students</option>
-                  <option value="valide">valide</option>
+                  <option value="validated">validated</option>
                   <option value="refused">refused</option>
-                  <option value="unpaied">unpaied</option>
-                  <option value="untreated">untreated</option>
+                  <option value="pending">pending</option>
+               
                </select>
                 <button
                 onClick={()=>{navigate('/adminpannel/NewStudent')}} className='add'>
