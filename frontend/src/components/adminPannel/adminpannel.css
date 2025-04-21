@@ -1,0 +1,21 @@
+.admin-pannel {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .admin-pannel .sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background-color: #462F9C; /* your sidebar background */
+    overflow-y: auto;
+  }
+  
+  .admin-pannel .page {
+    background-color: #F3F4FF;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  

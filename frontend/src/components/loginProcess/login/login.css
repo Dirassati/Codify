@@ -23,7 +23,7 @@
     display: inline-block;
 }
 
-.form-container {
+.login .form-container {
     background-color:  #FFFFFF;
     width: 500px;
     border-radius: 10px;
@@ -70,7 +70,7 @@ color: #153060;
 
 .login .input-field input {
     padding: 0 5px;
-    width: 440px;
+    width: 100%;
 height: 56px;
 border: none;
 border-radius: 5px;
@@ -79,7 +79,7 @@ color: #153060;
 }
 
 .login .input-field input.security-input{
-    width: 250px;
+    width: 60%;
 }
 
 
@@ -92,7 +92,7 @@ color: #153060;
 }
 
 .login .login-btn{
-    width: 440px;
+    width: 100%;
 height: 60px;
 border: none;
 border-radius: 5px;
@@ -141,4 +141,9 @@ transition: background 100ms ease;
 
 
     color: #f2431c89;
+}
+
+
+@media (max-width:768px){
+
 }
