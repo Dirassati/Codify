@@ -1,0 +1,242 @@
+.add-student {
+    overflow: auto;
+    height: 100vh;
+}
+
+.add-student .forms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.add-student .inscription-card {
+  
+    width: 95%;
+    background-color: #fff;
+    height: fit-content;
+    border-radius: 20px;
+    margin-bottom: 50px;
+   
+}
+
+.add-student .inscription-card  .photo-container{
+    margin-left: 30px;
+}
+
+
+.add-student .inscription-card  .photo-container .photo-input{
+    width: 175px;
+    height: 175px;
+    border-radius: 5px;
+ background-image: url('../../../../assets/images/dashed-border.svg');
+    background-position: center;
+    background-repeat: none;
+    background-size: cover;
+    display: flex;
+    justify-content: center;align-items: center;
+    cursor: pointer;
+  
+}
+
+
+.add-student .inscription-card .top {
+    
+    width: 100%;
+    height: 79px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #4D44B5;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px 30px;
+    margin-bottom: 50px;
+}
+
+.add-student .inscription-card .form-container  .form{
+    display: flex;
+    
+}
+
+.add-student .inscription-card .form-container form {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: max-content;
+    gap: 50px;
+    padding: 20px 60px;
+    align-items: start;
+    justify-content: center;
+}
+
+
+
+.add-student .inscription-card .form-container .input-container label,
+.add-student .inscription-card  .photo-container label {
+    display: block;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #303972;
+    margin-bottom: 10px;
+}
+
+
+
+.add-student .inscription-card .form-container .input-container input,
+.add-student .inscription-card .form-container .input-container .upload-input{
+    width: 100%;
+    height: 48px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #C1BBEB;
+    padding: 0px 5px;
+    margin-bottom: 30px;
+}
+
+.add-student .inscription-card .form-container .input-container textarea{
+    width: 100%;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #C1BBEB;
+    padding: 0px 5px;
+    padding: 10px;
+}
+
+
+.add-student .inscription-card .form-container .input-container select {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    appearance: none;
+    /* Removes default arrow on most browsers */
+    -webkit-appearance: none;
+    /* Safari/Chrome */
+    -moz-appearance: none;
+    /* Firefox */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    width: 100%;
+    height: 48px;
+}
+
+
+.add-student .inscription-card .form-container .input-container div{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.add-student .inscription-card .form-container .input-container input[type="radio"] {
+
+    width: 18px;
+    height: 18px;
+    border: 2px solid #4D44B5;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.add-student .inscription-card .form-container .input-container .upload-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #C1BBEB;
+}
+
+.add-student .inscription-card .form-container .input-container .upload-input button {
+    border: none;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.add-student .forms-container .btns {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    border-radius: 40px;
+margin-bottom: 50px;
+}
+
+.add-student .forms-container .btns button {
+    width: 168px;
+    height: 60px;
+cursor: pointer;
+    border-radius: 40px;
+    gap: 10px;
+    border-width: 2px;
+    padding-top: 10px;
+    padding-right: 24px;
+    padding-bottom: 10px;
+    padding-left: 24px;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    width: 168px;
+    height: 60px;
+
+    border-radius: 40px;
+    gap: 10px;
+    border-width: 2px;
+    padding-top: 10px;
+    padding-right: 24px;
+    padding-bottom: 10px;
+    padding-left: 24px;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-right: 20px;
+}
+
+.add-student .forms-container .btns button:hover{
+    opacity: 0.7;
+}
+
+.add-student .forms-container .btns .cancel {
+
+    border-color: #4D44B5;
+    color: #4D44B5;
+    background-color: inherit;
+}
+
+
+.add-student .forms-container .btns .submit{
+    width: 112px;
+height: 60px;
+
+
+border-radius: 40px;
+gap: 10px;
+background-color: #4D44B5;
+padding-top: 10px;
+padding-right: 24px;
+padding-bottom: 10px;
+padding-left: 24px;
+color: #FFFFFF;
+border: none;
+}
+

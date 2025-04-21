@@ -1,10 +1,25 @@
 import './homepage.css'
-import HomeIcon from '@mui/icons-material/Home';
+import React from "react";
+import Navbar from "./Navbar";
+import Second from "./Second/Second";
+import Third from "./Third/Third";
+import Teachers from "./Teachers/Teachers";
+import Testimonials from "./Testimonials/Testimonials";
+import FAQSection from "./FAQ/FAQSection";
+import Footer from "./Footer";
 
-function Homepage() {
+const Homepage = () => {
   return (
-    <div className='homepage'  style={{fontSize:"50px"}}><HomeIcon style={{height:"100px",width:"100px"}}/> HomePage</div>
-  )
-}
- 
-export default Homepage
+    <>
+      <Navbar />
+      <Second />
+            <Third />
+            <Teachers />
+            <Testimonials />
+            <FAQSection />
+            <Footer />
+    </>
+  );
+};
+
+export default Homepage;

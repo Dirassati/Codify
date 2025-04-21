@@ -1,0 +1,144 @@
+/* Apply this to the body to prevent horizontal scrolling */
+body {
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  margin: 0;
+  padding: 0;
+}
+
+/* Update .teachers-app to ensure proper handling of overflow */
+.teachers-app {
+  background-color: #F3F4FF;
+  padding: 20px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden; /* Hide horizontal scrolling */
+}
+
+.teachers-app .grid {
+  padding: 20px;
+  display: grid;
+  /* Flexible grid layout to adjust automatically to available space */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  justify-items: center;
+  flex-grow: 1;
+  width: 100%; /* Ensure grid doesn't overflow */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+.teachers-app .card {
+  position: relative;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.2s ease;
+  border: none;
+  width: 100%; /* Card takes full width of its container */
+  max-width: 300px; /* Maximum width to avoid overflow */
+  height: 352px;
+  border-radius: 20px;
+}
+
+.teachers-app .card h3 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  width: 168px;
+  height: 36px;
+}
+
+.teachers-app .card p {
+  width: 119px;
+  height: 27px;
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.teachers-app .card:hover {
+  transform: translateY(-4px);
+}
+
+.teachers-app .dots {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+}
+
+.teachers-app .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 80px;
+  object-fit: cover;
+  margin: 0 auto 12px;
+  border: 3px solid #d2c5f2;
+}
+
+.teachers-app .card h3 {
+  font-size: 16px;
+  color: #2c2c6c;
+  margin: 8px 0 4px;
+}
+
+.teachers-app .card p {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 12px;
+}
+
+.teachers-app .icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.teachers-app .icon-btn {
+  background-color: #5e4fd5;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.teachers-app .pagination {
+  display: flex;
+  justify-content: right;
+  gap: 8px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.teachers-app .pagination button {
+  min-width: 40px;
+  height: 40px;
+  top: 0.5px;
+  left: 48px;
+  border-radius: 40px;
+  border: none;
+  background: #e2e2f4;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.teachers-app .pagination button.active {
+  background: #5e4fd5;
+  color: white;
+}
+
+.teachers-app .info {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #888;
+}

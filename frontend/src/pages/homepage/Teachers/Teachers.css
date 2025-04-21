@@ -1,0 +1,78 @@
+.experts-container {
+    text-align: center;
+    background-color: #fde8e8;
+    padding: 40px;
+    
+    
+
+  }
+  
+  .title {
+    
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 50px;
+    letter-spacing: 0.2px;
+    width: 431;
+height: 50;
+
+
+    margin-bottom: 80px;
+  }
+  
+  .experts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .expert-card {
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 238px;
+    height: 375px;
+  }
+  
+  .expert-image {
+    width: 100%;
+    height: 
+231px; /* Set the desired height */
+    object-fit: cover; /* Crop excess height */
+    border-radius: 10px; /* Optional for rounded corners */
+  }
+  
+  
+  .expert-info {
+   margin: 10px 0;
+    
+  }
+  
+  .expert-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0%;
+  }
+  
+  .expert-profession {
+    color: gray;
+    font-size: 14px;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+  }
+  
+  .social-icons i {
+    font-size: 25px;
+    cursor: pointer;
+  }
+  
