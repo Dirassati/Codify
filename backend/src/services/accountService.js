@@ -22,9 +22,9 @@ const createAccount = async (email, matricule, password, user_role, roleData) =>
     switch (user_role) {
       case 'parents':
         await client.query(
-          `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil)
-           VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-          [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil]
+          `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil,card_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7,$8)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil,roleData.card_id]
         );
         break;
 
@@ -205,5 +205,7 @@ const deactivate_Account = async (userId) => {
       client.release(); // Release the client back to the pool
     }
   };
+
+
 
 module.exports = { createAccount, modifyAccount, deactivate_Account, activate_Account};

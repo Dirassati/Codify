@@ -121,4 +121,72 @@ const addStudentToInscription = async (parentInscriptionId, studentData) => {
   }
 };
 
-module.exports = { createParentInscription, addStudentToInscription };
+const knex = require("../db/knex");
+
+const getParentInscriptionById = async (parentId) => {
+  return await knex("parentInscription").where({ id: parentId }).first();
+};
+
+const getStudentsByParentId = async (parentId) => {
+  return await knex("eleveInscription").where({
+    parent_inscription_id: parentId,
+  });
+};
+
+const findUserByEmail = async (email) => {
+  return await knex("users").where({ email, status: "active" }).first();
+};
+
+const getAllParentsSorted = async () => {
+  return await knex("parentInscription").orderBy("created_at", "asc");
+};
+
+const getAllStudentsSorted = async () => {
+  return await knex("eleveInscription").orderBy("created_at", "asc");
+};
+
+const getStudentsByParentIdSorted = async (parentId) => {
+  return await knex("eleveInscription")
+    .where({ parent_inscription_id: parentId })
+    .orderBy("created_at", "asc");
+};
+
+const getStudentById = async (studentId) => {
+  return await knex("eleveInscription").where({ id: studentId });
+};
+
+const getParentById = async (parentId) => {
+  return await knex("parentInscription").where({ id: parentId });
+};
+
+const getFiltredInscriptions = async (status) => {
+  return await knex("eleveInscription").where({ status: status });
+};
+
+const updateStudentStatus = async (studentId, updates) => {
+  return await knex("eleveInscription")
+    .where({ id: studentId })
+    .update(updates);
+};
+
+const updateParentStatus = async (parentId, updates) => {
+  return await knex("parentInscription")
+    .where({ id: parentId })
+    .update(updates);
+};
+
+module.exports = {
+  createParentInscription,
+  addStudentToInscription,
+  getParentInscriptionById,
+  getStudentsByParentId,
+  findUserByEmail,
+  getAllParentsSorted,
+  getAllStudentsSorted,
+  getStudentsByParentIdSorted,
+  getStudentById,
+  getParentById,
+  getFiltredInscriptions,
+  updateStudentStatus,
+  updateParentStatus,
+};

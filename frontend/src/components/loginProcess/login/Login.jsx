@@ -31,6 +31,7 @@ async function handleSubmit(e){
 //console.log(captchaInputValue)
 // console.log(captchaValue)
 // console.log(user)
+console.log(userInput);
 
 if (captchaInputValue!==captchaValue ){
 setError("Error captcha"); setIsLoading(false);
@@ -48,11 +49,11 @@ else{
         setUser(response.data.user)
 
           // Redirect to dashboard, etc.
-if (user_role==="enseignant") {
+if (response.user.data.user_role==="enseignant") {
     navigate('/teacher')
-} else if (user_role==="parents") {
+} else if (response.user.data.user_role==="parents") {
     navigate('/parent')
-} else if (user_role==="eleve") {
+} else if (response.user.data.user_role==="eleve") {
     navigate('/student')
 } else {
     navigate('/adminpannel')
