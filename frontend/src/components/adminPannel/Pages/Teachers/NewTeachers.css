@@ -1,0 +1,161 @@
+/* NewTeachers.css */
+
+.new-teacher-form {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #F3F4FF;
+    
+
+  }
+  
+  .new-teacher-form__container {
+    
+    max-width: 1250px;
+    margin: 0 auto;
+    
+    border-radius: 12px;
+   
+  }
+  
+  .new-teacher-form__section_first{
+    min-height: 600px;
+    padding: 50px;
+    margin-bottom: 3rem;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+  }
+  .new-teacher-form__section_second{
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 50px;
+min-height: 338px;
+border-radius: 20px;
+max-width: 1475px;
+background-color: white;
+  }
+  
+  .new-teacher-form__title {
+    margin-top: -50px; /* pulls the title outside the container's top padding */
+    margin-left: -50px;
+    margin-right: -50px;
+    padding: 20px 30px;
+    background: #4D44B5;
+padding: 15px;
+font-family: Poppins;
+font-weight: 700;
+font-size: 24px;
+line-height: 100%;
+letter-spacing: 0%;
+color: #FFFFFF;
+
+
+border-top-left-radius: 20px;
+border-top-right-radius: 20px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .new-teacher-form__row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  
+  .new-teacher-form__group {
+    flex: 1;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .new-teacher-form__group label {
+font-weight: 600;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+color: #303972;
+
+  }
+  
+  .new-teacher-form__group input,
+  .new-teacher-form__group textarea {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: border 0.2s;
+  }
+  
+  .new-teacher-form__group input:focus,
+  .new-teacher-form__group textarea:focus {
+    border-color: #5b9bd5;
+    outline: none;
+    background-color: #fff;
+  }
+  
+  .new-teacher-form__group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .new-teacher-form__file-upload {
+    width: 175px;
+height: 140px;
+display: flex;
+align-items: center;
+    background: #f0f4f8;
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .new-teacher-form__file-label {
+    display: inline-block;
+    color: #666;
+    font-size: 0.95rem;
+  }
+  
+  .new-teacher-form__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .new-teacher-form__draft-button,
+  .new-teacher-form__submit-button {
+    padding: 0.7rem 1.4rem;
+    border: none;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .new-teacher-form__draft-button {
+    background-color: #e5e7eb;
+    color: #111;
+  }
+  
+  .new-teacher-form__draft-button:hover {
+    background-color: #d1d5db;
+  }
+  
+  .new-teacher-form__submit-button {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  .new-teacher-form__submit-button:hover {
+    background-color: #2563eb;
+  }
+  

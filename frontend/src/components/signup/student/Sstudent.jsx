@@ -5,6 +5,9 @@ import logo from '../../../assets/images/logo1.svg'
 import Footer from "../../../pages/homepage/Footer";
 import axios from 'axios'
 
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 import { useNavigate } from 'react-router-dom';
 
 function Sstudent() {
@@ -417,7 +420,9 @@ finally{
 
 
 
-        <button disabled={isLoading} type='submit' className="submit-btn"  >{isLoading ? "loading...":"Register"}</button>
+
+        <button disabled={isLoading} type='submit' className="submit-btn"  >{isLoading ? <CircularProgress disableShrink />:"Register"}</button>
+
 {message && <div style={{color:"007AFF",display:"flex",justifyContent:"center",width:"100%"}}>{message}</div>}
 
 

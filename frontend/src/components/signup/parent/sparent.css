@@ -6,7 +6,9 @@
 
   }
   
-  .header {
+
+  .Holder .header {
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,7 +17,9 @@
     width: 100%;
 }
 
-.logoparent {
+
+.Holder .logoparent {
+
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -27,7 +31,9 @@
     
 }
 
-  .logoparent h3{
+
+.Holder .logoparent h3{
+
     font-family: "Montserrat";
 font-weight: 700;
 font-size: 24px;
@@ -36,12 +42,16 @@ letter-spacing: 0.1px;
 color: var(--Miscellaneous-Floating-Tab---Text-Selected, #007AFF);
 
   }
-  .logoparent img{
+
+  .Holder .logoparent img{
+
     width: 75px;
 height: 75px;
 
   }
-  .header h1{
+
+  .Holder .header h1{
+
     margin-bottom: 10px;
 font-weight: 700;
 font-size: 58px;
@@ -51,7 +61,9 @@ text-align: center;
 color: #1A1A1A;
 
   }
-  .intro-text {
+
+  .Holder .intro-text {
+
     
     font-weight: 500;
     font-size: 20px;
