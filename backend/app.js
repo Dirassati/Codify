@@ -3,7 +3,10 @@ const dotenv = require("dotenv");
 const accountRoutes = require("./src/routes/accountRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const inscriptionRoutes = require("./src/routes/inscriptionRoutes");
-const { testConnection } = require("./testDbConnection"); // import testConnection
+const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
+const { testConnection } = require("./testDbConnection"); 
+const cron = require("node-cron");
+const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
 const cors = require("cors");
 
 dotenv.config();
@@ -24,10 +27,16 @@ app.use(express.json());
 app.use("/api", accountRoutes);
 app.use("/api", authRoutes);
 app.use("/api/inscription", inscriptionRoutes);
+app.use("/api/reinscription", reinscriptionRoutes);
 
 // Test endpoint
 app.get("/", (req, res) => {
   res.send("Hello, this is the backend!");
+});
+
+cron.schedule("0 0 * * *", () => {
+  // Runs daily at midnight
+  inactivateOldReinscriptions();
 });
 
 // Start the server
