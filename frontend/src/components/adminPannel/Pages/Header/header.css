@@ -1,3 +1,4 @@
+
 .headerdash{
 display: flex;
 justify-content: space-between;
@@ -19,6 +20,7 @@ margin-bottom: 1rem;
 }
 
 .headerdash .left h2{
+
     font-family: Poppins;
 font-weight: 700;
 font-size: 28px;
@@ -27,15 +29,19 @@ letter-spacing: 0%;
 color: #303972;
 }
 
+
 .headerdash .right{
     transform: translateX(-25px);
+
     display: flex;
     align-items: center;
     gap:20px;
     
 }
 
+
 .headerdash .right .icon{
+
     height: 40px;
     width: 40px;
     display: flex;
@@ -48,12 +54,16 @@ color: #303972;
     cursor: pointer;
 }
 
+
 .headerdash .right .icon img{
+
     height: 25px;
     width: 25px;
 }
 
+
 .headerdash .right .icon .notification-alert{
+
     width: 5px;
     height: 5px;
     background-color: #4D44B5;
@@ -63,7 +73,9 @@ color: #303972;
     left: 30px;
 }
 
+
 .headerdash .right .info h5{
+
     font-family: Poppins;
     font-weight: 600;
     font-size: 14px;
@@ -73,7 +85,9 @@ color: #303972;
 margin-bottom: 10px;
 }
 
+
 .headerdash .right .info p{
+
     font-family: Poppins;
     font-weight: 400;
     font-size: 14px;
@@ -82,7 +96,9 @@ margin-bottom: 10px;
 color: #A098AE;    
 }
 
+
 .headerdash .right .profile-picture{
+
     width: 40px;
 height: 40px;
 border-radius: 40px;

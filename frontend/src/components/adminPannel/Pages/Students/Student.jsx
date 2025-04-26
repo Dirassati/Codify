@@ -2,6 +2,7 @@ import './student.css'
 import phoneIcon from '../../../../assets/icons/phone.svg'
 import messageIcon from '../../../../assets/icons/message.svg'
 import threedotsIcons from '../../../../assets/icons/threedots.svg'
+
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
@@ -63,6 +64,7 @@ const fetchParentData= async ()=>{
             </td>
 
         </tr>
+
     )
 }
 

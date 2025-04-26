@@ -16,6 +16,7 @@ const register = async (req, res) => {
 
   try {
     const user = await createAccount(email, matricule, password, user_role, roleData);
+    
     res.status(201).json({
       message: 'Account created successfully',
       user, // Return the created user 
