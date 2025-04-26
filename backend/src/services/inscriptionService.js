@@ -138,17 +138,17 @@ const findUserByEmail = async (email) => {
 };
 
 const getAllParentsSorted = async () => {
-  return await knex("parentInscription").orderBy("created_at", "asc");
+  return await knex("parentInscription");
 };
 
 const getAllStudentsSorted = async () => {
-  return await knex("eleveInscription").orderBy("created_at", "asc");
+  return await knex("eleveInscription");
 };
 
 const getStudentsByParentIdSorted = async (parentId) => {
-  return await knex("eleveInscription")
-    .where({ parent_inscription_id: parentId })
-    .orderBy("created_at", "asc");
+  return await knex("eleveInscription").where({
+    parent_inscription_id: parentId,
+  });
 };
 
 const getStudentById = async (studentId) => {
