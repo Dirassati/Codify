@@ -58,7 +58,6 @@ L'équipe Dirassati
 
     // Send email
     await sendEmail(user.email, subject, text, html);
-
     res.status(201).json({
       message: "Account created successfully",
       user, // Return the created user
