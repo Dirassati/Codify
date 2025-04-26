@@ -4,7 +4,9 @@ import parametre from '../../../../assets/icons/parametre.svg'
 
 function Header(props) {
     return (
+
         <div className='headerdash'>
+
             <div className="left"><h2>{props.title}</h2></div>
             <div className="right">
                 <div className="icon">

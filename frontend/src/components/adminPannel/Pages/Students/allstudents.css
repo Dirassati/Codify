@@ -1,4 +1,5 @@
 .all-students {
+
     display: flex;
     justify-content: center;
     height: 480px;
@@ -72,11 +73,13 @@ accent-color: #4f46e5;
 
 
   .all-students thead tr th{
+
 font-weight: 600;
 font-size: 14px;
 line-height: 100%;
 letter-spacing: 0%;
 color: #303972;
+
   }
 
   .all-students tbody .name {

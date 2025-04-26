@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useEffect } from 'react'
 import Header from '../Header/Header'
 import SearchBar from './SearchBar'
@@ -69,6 +73,7 @@ setFilter("validated");
 
      
       
+
     </div>
   )
 }
