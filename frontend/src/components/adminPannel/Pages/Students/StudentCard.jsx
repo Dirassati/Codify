@@ -10,7 +10,12 @@ const [message,setMessage]=useState("")
 const [parentData,setParentData]=useState({});
 const [studentData,setStudentData]=useState({});
 useEffect(()=>{
-    setStudentData(localStorage.getItem('studentDetails'))
+    setStudentData(localStorage.getItem('studentDetails'));
+
+
+const studentI=localStorage.getItem('studentDetails');
+
+
     const fetchParentData= async ()=>{
         try {
             const response = await axios.get(`http://localhost:5000/api/inscription/parents/${student.parent_inscription_id}`);

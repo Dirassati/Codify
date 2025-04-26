@@ -9,20 +9,7 @@ function Student({ student, studentsSelected, changed }) {
     const navigate = useNavigate();
     const [parentData,setParentData]=useState({});
 
-useEffect(()=>{
-const fetchParentData= async ()=>{
-    try {
-        const response = await axios.get(`http://localhost:5000/api/inscription/parents/${student.parent_inscription_id}`);
-        console.log(response.data);
-        setParentData(response.data.parent)
-    } catch (error) {
-        console.error(error);
-        setMessage(error.response?.data?.message || "getting parent details failed  failed");
-        console.log(err.response?.data?.message || " getting parent details failed failed")
-    }
- 
-}
-},[])
+
 
     function handleClick() {
             navigate('/adminpannel/Studentcard');

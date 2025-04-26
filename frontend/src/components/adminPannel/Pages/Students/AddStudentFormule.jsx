@@ -20,6 +20,15 @@ function AddStudentFormule() {
   const [previousSchoolRecords, setPreviousSchoolRecords] = useState(null);
   const [immunizationRecords, setImmunizationRecords] = useState(null);
   const [message, setMessage] = useState("");
+  const [parentExist, setParentExist] = useState(true);
+  const [addChild, setAddChild] = useState(false);
+  const [parentCardId,setParentCardId]=useState("");
+  const [parentData, setParentData] = useState({
+    parent_id: 0,
+    parent_firstName: "",
+    parent_lastName: "",
+  });
+
 
 
   const [parentInfo, setParentInfo] = useState({
@@ -45,7 +54,7 @@ function AddStudentFormule() {
     student_dateOfBirth: "",
     student_chronicIllness: "",
     student_allergies: "",
-    student_photo:null,
+    student_photo: null,
     student_birthCertificateFile: null,
     student_proofOfResidenceFile: null,
     student_previousSchoolRecords: null,
@@ -138,7 +147,7 @@ function AddStudentFormule() {
 
   const handleClick = (e) => {
     const name = e.target.getAttribute("name");
-    
+
 
     if (name === "birthCertificateFile") {
       fileInputRef1.current.click();
@@ -159,22 +168,52 @@ function AddStudentFormule() {
 
   }
 
+  async function createParentAcc(e) {
+    e.preventDefault();
+    setParentExist(true);
+    try {
 
- async function handleSbmit() {
+      const response = await axios.post("http://localhost:5000/api/inscription/parent", parentInfo);
+
+      console.log(response.data);//supposing data is parent id
+     
+     //get parent
+      try {
+        const res = await axios.get(`http://localhost:5000/api/inscription/parents/${response.data}`);
+        console.log(res.data);
+        setParentData(response.data);//// changble according to backend
+      } catch (error) {
+        console.error(err);
+      setMessage(err.response?.data?.message || "adding parent  failed");
+      console.log(err.response?.data?.message || "adding parent  failed")
+      }
+     
+
+
+    }
+    catch (err) {
+      console.error(err);
+      setMessage(err.response?.data?.message || "adding parent  failed");
+      console.log(err.response?.data?.message || "adding parent  failed")
+    }
+  }
+
+
+  async function createStudentAcc() {
     console.log(studentInfo);
     console.log(parentInfo);
     setIsLoading(true);
-    
+
     const formData = new FormData();
-    formData.append("student_last_name", studentInfo.lastName);
-    formData.append("student_first_name", studentInfo.firstName);
-    formData.append("student_grade", studentInfo.degree);
-    formData.append("student_gender", studentInfo.gender);
-    formData.append("student_nationality", studentInfo.placeOfBirth);
-    formData.append("student_birth_date", studentInfo.dateOfBirth);
-    formData.append("student_blood_type", studentInfo.bloodType);
-    formData.append("student_allergies", studentInfo.allergies);
-    formData.append("student_chronic_illnesses", studentInfo.chronicIllness);
+    formData.append("student_last_name", studentInfo.student_lastName);
+    formData.append("student_first_name", studentInfo.student_firstName);
+    formData.append("student_grade", studentInfo.student_degree);
+    formData.append("student_gender", studentInfo.student_gender);
+    formData.append("student_nationality", studentInfo.student_placeOfBirth);
+    formData.append("student_birth_date", studentInfo.student_dateOfBirth);
+    formData.append("student_blood_type", studentInfo.student_bloodType);
+    formData.append("student_allergies", studentInfo.student_allergies);
+    formData.append("student_chronic_illnesses", studentInfo.student_chronicIllness);
 
 
     // if (!studentInfo.birthCertificateFile || !studentInfo.proofOfResidenceFile || !studentInfo.previousSchoolRecords || !studentInfo.immunizationRecords) {
@@ -186,49 +225,59 @@ function AddStudentFormule() {
     //   formData.append("residence_proof", studentInfo.proofOfResidenceFile);
     //   formData.append("previous_school_records", studentInfo.previousSchoolRecords);
     //   formData.append("immunization_records", studentInfo.immunizationRecords);
-      
+
     // }
 
-try{
-  setIsLoading(true);
-    const response = await axios.post("http://localhost:5000/api/inscription/parent", parentInfo);
-  
-    console.log(response.data);
-  
-      
+    setAddChild(false);
+
     try {
-  
-      const res=await axios.post(`http://localhost:5000/api/inscription/${response.data.parentInscriptionId}/students`,formData,
+
+
+      const res = await axios.post(`http://localhost:5000/api/inscription/${parentData.parent_id}/students`, formData,
         {
-          headers:{"Content-Type": "multipart/form-data",}
+          headers: { "Content-Type": "multipart/form-data", }
         },
       );
-    
+
       console.log(res.data.student);
       navigate('/addchild?')
-      
+
     } catch (err) {
       console.error(err);
       setMessage(err.response?.data?.message || "adding student failed failed");
       console.log(err.response?.data?.message || "adding student failed failed")
     }
-   
-      
-  } catch (err) {
-    console.error(err);
-    setMessage(err.response?.data?.message || "adding parent  failed");
-    console.log(err.response?.data?.message || "adding parent  failed")
-  }
-   
-finally{
-  setIsLoading(false);
-}
+    finally {
+      setIsLoading(false);
+    }
 
 
 
     // for (let [key, value] of formData.entries()) {
     //   console.log(`${key}:`, value);
     // }
+  }
+
+
+
+  function getParentData(e) {
+    e.preventDefault();
+
+
+    if (!parentData.parent_firstName) {
+      if (parentCardId) {
+         //http request output=parentData
+         setAddChild(true);
+      }
+     else{
+      alert("FILL the fields")
+     }
+      
+    }
+    else {
+      console.log("parent data already here");
+      setAddChild(true);
+    }
   }
 
   return (
@@ -240,66 +289,113 @@ finally{
           <div className="top">Parent Details</div>
 
           <div className="form-container">
-<p>{message&&message}</p>
-            <form >
 
-
-              <div className='input-container'>
-                <label>First Name *</label>
-                <input type="text" name="parent_firstName" placeholder="Enter First Name" required onChange={handleChange} />
-              </div>
-              <div className='input-container'>
-                <label>Last Name *</label>
-                <input type="text" name="lastName" placeholder="Enter Last Name" required onChange={handleChange} />
-              </div>
-
-              <div className='input-container'>
-                <label htmlFor="email">Email </label>
-                <input type="text" name="parent_email" placeholder='Enter the email' />
-              </div>
-
-              <div className='input-container'>
-                <label htmlFor="phone">Phone </label>
-                <input type="text" name="parent_phone" placeholder='Enter the phone number' />
-              </div>
-
-              <div className='input-container'>
-                <label>Profession</label>
-                <input type="text" name="parent_profession" placeholder="Enter the profession" required onChange={handleChange} />
-              </div>
-
-
-
-              <div className='input-container'>
-                <label htmlFor="status">Status </label>
-                <select name="parent_status" required onChange={handleChange}>
-                  <option value="">Select Civil Status</option>
-                  <option value="single">Single</option>
-                  <option value="married">Married</option>
-                  <option value="divorced">Divorced</option>
-                  <option value="widowed">Widowed</option>
-                </select>
-              </div>
-
-
-
-              <div className='input-container'>
-                <label>Address *</label>
-                <textarea type="text" name="parent_adress" rows="10" cols="50" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " className='adress' required onChange={handleChange} />
-              </div>
-
-              <div className='input-container'>
-                <label htmlFor="payment">Payment </label>
+            {
+              parentExist
+                ?
+                
                 <div>
-                  <input type="radio" name="payment_methode" value="cash" /> Cash
-                  <input type="radio" name="payment_methode" value="card" /> Card
-                  <input type="radio" name="payment_methode" value="card" /> Later
+                <form >
+                  {
+                    !parentData.parent_firstName
+                    &&
+                    <div className='input-container'>
+                      <label>Enter Card Id if parent Account exist *</label>
+                      <input type="text" name="parent_card_id" placeholder="Enter Card Id" required  onChange={(e)=>{setParentCardId(e.target.value)}}/>
+                    </div>
+                  }
+
+                  {
+                    parentData.parent_firstName
+                    &&
+                    <div className='input-container'>
+                      <label>First Name *</label>
+                      <input type="text" name="parent_firstName" value={parentData.parent_firstName} placeholder="Enter First Name" required />
+                    </div>
+                  }
+                  {
+                    parentData.parent_lastName
+                    &&
+                    <div className='input-container'>
+                      <label>Last Name *</label>
+                      <input type="text" name="lastName" value={parentData.parent_lastName} placeholder="Enter Last Name" required />
+                    </div>
+                  }
+
+
+
+                  
+                </form>
+                <div className="btns">
+                    <button className='submit'  onClick={getParentData}>Next</button>
+                    <button className='cancel' onClick={() => {
+                      setParentExist(false);
+                      setAddChild(false)
+                    }}>  Create Parent account</button>
+                  </div>
                 </div>
+                :
+                <div>
+
+                  <form >
+
+
+                    <div className='input-container'>
+                      <label>First Name *</label>
+                      <input type="text" name="parent_firstName" placeholder="Enter First Name" required onChange={handleChange} />
+                    </div>
+                    <div className='input-container'>
+                      <label>Last Name *</label>
+                      <input type="text" name="parent_lastName" placeholder="Enter Last Name" required onChange={handleChange} />
+                    </div>
+
+                    <div className='input-container'>
+                      <label htmlFor="email">Email </label>
+                      <input type="text" name="parent_email" placeholder='Enter the email' />
+                    </div>
+
+                    <div className='input-container'>
+                      <label htmlFor="phone">Phone </label>
+                      <input type="text" name="parent_phone" placeholder='Enter the phone number' />
+                    </div>
+
+                    <div className='input-container'>
+                      <label>Profession</label>
+                      <input type="text" name="parent_profession" placeholder="Enter the profession" required onChange={handleChange} />
+                    </div>
+
+
+
+                    <div className='input-container'>
+                      <label htmlFor="status">Status </label>
+                      <select name="parent_status" required onChange={handleChange}>
+                        <option value="">Select Civil Status</option>
+                        <option value="single">Single</option>
+                        <option value="married">Married</option>
+                        <option value="divorced">Divorced</option>
+                        <option value="widowed">Widowed</option>
+                      </select>
+                    </div>
+
+
+
+                    <div className='input-container'>
+                      <label>Address *</label>
+                      <textarea type="text" name="parent_adress" rows="10" cols="50" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " className='adress' required onChange={handleChange} />
+                    </div>
+
+                    <div className='input-container'>
+                      <label htmlFor="payment">Payment </label>
+                      <div>
+                        <input type="radio" name="payment_methode" value="cash" /> Cash
+                        <input type="radio" name="payment_methode" value="card" /> Card
+                        <input type="radio" name="payment_methode" value="card" /> Later
+                      </div>
 
 
 
 
-              </div>
+                    </div>
 
 
 
@@ -308,186 +404,202 @@ finally{
 
 
 
+                  </form>
+                  <div className="btns">
+                    <button className='cancel' >  Cancel</button>
+                    <button className='submit' onClick={createParentAcc}> Create</button>
+                  </div>
 
-            </form>
+                </div>
+            }
+
+
           </div>
         </div>
 
+        {
+          addChild
+          &&
+          <div>
+            <div className="inscription-card">
+              <div className="top">Student Details</div>
+
+              <div className="form-container">
+                <div className="form">
+                  <div className='photo-container'>
+                    <label htmlFor="photo">add Photo</label>
+                    <input type="file" name="student_photo" ref={fileInputRef5} onChange={handleFileChange} style={{ display: "none" }} />
 
 
-        <div className="inscription-card">
-          <div className="top">Student Details</div>
-
-          <div className="form-container">
-            <div className="form">
-              <div className='photo-container'>
-                <label htmlFor="photo">add Photo</label>
-                <input type="file" name="student_photo" ref={fileInputRef5}  onChange={handleFileChange} style={{ display: "none" }} />
+                    <div className="photo-input" name="student_photo" onClick={handleClick}></div>
+                  </div>
+                  <form>
 
 
-                <div className="photo-input" name="student_photo" onClick={handleClick}></div>
+
+                    <div className='input-container'>
+                      <label>First Name *</label>
+                      <input type="text" name="student_firstName" placeholder="Enter First Name" required onChange={handleChange} />
+                    </div>
+                    <div className='input-container'>
+                      <label>Last Name *</label>
+                      <input type="text" name="student_lastName" placeholder="Enter Last Name" required onChange={handleChange} />
+                    </div>
+
+                    <div className='input-container'>
+                      <label>Place of birth *</label>
+                      <input type="text" name="student_adress" placeholder="Enter Phone Number" required onChange={handleChange} />
+                    </div>
+                    <div className='input-container'>
+                      <label>Date of birth *</label>
+                      <input type="text" name="student_dateOfBirth" placeholder="Enter Phone Number" required onChange={handleChange} />
+                    </div>
+                    <div className='input-container'>
+                      <label for="degree">Degree </label>
+                      <input type="text" name="student_degree" placeholder='Enter the degree' onChange={handleChange} />
+                    </div>
+
+                    <div className='input-container'>
+                      <label htmlFor="gender">Gender </label>
+                      <select name="student_gender" required onChange={handleChange}>
+                        <option value="">Select Civil Status</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+
+                      </select>
+                    </div>
+
+                    <div className='input-container'>
+                      <label htmlFor="nationality">Nationality </label>
+                      <input type="text" name="student_nationality" placeholder='Enter nationality' />
+                    </div>
+
+                    <div className='input-container'>
+                      <label>Blood Type</label>
+                      <input type="text" name="student_bloodType" placeholder="Enter Blood type" required onChange={handleChange} />
+                    </div>
+
+                    <div className='input-container' >
+                      <label>Chronic illness</label>
+                      <input type="text" name="student_chronicIllness" placeholder="Enter any chronic illnisses you have" onChange={handleChange} />
+                    </div>
+                    <div className='input-container'>
+                      <label>Allergies </label>
+                      <input type="text" name="student_allergies" placeholder="Enter any kind of allergies you have" onChange={handleChange} />
+                    </div>
+
+
+
+
+                    <div className='input-container'>
+                      <label> Birth certificate</label>
+
+                      <input style={{ display: "none" }} ref={fileInputRef1} name='student_birthCertificateFile' type="file" accept="application/pdf" onChange={handleFileChange} />
+
+                      <div
+
+                        className="upload-input"
+                      >
+                        <p
+
+                        >{studentInfo.student_birthCertificateFile ? studentInfo.student_birthCertificateFile.name : "Upload Birth certificate"}</p>
+                        <button
+                          type='button'
+
+                          onClick={handleClick}
+                        >
+                          <img name='birthCertificateFile' src={uploadIcon} alt="uploadIcon" style={{ width: "30px", height: "30px", }} /></button>
+                      </div>
+
+                    </div>
+
+                    <div className='input-container'>
+                      <label>Proof of residence</label>
+
+                      <input style={{ display: "none" }} ref={fileInputRef2} name='student_proofOfResidenceFile' type="file" accept="application/pdf" onChange={handleFileChange} />
+
+                      <div
+
+                        className="upload-input"
+                      >
+                        <p
+
+                        >{studentInfo.student_proofOfResidenceFile ? studentInfo.student_proofOfResidenceFile.name : "Upload Proof of residence"}</p>
+                        <button
+                          type='button'
+
+                          onClick={handleClick}
+                        >
+                          <img name='proofOfResidenceFile' src={uploadIcon} alt="uploadIcon" style={{ width: "30px", height: "30px", }} /></button>
+                      </div>
+
+                    </div>
+
+                    <div className='input-container'>
+                      <label>Previous school records</label>
+
+                      <input style={{ display: "none" }} ref={fileInputRef3} name='student_previousSchoolRecords' type="file" accept="application/pdf" onChange={handleFileChange} />
+
+                      <div
+
+                        className="upload-input"
+                      >
+                        <p
+
+                        >{studentInfo.student_previousSchoolRecords ? studentInfo.student_previousSchoolRecords.name : "Upload Previous school records"}</p>
+                        <button
+                          type='button'
+
+                          onClick={handleClick}
+                        >
+                          <img name='previousSchoolRecords' src={uploadIcon} alt="uploadIcon" style={{ width: "30px", height: "30px", }} /></button>
+                      </div>
+
+                    </div>
+
+                    <div className='input-container'>
+                      <label> Immunization Records ( For First Grade )</label>
+
+                      <input style={{ display: "none" }} ref={fileInputRef4} name='student_immunizationRecords' type="file" accept="application/pdf" onChange={handleFileChange} />
+
+                      <div
+                        className="upload-input"
+
+                      >
+                        <p
+
+                        >{studentInfo.student_immunizationRecords ? studentInfo.student_immunizationRecords.name : "Upload Immunization Records "}</p>
+                        <button
+                          type='button'
+
+                          onClick={handleClick}
+                        >
+                          <img name='immunizationRecords' src={uploadIcon} alt="uploadIcon" style={{ width: "30px", height: "30px", }} /></button>
+                      </div>
+
+                    </div>
+
+                    <div className='input-container'>
+                      <label>Address *</label>
+                      <textarea type="text" name="student_address" rows="10" cols="50" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " className='adress' required onChange={handleChange} />
+                    </div>
+
+                  </form>
+                </div>
+
               </div>
-              <form>
-
-
-
-                <div className='input-container'>
-                  <label>First Name *</label>
-                  <input type="text" name="student_firstName" placeholder="Enter First Name" required onChange={handleChange} />
-                </div>
-                <div className='input-container'>
-                  <label>Last Name *</label>
-                  <input type="text" name="student_lastName" placeholder="Enter Last Name" required onChange={handleChange} />
-                </div>
-
-                <div className='input-container'>
-                  <label>Place of birth *</label>
-                  <input type="text" name="student_adress" placeholder="Enter Phone Number" required onChange={handleChange} />
-                </div>
-                <div className='input-container'>
-                  <label>Date of birth *</label>
-                  <input type="text" name="student_dateOfBirth" placeholder="Enter Phone Number" required onChange={handleChange} />
-                </div>
-                <div className='input-container'>
-                  <label for="degree">Degree </label>
-                  <input type="text" name="student_degree" placeholder='Enter the degree' onChange={handleChange}/>
-                </div>
-
-                <div className='input-container'>
-                  <label htmlFor="gender">Gender </label>
-                  <select name="student_gender" required onChange={handleChange}>
-                    <option value="">Select Civil Status</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-
-                  </select>
-                </div>
-
-                <div className='input-container'>
-                  <label htmlFor="nationality">Nationality </label>
-                  <input type="text" name="student_nationality" placeholder='Enter nationality' />
-                </div>
-
-                <div className='input-container'>
-                  <label>Blood Type</label>
-                  <input type="text" name="student_bloodType" placeholder="Enter Blood type" required onChange={handleChange} />
-                </div>
-
-                <div className='input-container' >
-                  <label>Chronic illness</label>
-                  <input type="text" name="student_chronicIllness" placeholder="Enter any chronic illnisses you have" onChange={handleChange} />
-                </div>
-                <div className='input-container'>
-                  <label>Allergies </label>
-                  <input type="text" name="student_allergies" placeholder="Enter any kind of allergies you have" onChange={handleChange} />
-                </div>
-
-
-
-
-                <div className='input-container'>
-                  <label> Birth certificate</label>
-
-                  <input style={{ display: "none" }} ref={fileInputRef1} name='student_birthCertificateFile' type="file" accept="application/pdf" onChange={handleFileChange} />
-
-                  <div
-
-                    className="upload-input"
-                  >
-                    <p
-
-                    >{studentInfo.student_birthCertificateFile ? studentInfo.student_birthCertificateFile.name : "Upload Birth certificate"}</p>
-                    <button
-                      type='button'
-
-                      onClick={handleClick}
-                    >
-                      <img name='birthCertificateFile' src={uploadIcon} alt="uploadIcon" style={{ width: "30px", height: "30px", }} /></button>
-                  </div>
-
-                </div>
-
-                <div className='input-container'>
-                  <label>Proof of residence</label>
-
-                  <input style={{ display: "none" }} ref={fileInputRef2} name='student_proofOfResidenceFile' type="file" accept="application/pdf" onChange={handleFileChange} />
-
-                  <div
-
-                    className="upload-input"
-                  >
-                    <p
-
-                    >{studentInfo.student_proofOfResidenceFile ? studentInfo.student_proofOfResidenceFile.name : "Upload Proof of residence"}</p>
-                    <button
-                      type='button'
-
-                      onClick={handleClick}
-                    >
-                      <img name='proofOfResidenceFile' src={uploadIcon} alt="uploadIcon" style={{ width: "30px", height: "30px", }} /></button>
-                  </div>
-
-                </div>
-
-                <div className='input-container'>
-                  <label>Previous school records</label>
-
-                  <input style={{ display: "none" }} ref={fileInputRef3} name='student_previousSchoolRecords' type="file" accept="application/pdf" onChange={handleFileChange} />
-
-                  <div
-
-                    className="upload-input"
-                  >
-                    <p
-
-                    >{studentInfo.student_previousSchoolRecords ? studentInfo.student_previousSchoolRecords.name : "Upload Previous school records"}</p>
-                    <button
-                      type='button'
-
-                      onClick={handleClick}
-                    >
-                      <img name='previousSchoolRecords' src={uploadIcon} alt="uploadIcon" style={{ width: "30px", height: "30px", }} /></button>
-                  </div>
-
-                </div>
-
-                <div className='input-container'>
-                  <label> Immunization Records ( For First Grade )</label>
-
-                  <input style={{ display: "none" }} ref={fileInputRef4} name='student_immunizationRecords' type="file" accept="application/pdf" onChange={handleFileChange} />
-
-                  <div
-                    className="upload-input"
-
-                  >
-                    <p
-
-                    >{studentInfo.student_immunizationRecords ? studentInfo.student_immunizationRecords.name : "Upload Immunization Records "}</p>
-                    <button
-                      type='button'
-
-                      onClick={handleClick}
-                    >
-                      <img name='immunizationRecords' src={uploadIcon} alt="uploadIcon" style={{ width: "30px", height: "30px", }} /></button>
-                  </div>
-
-                </div>
-
-                <div className='input-container'>
-                  <label>Address *</label>
-                  <textarea type="text" name="student_address" rows="10" cols="50" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " className='adress' required onChange={handleChange} />
-                </div>
-
-              </form>
             </div>
 
+            <div className="btns">
+              <button className='cancel' >  Cancel</button>
+              <button className='submit' onClick={createStudentAcc}>{isLoading ? <CircularProgress /> : "Submit"}</button>
+            </div>
           </div>
-        </div>
+        }
 
-        <div className="btns">
-          <button className='cancel' >  Cancel</button>
-          <button className='submit' onClick={handleSbmit}>{isLoading?<CircularProgress />:"Submit"}</button>
-        </div>
+
+
+
       </div>
 
 
