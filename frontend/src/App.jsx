@@ -22,6 +22,14 @@ import Users from './components/adminPannel/Pages/User/Users'
 import Activities from './components/adminPannel/Pages/Activity/Activities'
 import AddChild from './components/signup/student/AddChild'
 
+
+import AddStudentFormule from './components/adminPannel/Pages/Students/AddStudentFormule'
+import StudentCard from './components/adminPannel/Pages/Students/StudentCard'
+
+import NewTeachers from './components/adminPannel/Pages/Teachers/NewTeachers'
+
+
+
 function App() {
 
 
@@ -41,7 +49,19 @@ function App() {
         <Route path='/adminpannel' element={<Adminpannel />}>
           <Route path='Dashboard' element={<Dashboard />}></Route>
           <Route path='Students' element={<Students />}></Route>
-          <Route path='Teachers' element={<Teachers />}></Route>
+
+
+          <Route path='NewStudent' element={<AddStudentFormule />}></Route>
+          <Route path='Studentcard' element={<StudentCard />}></Route>
+         
+
+          <Route path='Teachers'>
+            <Route index element={<Teachers />} />
+            <Route path='add' element={<NewTeachers />} />
+          </Route>
+          <Route path='Teachers/add' element={<NewTeachers />} />
+
+
           <Route path='Events' element={<Events />}></Route>
           <Route path='Food' element={<Food />}></Route>
           <Route path='Finance' element={<Finance />}></Route>

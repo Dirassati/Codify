@@ -5,6 +5,9 @@ import logo from '../../../assets/images/logo1.svg'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 const ParentInformationForm = () => {
 
   const navigate=useNavigate();
@@ -125,7 +128,9 @@ Thank you for your interest in joining our school. To help us assist you better,
     })} />
         </div>
         
-        <button disabled={isLoading} type="submit" className="submit-btn" >{isLoading? "loading ...": "Submit"}</button>
+
+        <button disabled={isLoading} type="submit" className="submit-btn" >{isLoading? <CircularProgress disableShrink />: "Submit"}</button>
+
         {message && <div style={{color:"007AFF",display:"flex",justifyContent:"center",width:"100%"}}>{message}</div>}
 
 

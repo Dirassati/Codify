@@ -3,33 +3,68 @@ import phoneIcon from '../../../../assets/icons/phone.svg'
 import messageIcon from '../../../../assets/icons/message.svg'
 import threedotsIcons from '../../../../assets/icons/threedots.svg'
 
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-function Student() {
+function Student({ student, studentsSelected, changed }) {
+    const navigate = useNavigate();
+    const [parentData,setParentData]=useState({});
+
+useEffect(()=>{
+const fetchParentData= async ()=>{
+    try {
+        const response = await axios.get(`http://localhost:5000/api/inscription/parents/${student.parent_inscription_id}`);
+        console.log(response.data);
+        setParentData(response.data.parent)
+    } catch (error) {
+        console.error(error);
+        setMessage(error.response?.data?.message || "getting parent details failed  failed");
+        console.log(err.response?.data?.message || " getting parent details failed failed")
+    }
+ 
+}
+},[])
+
+    function handleClick() {
+            navigate('/adminpannel/Studentcard');
+            localStorage.setItem('studentDetails', JSON.stringify(student))
+            
+    }
     return (
-        <div className='student'>
-            <div>
-                <input type="checkbox" />
-                <div className="column info">
-                    <div className='profile-picture'></div>
-                    <div className="name">Samantha william</div>
-                </div>
-            </div>
+        <tr className={studentsSelected.includes(student.id) ? "clicked" : ""}>
+            <td>
+                <input type="checkbox" checked={studentsSelected.includes(student.id)} onChange={() => { changed(student.id) }} />
 
-            <div className="column id">#123456</div>
-            <div className="column date">March 25 2024</div>
-            <div className="column parent-name">mOhamed aek</div>
-            <div className="column city">Oran</div>
-            <div className="column contact">
-                <img src={phoneIcon} alt="phoneIcon" />
-                <img src={messageIcon} alt="messageIcon" />
-            </div>
-            <div className="column grade">
-                VIIC
-            </div>
-            <div className="column action">
-                <img src={threedotsIcons} alt="show more icon" />
-            </div>
-        </div>
+            </td>
+            <td onClick={handleClick} className='name'>
+                <div className='photo'></div>
+                <span> {`${student.student_first_name}  ${student.student_last_name}`}</span>
+            </td>
+            <td className='id'>{"#" + student.id}</td>
+            <td className='date'>{student.created_at}</td>
+            <td className='parent-name'>{student.parent_inscription_id}</td>
+            <td className='city'>{student.student_nationality}</td>
+            <td >
+
+
+                <div className="contact">
+                    <div ><img src={phoneIcon} alt="phoneIcon" /></div>
+                    <div > <img src={messageIcon} alt="messageIcon" /></div>
+                </div>
+
+            </td>
+            <td className='grade'>
+                <div>  {student.student_grade}</div>
+            </td>
+            <td className='status'>
+                <div className={student.status}>{student.status}</div>
+            </td>
+            <td className='action'>
+                <div> <img src={threedotsIcons} alt="show more icon" /></div>
+            </td>
+
+        </tr>
+
     )
 }
 

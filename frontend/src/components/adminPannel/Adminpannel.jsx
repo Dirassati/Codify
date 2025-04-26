@@ -10,7 +10,9 @@ function Adminpannel() {
 
   return (
     <div className='admin-pannel'>
-     <div><Sidebar /></div> 
+
+     <div className='sidebar'><Sidebar /></div> 
+
     <div className='page'><Outlet /></div>  
     </div>
   )
