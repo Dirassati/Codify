@@ -55,8 +55,10 @@ function TeacherSideBar() {
                     <EventAvailableIcon className='icon'/>
                     <div className="name">Events</div>
                 </Link>
+
                 <Link  className={`link ${index === 8 ? 'clicked' : ''}`}>
                     <div className="name">Log Out</div>
+
                 </Link>
             </div>
 
