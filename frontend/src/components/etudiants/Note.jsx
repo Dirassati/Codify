@@ -1,10 +1,10 @@
-import "./Notes.css"
+import "./note.css"
 import { FaSearch } from 'react-icons/fa';
 import { FaEye } from 'react-icons/fa';
 
 
 
-const Notes = () => {
+const Note = () => {
   // Static data for the table
   const students = [
     { id: 1, name: "Rahul Sharma", mark: "05/20", status: "Fail" },
@@ -61,4 +61,4 @@ const Notes = () => {
   )
 }
 
-export default Notes
+export default Note

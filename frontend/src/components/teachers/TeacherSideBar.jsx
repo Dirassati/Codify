@@ -56,7 +56,7 @@ function TeacherSideBar() {
                     <div className="name">Events</div>
                 </Link>
                 <Link to='LatestActivities' className={`link ${index === 8 ? 'clicked' : ''}`}>
-                    <div className="name">Log Out</div>
+                    <div className="name ">Log Out</div>
                 </Link>
             </div>
 
