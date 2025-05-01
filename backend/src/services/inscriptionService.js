@@ -65,7 +65,6 @@ const createParentInscription = async (parentData) => {
   }
 };
 
-// Step 2: Add Student to Parent Inscription
 const addStudentToInscription = async (parentInscriptionId, studentData) => {
   const {
     student_last_name,
@@ -84,7 +83,6 @@ const addStudentToInscription = async (parentInscriptionId, studentData) => {
   try {
     await client.query("BEGIN");
 
-    // Step 2: Add student information to the eleveInscription table
     const studentQuery = `
       INSERT INTO "eleveInscription" (
         parent_inscription_id, student_last_name, student_first_name, student_grade, 

@@ -1,11 +1,10 @@
 const { createAccount, modifyAccount, deactivate_Account, activate_Account } = require('../services/accountService');
 
 const register = async (req, res) => {
-  const { email, matricule, password, user_role, ...roleData } = req.body;
+  const { email, password, user_role, ...roleData } = req.body;
 
-  // Validate input
-  if (!email && !matricule) {
-    return res.status(400).json({ message: 'Email or matricule is required' });
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
   }
   if (!password) {
     return res.status(400).json({ message: 'Password is required' });
@@ -15,17 +14,17 @@ const register = async (req, res) => {
   }
 
   try {
-    const user = await createAccount(email, matricule, password, user_role, roleData);
-    
+    const user = await createAccount(email, password, user_role, roleData);
+
     res.status(201).json({
       message: 'Account created successfully',
-      user, // Return the created user 
+      user, 
     });
   } catch (err) {
     console.error(err);
 
     if (err.code === '23505') {
-      return res.status(400).json({ message: 'Email or matricule already exists' });
+      return res.status(400).json({ message: 'Email already exists' });
     }
 
     if (err.message === 'Parent ID does not exist') {
@@ -37,11 +36,9 @@ const register = async (req, res) => {
 };
 
 const updateAccount = async (req, res) => {
-    console.log('Update Account Route Hit');
-  const { id } = req.params; // User ID to update
+  const { id } = req.params; 
   const { email, password, ...roleData } = req.body;
 
-  // Validate input
   if (!email && !password && !roleData) {
     return res.status(400).json({ message: 'No fields to update' });
   }
@@ -68,50 +65,47 @@ const updateAccount = async (req, res) => {
 };
 
 const deactivateAccount = async (req, res) => {
-    console.log('Request Params:', req.params);
-    const { id } = req.params; // Extract the id from req.params
-  
-    if (!id) {
-      return res.status(400).json({ message: 'User ID is required' });
-    }
-  
-    try {
-      console.log('Deactivate Account: Deactivating account for', id);
-      const user = await deactivate_Account(id); 
-      console.log('Deactivate Account: Account deactivated successfully for', id);
-      res.status(200).json({
-        message: 'Account deactivated successfully',
-        user, // Return the updated user
-      });
-    } catch (err) {
-      console.error('Deactivate Account Error:', err);
-  
-      if (err.message === 'User not found') {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      res.status(500).json({ message: 'Error deactivating account' });
-    }
-  };
+  const { id } = req.params; 
 
-  const activateAccount = async (req, res) => {
-    const { id } = req.params; // User ID to activate
-  
-    try {
-        const user = await activate_Account(id);
-      res.status(200).json({
-        message: 'Account activated successfully',
-        user, // Return the updated user
-      });
-    } catch (err) {
-      console.error(err);
-  
-      if (err.message === 'User not found') {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      res.status(500).json({ message: 'Error activating account' });
-    }
-  };
+  if (!id) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
 
-module.exports = { register, updateAccount, deactivateAccount, activateAccount};
+  try {
+    const user = await deactivate_Account(id);
+    res.status(200).json({
+      message: 'Account deactivated successfully',
+      user, 
+    });
+  } catch (err) {
+    console.error(err);
+
+    if (err.message === 'User not found') {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(500).json({ message: 'Error deactivating account' });
+  }
+};
+
+const activateAccount = async (req, res) => {
+  const { id } = req.params; 
+
+  try {
+    const user = await activate_Account(id);
+    res.status(200).json({
+      message: 'Account activated successfully',
+      user, 
+    });
+  } catch (err) {
+    console.error(err);
+
+    if (err.message === 'User not found') {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(500).json({ message: 'Error activating account' });
+  }
+};
+
+module.exports = { register, updateAccount, deactivateAccount, activateAccount };
