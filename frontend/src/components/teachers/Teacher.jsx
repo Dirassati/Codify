@@ -6,7 +6,7 @@ function Teacher() {
   return (
     <div className='tteacher'>
      <div className="sidebar"><TeacherSideBar /></div> 
-      <div className="page"><Outlet /></div> 
+      <div className="page" style={{backgroundColor:"#F3F4FF"}}><Outlet /></div> 
       teacher
       </div>
   )

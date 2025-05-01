@@ -17,7 +17,7 @@ function TeacherSideBar() {
     const [index, setIndex] = useState(1);
 
     useEffect(()=>{
-        setIndex(0);
+        setIndex(1);
     },[true])
     return (
         <div className='side-bar teacher'>
@@ -55,7 +55,7 @@ function TeacherSideBar() {
                     <EventAvailableIcon className='icon'/>
                     <div className="name">Events</div>
                 </Link>
-                <Link to='LatestActivities' className={`link ${index === 8 ? 'clicked' : ''}`}>
+                <Link  className={`link ${index === 8 ? 'clicked' : ''}`}>
                     <div className="name">Log Out</div>
                 </Link>
             </div>

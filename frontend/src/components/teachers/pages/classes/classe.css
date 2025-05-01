@@ -1,0 +1,31 @@
+.classes .attendence div {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.classes .attendence .present {
+    background-color: #E5FFF7;
+    color: #0CBC8B;
+    width: 104px;
+    height: 29px;
+cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
+}
+
+.classes .attendence .absent {
+    background-color: #D9D9D9;
+    color: #F93333;
+    width: 104px;
+    height: 29px;
+    border: none;
+    cursor: pointer;
+   border-radius: 5px;
+}
+
+.classes .attendence button:hover{
+    opacity: 0.8;
+}

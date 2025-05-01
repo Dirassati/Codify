@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import leftArrowIcon from "../../../../assets/icons/leftArrow.svg";
 import rightArrowIcon from "../../../../assets/icons/rightArrow.svg";
 import searchIcon from '../../../../assets/icons/search.svg'
-import SingleStudent from "./SingleStudent";
+import SingleAttendence from './SingleAttendence'
 import Header from "../../../adminPannel/Pages/Header/Header";
+import './classe.css'
 
-function Studentss() {
+function Classe() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [studentsSelected, setStudentsSelected] = useState([]);
@@ -150,7 +151,8 @@ function Studentss() {
 
   return (
 
-    <div>
+    <div className="classes">
+
       <Header title="Students" role="Teacher"/>
 
       <div className='search-bar'>
@@ -179,13 +181,14 @@ function Studentss() {
                 <th>Last Name</th>
                 <th>First Name</th>
                 <th>Class</th>
+                <th>Attendence</th>
 
 
               </tr>
             </thead>
             <tbody>
               {studentsDisplayed.map((student) => (
-                <SingleStudent
+                <SingleAttendence
                   student={student}
                   studentsSelected={studentsSelected}
                   changed={handleCheckClick}
@@ -246,4 +249,4 @@ function Studentss() {
   );
 }
 
-export default Studentss;
+export default Classe;
