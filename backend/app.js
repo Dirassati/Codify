@@ -15,6 +15,9 @@ const parentRoutes = require('./src/routes/parentRoutes');
 const teacherRoutes = require('./src/routes/teacherRoutes');
 const errorMiddleware = require("./src/middleware/errorMiddleware");
 const { testConnection } = require("./testDbConnection");
+const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
+const cron = require("node-cron");
+const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
 
 dotenv.config();
 
@@ -43,7 +46,7 @@ app.use("/api", specializationRoutes);
 app.use('/api', studentRoutes);
 app.use('/api', parentRoutes);
 app.use('/api', teacherRoutes);
-
+app.use("/api/reinscription", reinscriptionRoutes);
 
 // Test endpoint
 app.get("/", (req, res) => {
@@ -53,9 +56,14 @@ app.get("/", (req, res) => {
 // Error handling middleware (should be after routes)
 app.use(errorMiddleware);
 
+// Cron job
+cron.schedule("0 0 * * *", () => {
+  // Runs daily at midnight
+  inactivateOldReinscriptions();
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   testConnection();
 });
-
