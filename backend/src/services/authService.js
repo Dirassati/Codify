@@ -15,13 +15,11 @@ const authenticateUser = async (email, password) => {
 
     const user = userResult.rows[0];
 
-    // Check if the password matches
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new Error("Invalid email or password");
     }
 
-    // Generate JWT Token
     const token = generateToken(user);
 
     return { token, user };

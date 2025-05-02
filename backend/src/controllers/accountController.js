@@ -7,7 +7,7 @@ const {
 const { sendEmail } = require("../utils/mailer");
 
 const register = async (req, res) => {
-  const { email, matricule, password, user_role, ...roleData } = req.body;
+  const { email, password, user_role, ...roleData } = req.body;
 
   // Validate input
   if (!email && !matricule) {
@@ -84,7 +84,6 @@ const updateAccount = async (req, res) => {
   const { id } = req.params; // User ID to update
   const { email, password, ...roleData } = req.body;
 
-  // Validate input
   if (!email && !password && !roleData) {
     return res.status(400).json({ message: "No fields to update" });
   }

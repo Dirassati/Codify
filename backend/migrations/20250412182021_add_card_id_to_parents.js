@@ -1,14 +1,3 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-exports.up = function (knex) {};
-
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-
 exports.up = async function (knex) {
   await knex.schema.alterTable("parents", (table) => {
     table.string("card_id");
