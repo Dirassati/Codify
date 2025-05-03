@@ -1,19 +1,19 @@
 const pool = require('../db/db');
 const { hashPassword } = require('../utils/passwordUtils');
 
-const createAccount = async (email, password, user_role, roleData) => {
+const createAccount = async (email, matricule, password, user_role, roleData) => {
   const hashedPassword = await hashPassword(password);
 
   const client = await pool.connect();
 
   try {
-    await client.query('BEGIN'); 
+    await client.query('BEGIN');
 
     const userQuery = `
-      INSERT INTO users (email, password, user_role)
-      VALUES ($1, $2, $3)
+      INSERT INTO users (email, password, user_role, matricule)
+      VALUES ($1, $2, $3, $4)
       RETURNING *`;
-    const userValues = [email, hashedPassword, user_role];
+    const userValues = [email, hashedPassword, user_role, matricule];
     const userResult = await client.query(userQuery, userValues);
     const user = userResult.rows[0];
 
@@ -74,7 +74,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
   const client = await pool.connect();
 
   try {
-    await client.query('BEGIN'); 
+    await client.query('BEGIN');
 
     const userResult = await client.query('SELECT email, user_role FROM users WHERE id = $1', [userId]);
     const currentUser = userResult.rows[0];
@@ -134,7 +134,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
       await client.query(roleQuery, roleValues);
     }
 
-    await client.query('COMMIT'); 
+    await client.query('COMMIT');
     return updatedUser;
   } catch (err) {
     await client.query('ROLLBACK');
@@ -160,7 +160,7 @@ const deactivate_Account = async (userId) => {
     }
 
     await client.query('COMMIT');
-    return result.rows[0]; 
+    return result.rows[0];
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
@@ -185,7 +185,7 @@ const activate_Account = async (userId) => {
     }
 
     await client.query('COMMIT');
-    return result.rows[0]; 
+    return result.rows[0];
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
