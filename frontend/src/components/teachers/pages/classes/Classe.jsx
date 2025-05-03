@@ -1,14 +1,20 @@
 import axios from "axios";
-import './studentss.css'
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import leftArrowIcon from "../../../../assets/icons/leftArrow.svg";
 import rightArrowIcon from "../../../../assets/icons/rightArrow.svg";
 import searchIcon from '../../../../assets/icons/search.svg'
-import SingleStudent from "./SingleStudent";
-import Header from "../../../adminPannel/Pages/Header/Header";
+import SingleAttendence from './SingleAttendence'
 import { FaSearch } from 'react-icons/fa';
-function Studentss() {
+import Header from "../../../adminPannel/Pages/Header/Header";
+import './classe.css'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+
+function Classe() {
+
+const {id}=useParams();////class id 
+
+console.log(id);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [studentsSelected, setStudentsSelected] = useState([]);
@@ -116,7 +122,7 @@ function Studentss() {
     const start = (studentsPageSelected - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     setStudentsDisplayed(students.slice(start, end));
-  }, [studentsPageSelected, students]);
+  }, [studentsPageSelected,students]);
 
   useEffect(() => {
     // Update page numbers whenever filter changes
@@ -124,7 +130,7 @@ function Studentss() {
     if (studentsPageSelected > totalPages) {
       setStudentsPageSelected(1);
     }
-  }, [students.length, totalPages]);
+  }, [students.length,totalPages]);
 
   useEffect(() => {
     // console.log("Displayed students:", studentsDisplayed);
@@ -149,17 +155,21 @@ function Studentss() {
     setAllChecked((prev) => !prev);
   }
 
+
+
   return (
 
-    <div className="studentss">
-      <div className='classes-title'>
-        Students
-      </div>
-    
-              <div className="search-container">
-                 <input type="text" placeholder="selecte class" className="search-input" />
-                 <span className="search-icon"> <FaSearch /></span>
-               </div>
+    <div className="classes">
+
+<div className='classes-title'>
+<KeyboardArrowLeftIcon  className="icon" onClick={()=>{navigate('/teacher/classes')}}/> 
+2Cs
+</div>
+
+          <div className="search-container">
+             <input type="text" placeholder="selecte class" className="search-input" />
+             <span className="search-icon"> <FaSearch /></span>
+           </div>
 
       <div className="all-students">
         <div className="table-wrapper">
@@ -178,13 +188,14 @@ function Studentss() {
                 <th>Last Name</th>
                 <th>First Name</th>
                 <th>Class</th>
+                <th>Attendence</th>
 
 
               </tr>
             </thead>
             <tbody>
               {studentsDisplayed.map((student) => (
-                <SingleStudent
+                <SingleAttendence
                   student={student}
                   studentsSelected={studentsSelected}
                   changed={handleCheckClick}
@@ -245,4 +256,4 @@ function Studentss() {
   );
 }
 
-export default Studentss;
+export default Classe;

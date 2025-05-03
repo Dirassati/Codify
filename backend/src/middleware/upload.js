@@ -39,7 +39,7 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 10 * 1024 * 1024, 
+    fileSize: 10 * 1024 * 1024, // 10MB per file
   },
 }).fields([
   { name: "birth_certificate", maxCount: 1 },

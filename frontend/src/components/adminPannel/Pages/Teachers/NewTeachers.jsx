@@ -16,12 +16,8 @@ function NewTeachers() {
     degree: '',
     educationStartDate: '',
     educationEndDate: '',
-    photo: null,
-    matricule: '',
-    password: ''
+    photo: null
   });
-
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,14 +36,8 @@ function NewTeachers() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    console.log("Sending data to https://fakeapi.com/teachers ...");
-
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setLoading(false);
-      alert('Teacher information submitted successfully!');
-    }, 2000);
+    console.log('Form submitted:', formData);
+    alert('Teacher information submitted successfully!');
   };
 
   const handleSaveDraft = () => {
@@ -62,7 +52,6 @@ function NewTeachers() {
         <form onSubmit={handleSubmit}>
           <div className="new-teacher-form__section_first">
             <h2 className="new-teacher-form__title">Personal Details</h2>
-
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
                 <label>First Name *</label>
@@ -84,40 +73,30 @@ function NewTeachers() {
                 <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
               </div>
             </div>
-
             <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label>Matricule *</label>
-                <input type="text" name="matricule" value={formData.matricule} onChange={handleChange} required />
-              </div>
-              <div className="new-teacher-form__group">
-                <label>Mot de passe *</label>
-                <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+            <div className="new-teacher-form__group">
+              <label>Address *</label>
+              <textarea name="address" value={formData.address} onChange={handleChange} required />
+            </div>
+            <div className="new-teacher-form__group">
+              <label>Photo *</label>
+              <div className="new-teacher-form__file-upload">
+                <label htmlFor="photo-upload" className="new-teacher-form__file-label">
+                  {formData.photo ? formData.photo.name : 'Drag and drop or click here to select file'}
+                </label>
+                <input
+                  id="photo-upload"
+                  type="file"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  required
+                />
               </div>
             </div>
-
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label>Address *</label>
-                <textarea name="address" value={formData.address} onChange={handleChange} required />
-              </div>
-              <div className="new-teacher-form__group">
-                <label>Photo *</label>
-                <div className="new-teacher-form__file-upload">
-                  <label htmlFor="photo-upload" className="new-teacher-form__file-label">
-                    {formData.photo ? formData.photo.name : 'Drag and drop or click here to select file'}
-                  </label>
-                  <input
-                    id="photo-upload"
-                    type="file"
-                    onChange={handleFileChange}
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    required
-                  />
-                </div>
-              </div>
             </div>
+
+
 
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
@@ -129,22 +108,22 @@ function NewTeachers() {
                 <input type="text" name="placeOfBirth" value={formData.placeOfBirth} onChange={handleChange} required />
               </div>
             </div>
-          </div>
 
           <div className="new-teacher-form__section_second">
             <h2 className="new-teacher-form__title">Education</h2>
 
             <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label>University *</label>
-                <input type="text" name="university" value={formData.university} onChange={handleChange} required />
-              </div>
-              <div className="new-teacher-form__group">
-                <label>Degree *</label>
-                <input type="text" name="degree" value={formData.degree} onChange={handleChange} required />
-              </div>
+
+            <div className="new-teacher-form__group">
+              <label>University *</label>
+              <input type="text" name="university" value={formData.university} onChange={handleChange} required />
+            </div>
+            <div className="new-teacher-form__group">
+              <label>Degree *</label>
+              <input type="text" name="degree" value={formData.degree} onChange={handleChange} required />
             </div>
 
+          </div>
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
                 <label>Start Date *</label>
@@ -155,27 +134,19 @@ function NewTeachers() {
                 <input type="month" name="educationEndDate" value={formData.educationEndDate} onChange={handleChange} required />
               </div>
               <div className="new-teacher-form__group">
-                <label>City *</label>
-                <input type="text" name="city" value={formData.city} onChange={handleChange} required />
-              </div>
+              <label>City *</label>
+              <input type="text" name="city" value={formData.city} onChange={handleChange} required />
             </div>
+            </div>
+            
           </div>
 
           <div className="new-teacher-form__actions">
-            <button
-              type="button"
-              onClick={handleSaveDraft}
-              className="new-teacher-form__draft-button"
-              disabled={loading}
-            >
+            <button type="button" onClick={handleSaveDraft} className="new-teacher-form__draft-button">
               Save as Draft
             </button>
-            <button
-              type="submit"
-              className="new-teacher-form__submit-button"
-              disabled={loading}
-            >
-              {loading ? <div className="spinner"></div> : 'Submit'}
+            <button type="submit" className="new-teacher-form__submit-button">
+              Submit
             </button>
           </div>
         </form>
