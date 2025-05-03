@@ -1,7 +1,22 @@
 .allclasses{
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.classes-container{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 40px;
+    gap: 2px;
+}
+
+.classes-title{
+  
+font-weight: 700;
+font-size: 28px;
+line-height: 100%;
+letter-spacing: 0%;
+color: #164666;
+margin-bottom: 50px;
 }
 
 .group-card {
@@ -12,11 +27,11 @@
     border-radius: 20px;
     margin: 0;
     cursor: pointer;
-    
+    margin-bottom: 20px;
 }
 
 .group-card:hover{
-    transform: translate(0, -30px);
+    transform: translate(0, -15px);
     transition: transform 1s;
 }
 
@@ -44,5 +59,6 @@
     font-size: 14px;
     line-height: 100%;
     letter-spacing: -4%;
+    
     color: #374151;
 }

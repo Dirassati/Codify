@@ -1,4 +1,5 @@
 import axios from "axios";
+import './studentss.css'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import leftArrowIcon from "../../../../assets/icons/leftArrow.svg";
@@ -6,7 +7,7 @@ import rightArrowIcon from "../../../../assets/icons/rightArrow.svg";
 import searchIcon from '../../../../assets/icons/search.svg'
 import SingleStudent from "./SingleStudent";
 import Header from "../../../adminPannel/Pages/Header/Header";
-
+import { FaSearch } from 'react-icons/fa';
 function Studentss() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -115,7 +116,7 @@ function Studentss() {
     const start = (studentsPageSelected - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     setStudentsDisplayed(students.slice(start, end));
-  }, [studentsPageSelected,students]);
+  }, [studentsPageSelected, students]);
 
   useEffect(() => {
     // Update page numbers whenever filter changes
@@ -123,7 +124,7 @@ function Studentss() {
     if (studentsPageSelected > totalPages) {
       setStudentsPageSelected(1);
     }
-  }, [students.length,totalPages]);
+  }, [students.length, totalPages]);
 
   useEffect(() => {
     // console.log("Displayed students:", studentsDisplayed);
@@ -150,17 +151,15 @@ function Studentss() {
 
   return (
 
-    <div>
-      <Header title="Students" role="Teacher"/>
-
-      <div className='search-bar'>
-        <div className="input-field">
-          <img src={searchIcon} alt="searchIcon" />
-          <input type="text" placeholder='Search here...' />
-        </div>
-
-
+    <div className="studentss">
+      <div className='classes-title'>
+        Students
       </div>
+    
+              <div className="search-container">
+                 <input type="text" placeholder="selecte class" className="search-input" />
+                 <span className="search-icon"> <FaSearch /></span>
+               </div>
 
       <div className="all-students">
         <div className="table-wrapper">

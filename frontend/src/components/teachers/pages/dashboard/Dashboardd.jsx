@@ -1,13 +1,36 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import "./dashboard.css"
+import Profile from "./Profile"
+import UseClickOutside from "../../../../functions/UseClickOutside"
 
 const Dashboardd = () => {
+  const profileRef=useRef();
+  const notificationsRef=useRef();
   const [showNotifications, setShowNotifications] = useState(false)
-
+  const [showProfile, setShowProfile] = useState(false)
   const toggleNotifications = () => {
-    setShowNotifications(!showNotifications)
+    setShowNotifications(!showNotifications);
+    setShowProfile(false);
   }
 
+  const toggleProfile = () => {
+    setShowProfile(!showProfile);
+    setShowNotifications(false);
+  }
+
+const annuler =()=>{
+  setShowProfile(false);
+}
+
+const addProfileInfo =(info)=>{
+//http requests 
+}
+
+const changePassword =(info)=>{
+  //http requests 
+  }
+
+  UseClickOutside(notificationsRef,()=>{setShowNotifications(false)});
   return (
     <div className="dashboard-container">
       <div className="header-icons">
@@ -38,13 +61,13 @@ const Dashboardd = () => {
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
           </svg>
         </div>
-        <div className="profile-icon">
+        <div className="profile-icon" onClick={toggleProfile}>
           <div className="avatar"></div>
         </div>
       </div>
 
       {showNotifications && (
-        <div className="notification-dropdown">
+        <div className="notification-dropdown" ref={notificationsRef}>
           <h2 className="notification-title">Notification</h2>
 
           <div className="notification-subtitle">Home Work</div>
@@ -122,6 +145,10 @@ const Dashboardd = () => {
           </div>
         </div>
       )}
+
+
+
+{showProfile &&<div ref={profileRef}><Profile annuler={annuler} changePassword={changePassword} addProfileInfo={addProfileInfo} /></div>}
 
       <h1 className="dashboard-title">Dashboardd</h1>
 

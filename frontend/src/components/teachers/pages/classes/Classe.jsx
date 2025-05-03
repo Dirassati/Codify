@@ -1,14 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import leftArrowIcon from "../../../../assets/icons/leftArrow.svg";
 import rightArrowIcon from "../../../../assets/icons/rightArrow.svg";
 import searchIcon from '../../../../assets/icons/search.svg'
 import SingleAttendence from './SingleAttendence'
+import { FaSearch } from 'react-icons/fa';
 import Header from "../../../adminPannel/Pages/Header/Header";
 import './classe.css'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 function Classe() {
+
+const {id}=useParams();////class id 
+
+console.log(id);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [studentsSelected, setStudentsSelected] = useState([]);
@@ -149,20 +155,21 @@ function Classe() {
     setAllChecked((prev) => !prev);
   }
 
+
+
   return (
 
     <div className="classes">
 
-      <Header title="Students" role="Teacher"/>
+<div className='classes-title'>
+<KeyboardArrowLeftIcon  className="icon" onClick={()=>{navigate('/teacher/classes')}}/> 
+2Cs
+</div>
 
-      <div className='search-bar'>
-        <div className="input-field">
-          <img src={searchIcon} alt="searchIcon" />
-          <input type="text" placeholder='Search here...' />
-        </div>
-
-
-      </div>
+          <div className="search-container">
+             <input type="text" placeholder="selecte class" className="search-input" />
+             <span className="search-icon"> <FaSearch /></span>
+           </div>
 
       <div className="all-students">
         <div className="table-wrapper">

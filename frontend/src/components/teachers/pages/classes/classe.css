@@ -1,3 +1,15 @@
+.classes{
+    padding: 20px;
+}
+
+.classes .icon{
+    width: 32px;
+height: 19px;
+
+cursor: pointer;
+
+}
+
 .classes .attendence div {
     display: flex;
     align-items: center;
