@@ -1,4 +1,4 @@
-const pool = require('../db/db');
+const pool = require('../db/db'); // Assuming this is correctly configured
 
 const checkAccountStatus = async (req, res, next) => {
   const { id } = req.params; 
@@ -19,7 +19,7 @@ const checkAccountStatus = async (req, res, next) => {
     next();
   } catch (err) {
     console.error('Error checking account status:', err);
-    res.status(500).json({ message: 'Error checking account status' });
+    return res.status(500).json({ message: 'Error checking account status' });
   }
 };
 

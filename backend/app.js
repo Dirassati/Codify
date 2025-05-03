@@ -1,4 +1,5 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const cors = require("cors");
 const accountRoutes = require("./src/routes/accountRoutes");
 const authRoutes = require("./src/routes/authRoutes");
@@ -32,7 +33,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // or an array of allowed origins
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );

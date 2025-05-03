@@ -10,16 +10,19 @@ const createAccount = async (email, password, user_role, roleData) => {
     await client.query('BEGIN'); 
 
     const userQuery = `
-      INSERT INTO users (email, password, user_role)
-      VALUES ($1, $2, $3)
+      INSERT INTO users (email, password, user_role, matricule)
+      VALUES ($1, $2, $3, $4)
       RETURNING *`;
-    const userValues = [email, hashedPassword, user_role];
+    const userValues = [email, hashedPassword, user_role, matricule];
     const userResult = await client.query(userQuery, userValues);
     const user = userResult.rows[0];
 
     switch (user_role) {
       case 'parents':
         await client.query(
+          `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil, card_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil, roleData.card_id]
           `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil, card_id)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
           [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil, roleData.card_id]
@@ -34,6 +37,9 @@ const createAccount = async (email, password, user_role, roleData) => {
           throw new Error('Parent ID does not exist');
         }
         await client.query(
+          `INSERT INTO eleve (id, last_name, first_name, address, grade_id, gender, nationality, birth_date, blood_type, allergies, chronic_illnesses, date_inscription, parent_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.address, roleData.grade_id, roleData.gender, roleData.nationality, roleData.birth_date, roleData.blood_type, roleData.allergies, roleData.chronic_illnesses, roleData.date_inscription, roleData.parent_id]
           `INSERT INTO eleve (id, last_name, first_name, address, grade_id, gender, nationality, birth_date, blood_type, allergies, chronic_illnesses, date_inscription, parent_id)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
           [user.id, roleData.last_name, roleData.first_name, roleData.address, roleData.grade_id, roleData.gender, roleData.nationality, roleData.birth_date, roleData.blood_type, roleData.allergies, roleData.chronic_illnesses, roleData.date_inscription, roleData.parent_id]
@@ -74,7 +80,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
   const client = await pool.connect();
 
   try {
-    await client.query('BEGIN'); 
+    await client.query('BEGIN');
 
     const userResult = await client.query('SELECT email, user_role FROM users WHERE id = $1', [userId]);
     const currentUser = userResult.rows[0];
@@ -107,6 +113,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
       index++;
     }
 
+
     userQuery = userQuery.slice(0, -2);
 
     userQuery += ` WHERE id = $${index} RETURNING *`;
@@ -116,7 +123,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
     const updatedUser = updatedUserResult.rows[0];
 
     if (roleData) {
-      let roleQuery = `UPDATE ${currentUser.user_role} SET `;
+      let roleQuery = `UPDATE ${currentUser.user_role} SET `
       const roleValues = [];
       index = 1;
 
@@ -126,6 +133,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
         index++;
       }
 
+
       roleQuery = roleQuery.slice(0, -2);
 
       roleQuery += ` WHERE id = $${index}`;
@@ -134,12 +142,14 @@ const modifyAccount = async (userId, email, password, roleData) => {
       await client.query(roleQuery, roleValues);
     }
 
-    await client.query('COMMIT'); 
+    await client.query('COMMIT');
     return updatedUser;
   } catch (err) {
     await client.query('ROLLBACK');
+    await client.query('ROLLBACK');
     throw err;
   } finally {
+    client.release();
     client.release();
   }
 };
@@ -160,7 +170,7 @@ const deactivate_Account = async (userId) => {
     }
 
     await client.query('COMMIT');
-    return result.rows[0]; 
+    return result.rows[0];
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
@@ -185,7 +195,7 @@ const activate_Account = async (userId) => {
     }
 
     await client.query('COMMIT');
-    return result.rows[0]; 
+    return result.rows[0];
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
@@ -195,4 +205,3 @@ const activate_Account = async (userId) => {
 };
 
 module.exports = { createAccount, modifyAccount, deactivate_Account, activate_Account };
-

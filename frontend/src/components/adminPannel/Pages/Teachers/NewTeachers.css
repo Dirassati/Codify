@@ -139,6 +139,7 @@ align-items: center;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease;
+    margin-bottom: 1rem;
   }
   
   .new-teacher-form__draft-button {
