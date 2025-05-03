@@ -1,8 +1,3 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-
 exports.up = async function (knex) {
   await knex.schema.alterTable("eleve", (table) => {
     table.string("matricule", 255).unique();
