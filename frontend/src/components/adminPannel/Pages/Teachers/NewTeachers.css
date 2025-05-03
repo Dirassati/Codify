@@ -159,19 +159,5 @@ align-items: center;
   .new-teacher-form__submit-button:hover {
     background-color: #2563eb;
   }
-  .spinner {
-    width: 20px;
-    height: 20px;
-    border: 3px solid #fff;
-    border-top: 3px solid #007bff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: auto;
-  }
-  
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+
   

@@ -29,11 +29,12 @@ import StudentCard from './components/adminPannel/Pages/Students/StudentCard'
 import NewTeachers from './components/adminPannel/Pages/Teachers/NewTeachers'
 import Dashboardd from './components/teachers/pages/dashboard/Dashboardd'
 import Studentss from './components/teachers/pages/students/Studentss'
-import Classes from './components/teachers/pages/classes/Classes'
+import Classe from './components/teachers/pages/classes/Classe'
 import Homework from './components/teachers/pages/homework/Homework'
 import Courses from './components/teachers/pages/courses/Courses'
 import Notes from './components/teachers/pages/notes/Notes'
 import Eventss from './components/teachers/pages/events/Eventss'
+import AllClasses from './components/teachers/pages/classes/AllClasses'
 
 
 function App() {
@@ -78,7 +79,8 @@ function App() {
         <Route path='/teacher' element={<Teacher />}>
           <Route path='Dashboard' element={<Dashboardd /> }/>
           <Route path='Students' element={<Studentss /> }/>
-          <Route path='Classes' element={<Classes />} />
+          <Route path='Classes' element={<AllClasses />} />
+          <Route path='Classe/:id' element={<Classe />} />
           <Route path='Homework' element={<Homework />} />
           <Route path='Courses' element={<Courses />} />
           <Route path='Notes' element={<Notes />} />

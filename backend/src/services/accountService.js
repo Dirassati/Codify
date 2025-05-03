@@ -1,13 +1,13 @@
 const pool = require('../db/db');
 const { hashPassword } = require('../utils/passwordUtils');
 
-const createAccount = async (email, matricule, password, user_role, roleData) => {
+const createAccount = async (email, password, user_role, roleData) => {
   const hashedPassword = await hashPassword(password);
 
   const client = await pool.connect();
 
   try {
-    await client.query('BEGIN');
+    await client.query('BEGIN'); 
 
     const userQuery = `
       INSERT INTO users (email, password, user_role, matricule)
@@ -23,6 +23,9 @@ const createAccount = async (email, matricule, password, user_role, roleData) =>
           `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil, card_id)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
           [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil, roleData.card_id]
+          `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil, card_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil, roleData.card_id]
         );
         break;
 
@@ -34,6 +37,9 @@ const createAccount = async (email, matricule, password, user_role, roleData) =>
           throw new Error('Parent ID does not exist');
         }
         await client.query(
+          `INSERT INTO eleve (id, last_name, first_name, address, grade_id, gender, nationality, birth_date, blood_type, allergies, chronic_illnesses, date_inscription, parent_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.address, roleData.grade_id, roleData.gender, roleData.nationality, roleData.birth_date, roleData.blood_type, roleData.allergies, roleData.chronic_illnesses, roleData.date_inscription, roleData.parent_id]
           `INSERT INTO eleve (id, last_name, first_name, address, grade_id, gender, nationality, birth_date, blood_type, allergies, chronic_illnesses, date_inscription, parent_id)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
           [user.id, roleData.last_name, roleData.first_name, roleData.address, roleData.grade_id, roleData.gender, roleData.nationality, roleData.birth_date, roleData.blood_type, roleData.allergies, roleData.chronic_illnesses, roleData.date_inscription, roleData.parent_id]
@@ -107,6 +113,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
       index++;
     }
 
+
     userQuery = userQuery.slice(0, -2);
 
     userQuery += ` WHERE id = $${index} RETURNING *`;
@@ -117,6 +124,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
 
     if (roleData) {
       let roleQuery = `UPDATE ${currentUser.user_role} SET `;
+      let roleQuery = `UPDATE ${currentUser.user_role} SET `;
       const roleValues = [];
       index = 1;
 
@@ -125,6 +133,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
         roleValues.push(value);
         index++;
       }
+
 
       roleQuery = roleQuery.slice(0, -2);
 
@@ -138,8 +147,10 @@ const modifyAccount = async (userId, email, password, roleData) => {
     return updatedUser;
   } catch (err) {
     await client.query('ROLLBACK');
+    await client.query('ROLLBACK');
     throw err;
   } finally {
+    client.release();
     client.release();
   }
 };
