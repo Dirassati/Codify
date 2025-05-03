@@ -1,11 +1,9 @@
 .search-bar {
     display: flex;
-
 justify-content: space-between;
     padding: 20px 30px;
    
     width: 100%;
-
 }
 
 
@@ -46,7 +44,6 @@ width: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
-
     gap: 10px;
 }
 
@@ -86,7 +83,6 @@ width: 300px;
 
   .search-bar .add-btns button
   {
-
     background-color: none;
     display: flex;
     justify-content: center;
@@ -109,9 +105,7 @@ cursor: pointer;
   .search-bar .add-btns button.new{
     color: #4D44B5;
     background-color: transparent;
-
     transition: 0.2s ease
-
   }
 
   .search-bar .add-btns button.new:hover{
@@ -123,15 +117,11 @@ background-color: #4d44b527;
   .search-bar .add-btns button.add{
 background-color: #4D44B5;
 color: #ffff;
-
 border: none;
-
   }
 
   .search-bar .add-btns button.add:hover{
     background-color: #4d44b5c1;
-
   }
 
   
-

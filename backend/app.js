@@ -35,6 +35,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api", accountRoutes);
+app.use("/api", accountRoutes);
 app.use("/api", authRoutes);
 app.use("/api/inscription", inscriptionRoutes);
 app.use("/api", classroomRoutes);

@@ -1,0 +1,13 @@
+.side-bar.teacher{
+background-color: #18A0FB;
+}
+
+.side-bar.teacher .links  .name,
+.side-bar.teacher .links .icon
+{
+    color: #fff;
+}
+
+.side-bar.teacher .links .link.clicked *{
+color: #65D7F0;
+}
