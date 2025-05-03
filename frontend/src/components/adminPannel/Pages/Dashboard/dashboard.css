@@ -1,0 +1,112 @@
+.dashboard .dashboard-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    width: 100%;
+}
+
+.dashboard .dashboard-container .left-bar {
+    width: 71%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.dashboard .dashboard-container .right-bar {
+    height: 250vh;
+    width: 350px;
+    background-color: #fff;
+    position: absolute;
+    right: 0px;
+    top: 0;
+}
+
+.dashboard .dashboard-container .left-bar .school-data {
+    width: 90%;
+    display: flex;
+    gap: 100px;
+
+    height: 172px;
+    border-radius: 20px;
+    background-color: #fff;
+    margin: 50px;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+
+
+
+.dashboard .dashboard-container .left-bar .school-data .item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.dashboard .dashboard-container .left-bar .school-data .icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+
+
+}
+
+.dashboard .dashboard-container .left-bar .school-data .student .icon {
+    background-color: #4D44B5;
+}
+
+.dashboard .dashboard-container .left-bar .school-data .teacher .icon {
+    background-color: #FB7D5B;
+}
+
+.dashboard .dashboard-container .left-bar .school-data .event .icon {
+    background-color: #FCC43E;
+}
+
+.dashboard .dashboard-container .left-bar .school-data h5 {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #A098AE;
+}
+
+.dashboard .dashboard-container .left-bar .school-data p {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #303972;
+}
+
+.dashboard .dashboard-container .left-bar .charts img {
+    width: 100%;
+}
+
+.dashboard .dashboard-container .left-bar .school-performance {
+    width: 90%;
+    height: 479px;
+
+    margin-bottom: 50px;
+}
+
+.dashboard .dashboard-container .left-bar .school-calendar-finance {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.dashboard .dashboard-container .left-bar .school-calendar-finance>div {
+    width: 45%;
+    height: 562px;
+    border: 1px solid #F5F5F5
+}

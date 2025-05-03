@@ -1,0 +1,21 @@
+.tteacher {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .tteacher .sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    /* your sidebar background */
+    overflow-y: auto;
+  }
+  
+  .tteacher .page {
+   
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
