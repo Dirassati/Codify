@@ -123,8 +123,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
     const updatedUser = updatedUserResult.rows[0];
 
     if (roleData) {
-      let roleQuery = `UPDATE ${currentUser.user_role} SET `;
-      let roleQuery = `UPDATE ${currentUser.user_role} SET `;
+      let roleQuery = `UPDATE ${currentUser.user_role} SET `
       const roleValues = [];
       index = 1;
 
