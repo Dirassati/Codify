@@ -19,7 +19,11 @@ app.use("/auth", authenRoutes);
 app.use('/api/admin/students/search', require('./src/routes/StudentsearchRoutes'));
 app.use('/api/admin/teachers/search', require('./src/routes/TeachersearchRoutes'));
 app.use('/api/admin/parents/search', require('./src/routes/ParentsearchRoutes'));
-
+//chat functionality
+app.use('/api/chats', chatRoutes);
+//socket.io
+const io = socketConfig(server);
+require('./services/socketService')(io);
 // Test endpoint
 app.get('/', (req, res) => {
   res.send('Hello, this is the backend!');

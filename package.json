@@ -29,6 +29,7 @@
     "rechoir": "^0.8.0",
     "resolve": "^1.22.10",
     "resolve-from": "^5.0.0",
+    "socket.io": "^4.8.1",
     "supports-preserve-symlinks-flag": "^1.0.0",
     "tarn": "^3.0.2",
     "tildify": "^2.0.0"
@@ -38,5 +39,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }
