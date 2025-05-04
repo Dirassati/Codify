@@ -1,0 +1,168 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Testimonials Section */
+.testimonials-container {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f9f9f9;
+  position: relative;
+  overflow: hidden;
+}
+
+.titles {
+  margin-bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.titles h2 {
+  font-family: 'Raleway';
+  font-weight: 700;
+  font-size: 58px;
+  line-height: 75.4px;
+  text-align: center;
+}
+
+.titles p {
+  max-width: 760px;
+  margin: 0 auto;
+  font-family: "Outfit";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  color: #333333;
+}
+
+/* Slider */
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+/* Cards Container */
+.cards {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Individual Card */
+.card {
+  background: white;
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid #262626;
+  box-shadow: 6px 6px 0px 2px #1E1E1E;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  width: 31%;
+  height: 492px;
+  border-radius: 12px;
+}
+
+.card h3 {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  width: 248px;
+  font-family: "Outfit";
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+  color: #333333;
+}
+
+.card h5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  color: #FF8D4D;
+}
+
+.card p {
+  width: 248px;
+  font-family: 'Outfit';
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  color: #333333;
+}
+
+/* Avatar Styling */
+.avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 8px;
+  border: 2px solid #333333;
+  padding: 14px;
+  cursor: pointer;
+  color: #333;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.nav-btn:hover {
+  background-color: #333;
+  color: white;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .slider {
+    flex-direction: column;
+  }
+  .cards {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .card {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .titles h2 {
+    font-size: 42px;
+  }
+
+  .titles p {
+    font-size: 18px;
+  }
+
+  .card {
+    width: 100%;
+    height: auto;
+    padding: 30px;
+  }
+
+  .cards {
+    flex-direction: column;
+  }
+
+  .nav-btn {
+    display: none; /* Hide navigation buttons on smaller screens */
+  }
+}

@@ -1,0 +1,47 @@
+.forgot-password-container.verification .forgot-password .input-field {
+    display: flex;
+   align-items: center; 
+
+    gap: 10px;
+    
+    
+
+
+}
+
+.forgot-password-container.verification .forgot-password .input-field *{
+    
+    width: 70px;
+    height: 66px;
+    border-radius: 5px;
+    padding-top: 16px;
+    padding-right: 12px;
+    padding-bottom: 16px;
+    padding-left: 12px;
+    border: 1px solid #9BADCA;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.forgot-password-container.verification .forgot-password .input-field *::-webkit-inner-spin-button,
+.forgot-password-container.verification .forgot-password .input-field *::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.forgot-password-container.verification .forgot-password p{
+    text-align: center;
+}
+
+.forgot-password-container.verification .forgot-password p span{
+    color: #F2451C;
+    cursor: pointer;
+}
+
+
+.forgot-password-container.verification .forgot-password p.time{
+    color:#F2451C;
+    
+
+}
