@@ -1,0 +1,46 @@
+{
+  "name": "codify",
+  "version": "1.0.0",
+  "description": "Website project",
+  "main": "resetPW.js",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "colorette": "^2.0.19",
+    "commander": "^10.0.1",
+    "debug": "^4.3.4",
+    "dotenv": "^16.5.0",
+    "escalade": "^3.2.0",
+    "esm": "^3.2.25",
+    "express": "^5.1.0",
+    "function-bind": "^1.1.2",
+    "get-package-type": "^0.1.0",
+    "getopts": "^2.3.0",
+    "hasown": "^2.0.2",
+    "interpret": "^2.2.0",
+    "is-core-module": "^2.16.1",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "lodash": "^4.17.21",
+    "ms": "^2.1.2",
+    "nodemailer": "^6.10.1",
+    "path-parse": "^1.0.7",
+    "pg": "^8.14.1",
+    "pg-connection-string": "^2.6.2",
+    "rechoir": "^0.8.0",
+    "resolve": "^1.22.10",
+    "resolve-from": "^5.0.0",
+    "socket.io": "^4.8.1",
+    "supports-preserve-symlinks-flag": "^1.0.0",
+    "tarn": "^3.0.2",
+    "tildify": "^2.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
