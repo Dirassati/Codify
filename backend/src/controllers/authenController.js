@@ -60,8 +60,13 @@ module.exports = {
       
       await userModel.setResetToken(user.id, code, expiresAt);
       await emailService.sendResetCode(email, code);
+      const resetToken = jwt.sign(
+        { email, purpose: 'password_reset_request' },
+        process.env.JWT_SECRET,
+        { expiresIn: '10m' } // Short-lived token
+      );
       
-      res.status(200).json({ message: 'If email exists, a code was sent' });
+      res.status(200).json({ message: 'If email exists, a code was sent' ,resetToken });
     } catch (error) {
       console.error('Forgot password error:', error);
       res.status(500).json({ message: 'Server error' });
@@ -70,12 +75,19 @@ module.exports = {
 
   verifyResetCode: async (req, res) => {
     try {
-      const { email, code } = req.body;
+      const { code , resetToken } = req.body;
+
+      const { email, purpose, exp } = jwt.verify(resetToken, process.env.JWT_SECRET);
+    if (purpose !== 'password_reset_request'|| Date.now() >= exp * 1000) {
+      return res.status(400).json({ message: 'Invalid token' });
+    }
       const user = await userModel.findByEmail(email);
       
       if (!user || user.reset_token !== code || new Date(user.reset_token_expires) < new Date()) {
         return res.status(400).json({ message: 'Invalid code' });
       }
+      
+      await userModel.setResetToken(user.id, null, null);
       
       const token = generateJWT({ userId: user.id, purpose: 'password_reset' });
       res.status(200).json({ token });

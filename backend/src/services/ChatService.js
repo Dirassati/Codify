@@ -1,10 +1,10 @@
-const { createChat } = require('../models/chat');
-const { findbyId } = require('../models/User');
+const { createChat } = require('../models/Chat');
+const User = require('../models/User');
 
 const canChat = async (senderId, receiverId) => {
   const [sender, receiver] = await Promise.all([
-    findUserById(senderId),
-    findUserById(receiverId)
+    User.findById(senderId),
+    User.findById(receiverId)
   ]);
   const allowedPairs = {
     student: ['parent', 'teacher', 'admin'],
