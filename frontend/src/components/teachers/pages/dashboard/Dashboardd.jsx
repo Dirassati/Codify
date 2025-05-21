@@ -34,8 +34,9 @@ const changePassword =(info)=>{
   return (
     <div className="dashboard-container">
       <div className="header-icons">
-        <div className="notification-icon" onClick={toggleNotifications}>
+        <div className="notification-icon" onClick={toggleNotifications}ref={notificationsRef}>
           <svg
+          
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
