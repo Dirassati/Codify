@@ -16,6 +16,7 @@ function Header(props) {
                 <div className="info">
                     <h5>Nabila .A</h5>
                     <p>{props.role}</p>
+
                 </div>
                 <div className='profile-picture'></div>
 
