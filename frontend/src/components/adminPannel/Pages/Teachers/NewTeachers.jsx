@@ -22,6 +22,7 @@ function NewTeachers() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,22 +33,60 @@ function NewTeachers() {
   };
 
   const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && !file.type.startsWith('image/')) {
+      alert('Please upload a valid image file.');
+      return;
+    }
     setFormData(prev => ({
       ...prev,
-      photo: e.target.files[0]
+      photo: file
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    console.log("Sending data to https://fakeapi.com/teachers ...");
 
-    setTimeout(() => {
+    if (!formData.photo) {
+      alert('Please upload a photo.');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Simulate API call (replace with actual API call in production)
+      console.log("Sending data to https://fakeapi.com/teachers ...");
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate async operation
+
       console.log('Form submitted:', formData);
-      setLoading(false);
       alert('Teacher information submitted successfully!');
-    }, 2000);
+
+      // Reset form after successful submission
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        address: '',
+        dateOfBirth: '',
+        placeOfBirth: '',
+        city: '',
+        university: '',
+        degree: '',
+        educationStartDate: '',
+        educationEndDate: '',
+        photo: null,
+        matricule: '',
+        password: ''
+      });
+    } catch (err) {
+      setError('Failed to submit the form. Please try again.');
+      console.error('Submission error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSaveDraft = () => {
@@ -65,44 +104,99 @@ function NewTeachers() {
 
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
-                <label>First Name *</label>
-                <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                <label htmlFor="firstName">First Name *</label>
+                <input
+                  id="firstName"
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
               <div className="new-teacher-form__group">
-                <label>Last Name *</label>
-                <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
-              </div>
-            </div>
-
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label>Email *</label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-              </div>
-              <div className="new-teacher-form__group">
-                <label>Phone *</label>
-                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
-              </div>
-            </div>
-
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label>Matricule *</label>
-                <input type="text" name="matricule" value={formData.matricule} onChange={handleChange} required />
-              </div>
-              <div className="new-teacher-form__group">
-                <label>Mot de passe *</label>
-                <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                <label htmlFor="lastName">Last Name *</label>
+                <input
+                  id="lastName"
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
             </div>
 
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
-                <label>Address *</label>
-                <textarea name="address" value={formData.address} onChange={handleChange} required />
+                <label htmlFor="email">Email *</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
               <div className="new-teacher-form__group">
-                <label>Photo *</label>
+                <label htmlFor="phone">Phone *</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
+              </div>
+            </div>
+
+            <div className="new-teacher-form__row">
+              <div className="new-teacher-form__group">
+                <label htmlFor="matricule">Matricule *</label>
+                <input
+                  id="matricule"
+                  type="text"
+                  name="matricule"
+                  value={formData.matricule}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div className="new-teacher-form__group">
+                <label htmlFor="password">Mot de passe *</label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
+              </div>
+            </div>
+
+            <div className="new-teacher-form__row">
+              <div className="new-teacher-form__group">
+                <label htmlFor="address">Address *</label>
+                <textarea
+                  id="address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div className="new-teacher-form__group">
+                <label htmlFor="photo-upload">Photo *</label>
                 <div className="new-teacher-form__file-upload">
                   <label htmlFor="photo-upload" className="new-teacher-form__file-label">
                     {formData.photo ? formData.photo.name : 'Drag and drop or click here to select file'}
@@ -114,53 +208,111 @@ function NewTeachers() {
                     accept="image/*"
                     style={{ display: 'none' }}
                     required
+                    aria-required="true"
                   />
                 </div>
               </div>
             </div>
 
-
-
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
-                <label>Date of Birth *</label>
-                <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} required />
+                <label htmlFor="dateOfBirth">Date of Birth *</label>
+                <input
+                  id="dateOfBirth"
+                  type="date"
+                  name="dateOfBirth"
+                  value={formData.dateOfBirth}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
               <div className="new-teacher-form__group">
-                <label>Place of Birth *</label>
-                <input type="text" name="placeOfBirth" value={formData.placeOfBirth} onChange={handleChange} required />
+                <label htmlFor="placeOfBirth">Place of Birth *</label>
+                <input
+                  id="placeOfBirth"
+                  type="text"
+                  name="placeOfBirth"
+                  value={formData.placeOfBirth}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
             </div>
+          </div> {/* Closing tag for new-teacher-form__section_first */}
 
           <div className="new-teacher-form__section_second">
             <h2 className="new-teacher-form__title">Education</h2>
 
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
-                <label>University *</label>
-                <input type="text" name="university" value={formData.university} onChange={handleChange} required />
+                <label htmlFor="university">University *</label>
+                <input
+                  id="university"
+                  type="text"
+                  name="university"
+                  value={formData.university}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
               <div className="new-teacher-form__group">
-                <label>Degree *</label>
-                <input type="text" name="degree" value={formData.degree} onChange={handleChange} required />
+                <label htmlFor="degree">Degree *</label>
+                <input
+                  id="degree"
+                  type="text"
+                  name="degree"
+                  value={formData.degree}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
             </div>
 
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
-                <label>Start Date *</label>
-                <input type="month" name="educationStartDate" value={formData.educationStartDate} onChange={handleChange} required />
+                <label htmlFor="educationStartDate">Start Date *</label>
+                <input
+                  id="educationStartDate"
+                  type="month"
+                  name="educationStartDate"
+                  value={formData.educationStartDate}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
               <div className="new-teacher-form__group">
-                <label>End Date *</label>
-                <input type="month" name="educationEndDate" value={formData.educationEndDate} onChange={handleChange} required />
+                <label htmlFor="educationEndDate">End Date *</label>
+                <input
+                  id="educationEndDate"
+                  type="month"
+                  name="educationEndDate"
+                  value={formData.educationEndDate}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
               <div className="new-teacher-form__group">
-                <label>City *</label>
-                <input type="text" name="city" value={formData.city} onChange={handleChange} required />
+                <label htmlFor="city">City *</label>
+                <input
+                  id="city"
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                />
               </div>
             </div>
           </div>
+
+          {error && <div className="new-teacher-form__error">{error}</div>}
 
           <div className="new-teacher-form__actions">
             <button
