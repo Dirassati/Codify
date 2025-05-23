@@ -120,7 +120,6 @@ function NewTeachers() {
             </div>
 
 
-
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
                 <label>Date of Birth *</label>
@@ -131,6 +130,7 @@ function NewTeachers() {
                 <input type="text" name="placeOfBirth" value={formData.placeOfBirth} onChange={handleChange} required />
               </div>
             </div>
+
 
           <div className="new-teacher-form__section_second">
             <h2 className="new-teacher-form__title">Education</h2>

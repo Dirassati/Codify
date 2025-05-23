@@ -10,6 +10,10 @@ import Adminpannel from './components/adminPannel/Adminpannel'
 import Parent from './components/parents/Parent'
 import Teacher from './components/teachers/Teacher'
 import Student from './components/etudiants/Student'
+import Homes from './components/etudiants/Home/Std_Home'
+import Subjects from './components/etudiants/Subjects/Subjects'
+import Notes_std from './components/etudiants/Notes/Notes'
+import Profile from './components/etudiants/Profile/Profile'
 import Sparent from './components/signup/parent/Sparent'
 import Sstudent from './components/signup/student/Sstudent'
 import Dashboard from './components/adminPannel/Pages/Dashboard/Dashboard'
@@ -29,12 +33,11 @@ import StudentCard from './components/adminPannel/Pages/Students/StudentCard'
 import NewTeachers from './components/adminPannel/Pages/Teachers/NewTeachers'
 import Dashboardd from './components/teachers/pages/dashboard/Dashboardd'
 import Studentss from './components/teachers/pages/students/Studentss'
-import Classe from './components/teachers/pages/classes/Classe'
+import Classes from './components/teachers/pages/classes/Classes'
 import Homework from './components/teachers/pages/homework/Homework'
 import Courses from './components/teachers/pages/courses/Courses'
 import Notes from './components/teachers/pages/notes/Notes'
 import Eventss from './components/teachers/pages/events/Eventss'
-import AllClasses from './components/teachers/pages/classes/AllClasses'
 
 
 function App() {
@@ -75,12 +78,19 @@ function App() {
 
         </Route>
         <Route path='/parent' element={<Parent />}></Route>
-        <Route path='/student' element={<Student />}></Route>
+   
+         <Route path='/student' element={<Student />}>
+         <Route path='Home' element={< Homes/> }/>
+         <Route path='Subjects' element={< Subjects/> }/>
+         <Route path='Notes' element={< Notes_std/> }/>
+          <Route path='Profile' element={< Profile/> }/>
+        </Route>
+
+
         <Route path='/teacher' element={<Teacher />}>
           <Route path='Dashboard' element={<Dashboardd /> }/>
           <Route path='Students' element={<Studentss /> }/>
-          <Route path='Classes' element={<AllClasses />} />
-          <Route path='Classe/:id' element={<Classe />} />
+          <Route path='Classes' element={<Classes />} />
           <Route path='Homework' element={<Homework />} />
           <Route path='Courses' element={<Courses />} />
           <Route path='Notes' element={<Notes />} />
