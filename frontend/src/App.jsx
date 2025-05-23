@@ -38,6 +38,11 @@ import Homework from './components/teachers/pages/homework/Homework'
 import Courses from './components/teachers/pages/courses/Courses'
 import Notes from './components/teachers/pages/notes/Notes'
 import Eventss from './components/teachers/pages/events/Eventss'
+import AllClasses from './components/teachers/pages/classes/AllClasses'
+import Payment from './components/parents/payment/Payment';
+import PForm from './components/parents/payment/PForm';
+import PaymentSummary from './components/parents/payment/PaymentSummary';
+import SuccessPayment from './components/parents/payment/SuccessPayment';
 
 
 function App() {
@@ -96,6 +101,10 @@ function App() {
           <Route path='Notes' element={<Notes />} />
           <Route path='Events' element={<Eventss />} />
         </Route>
+        <Route path="/payment" element={<Payment />} />
+         <Route path="/paymentForm" element={<PForm />} />
+         <Route path="/payment/summary" element={<PaymentSummary />} />
+         <Route path="/payment/summary/Success" element={<SuccessPayment />} />
       </Routes>
     </BrowserRouter>
 
