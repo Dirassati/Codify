@@ -10,6 +10,10 @@ import Adminpannel from './components/adminPannel/Adminpannel'
 import Parent from './components/parents/Parent'
 import Teacher from './components/teachers/Teacher'
 import Student from './components/etudiants/Student'
+import Homes from './components/etudiants/Home/Std_Home'
+import Subjects from './components/etudiants/Subjects/Subjects'
+import Notes_std from './components/etudiants/Notes/Notes'
+import Profile from './components/etudiants/Profile/Profile'
 import Sparent from './components/signup/parent/Sparent'
 import Sstudent from './components/signup/student/Sstudent'
 import Dashboard from './components/adminPannel/Pages/Dashboard/Dashboard'
@@ -74,7 +78,15 @@ function App() {
 
         </Route>
         <Route path='/parent' element={<Parent />}></Route>
-        <Route path='/student' element={<Student />}></Route>
+   
+         <Route path='/student' element={<Student />}>
+         <Route path='Home' element={< Homes/> }/>
+         <Route path='Subjects' element={< Subjects/> }/>
+         <Route path='Notes' element={< Notes_std/> }/>
+          <Route path='Profile' element={< Profile/> }/>
+        </Route>
+
+
         <Route path='/teacher' element={<Teacher />}>
           <Route path='Dashboard' element={<Dashboardd /> }/>
           <Route path='Students' element={<Studentss /> }/>
