@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const subjectController = require("../controllers/subjectController");
-const validateFields = require("../middleware/validateFields");
+const validateSubject = require("../middleware/validateSubject");
 
-router.post("/subjects", validateFields, subjectController.createSubject);
+router.post("/subjects", validateSubject, subjectController.createSubject);
 router.get("/subjects/list", subjectController.getSubjects);
 
 module.exports = router;
