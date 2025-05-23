@@ -9,7 +9,13 @@ color:#18A0FB;
 }
 
 
-.parent-home .search-container {
+.parent-header-left{
+  display: flex;
+  width :600px;
+  gap: 20px;
+}
+
+.parent-home .parent-header {
    
     
   display: flex;
@@ -17,13 +23,13 @@ color:#18A0FB;
     
 }
 
-.parent-home .search-wrappe{
+/* .parent-home .ssearch-container{
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
-}
+} */
 
-.parent-home .search-wrappe .add-child-btn{
+.parent-home  .add-child-btn{
 border: none;
 font-family: Poppins;
 font-weight: 400;

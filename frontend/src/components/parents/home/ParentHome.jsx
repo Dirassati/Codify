@@ -2,17 +2,18 @@ import './parenthome.css'
 import SearchIcon from '../../../assets/icons/search.svg';
 import NotificationIcon from '../../../assets/icons/notification.svg';
 import SingleChild from './SingleChild'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import AddIcon from '@mui/icons-material/Add';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { FaBell, FaSearch } from 'react-icons/fa';
 
 function ParentHome() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [children,setChildren]=useState([]);
+  const [children, setChildren] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true)
       try {
@@ -24,27 +25,27 @@ useEffect(() => {
         await new Promise((resolve) => setTimeout(resolve, 800))
 
         // Sample data that would come from the API
-         const children = [
-    {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    },
-     {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    },
-     {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    }
+        const children = [
+          {
+            student_first_name: "student1",
+            student_last_name: "ss",
+            student_grade: "VV"
+          },
+          {
+            student_first_name: "student1",
+            student_last_name: "ss",
+            student_grade: "VV"
+          },
+          {
+            student_first_name: "student1",
+            student_last_name: "ss",
+            student_grade: "VV"
+          }
 
-  ];
+        ];
 
-     setChildren(children);
-       
+        setChildren(children);
+
         setLoading(false)
       } catch (err) {
         console.error("Error fetching profile data:", err)
@@ -55,7 +56,7 @@ useEffect(() => {
 
     fetchProfileData()
   }, [])
-  
+
 
   if (loading) {
     return (
@@ -83,8 +84,21 @@ useEffect(() => {
 
   return (
     <div className='parent-home'>
-      
-      <div className="search-wrappe">
+
+      <div className="parent-header">
+        <div className='parent-header'>
+          <div className="ssearch-container">
+            <FaSearch className="ssearch-icon" />
+            <input type="text" placeholder="Search" className="ssearch-input" />
+          </div>
+          <button className="notification-button " onClick={() => { navigate('/parent/Notifications') }}>
+            <FaBell />
+          </button>
+        </div>
+
+        <button className='add-child-btn' onClick={() => { navigate('/parent/AddChildFormule') }}><AddIcon /> Add Child</button>
+      </div>
+      {/* <div className="search-wrappe">
             <div className="search-field">
               <div className="search-container">
                 <input type="text" className="search-input" placeholder="Search" />
@@ -97,24 +111,24 @@ useEffect(() => {
              
             </div>
               <button className='add-child-btn' onClick={()=>{navigate('/parent/AddChildFormule')}}><AddIcon /> Add Child</button>
-      </div>
-    
+      </div> */}
+
       <div className='children all-students'>
 
         <div className="table-wrapper">
-            <h2>My Children</h2>
+          <h2>My Children</h2>
           <table>
             <thead>
               <tr>
-             
+
                 <th>Name</th>
-                
+
                 <th>Grade</th>
               </tr>
             </thead>
             <tbody>
-              {children.map((child,index) => (
-                <SingleChild key={index} child={child}/>
+              {children.map((child, index) => (
+                <SingleChild key={index} child={child} />
               ))}
             </tbody>
           </table>

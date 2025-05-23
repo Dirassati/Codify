@@ -33,13 +33,11 @@ const [message,setMessage]=useState("");
     lastName: "",
     address: "",
     degree: "",
-    
     bloodType: "",
     gender: "",
     placeOfBirth: "",
     dayOfBirth: "",
     monthOfBirth: "",
-
     yearOfBirth: "",
     chronicIllness: "",
     allergies: "",

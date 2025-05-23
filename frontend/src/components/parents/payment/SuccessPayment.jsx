@@ -1,5 +1,4 @@
-import Sidebar from './Sidebar';
-import Header from './Header';
+import SearchHeader from '../SearchHeader';
 import './SuccessPayment.css';
 
 const SuccessPayment = () => {
@@ -7,9 +6,9 @@ const SuccessPayment = () => {
 
   return (
     <div className="success-page">
-      <Sidebar />
+    
       <div className="main-content">
-        <Header />
+        <SearchHeader />
         <div className="success-container">
           <div className="confirmation">
             <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">

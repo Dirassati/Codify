@@ -1,13 +1,12 @@
-.header {
+.parent-header {
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
   align-items: center;
   padding: 15px 30px;
-  border-bottom: 1px solid #e0e0e0;
   background-color: #ffffff;
 }
 
-.search-container {
+.parent-header .ssearch-container {
   display: flex;
   align-items: center;
   background-color: #f9fafb;
@@ -18,26 +17,25 @@
   margin-left: -8px;
 }
 
-.search-icon {
+ .parent-header .ssearch-icon {
   color: #1e40af;
   font-size: 16px;
   margin-right: 8px;
-  
+  display: flex;
+  align-items: center;
 }
 
-.search-input {
+.parent-header .ssearch-input {
   border: none;
   outline: none;
   background: transparent;
   font-size: 14px;
-  margin-left: -15px;
-  flex: 1;
+
+  
 }
 
-.notification-button {
-  margin-left: -2250px;
-  margin-TOP: -100px;
-    margin-bottom: 8px;
+.parent-header .notification-button {
+
 
 
   background: none;

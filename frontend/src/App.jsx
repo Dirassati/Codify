@@ -47,7 +47,7 @@ import PForm from './components/parents/payment/PForm';
 import PaymentSummary from './components/parents/payment/PaymentSummary';
 import SuccessPayment from './components/parents/payment/SuccessPayment';
 import ParentHome from './components/parents/home/ParentHome'
-import Paiment from './components/parents/payment/Paiment'
+
 import ParentProfile from './components/parents/profile/ParentProfile'
 import Reregistration from './components/parents/reregistration/Reregistration'
 import ParentAddChild from './components/parents/addChild/ParentAddChild'
@@ -91,7 +91,7 @@ function App() {
           <Route path='LatestActivities' element={<Activities />}></Route>
 
         </Route>
-        <Route path='/parent' element={<Parent />}></Route>
+    
 
         <Route path='/student' element={<Student />}>
           <Route path='Home' element={< Homes />} />
@@ -103,13 +103,18 @@ function App() {
 
         <Route path='/parent' element={<Parent />}>
           <Route path='Home' element={< ParentHome />} />
-          <Route path='payment' element={<Paiment />} />
           <Route path='Re-registartion' element={< Reregistration />} />
           <Route path='Profile' element={< ParentProfile />} />
           <Route path='AddChildFormule' element={<ParentAddChild />} />
           <Route path='Notifications' element={<Notifications />} />
+          <Route path="payment" element={<Payment />} />
+
+      <Route path="payment/Success" element={<SuccessPayment />} />
+          <Route path="payment/summary" element={<PaymentSummary />} />
+           <Route path="payment/Form" element={<PForm />} />
 
         </Route>
+
 
         <Route path='/student' element={<Student />}>
           <Route path='Home' element={< Homes />} />
@@ -129,10 +134,7 @@ function App() {
           <Route path='Notes' element={<Notes />} />
           <Route path='Events' element={<Eventss />} />
         </Route>
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/paymentForm" element={<PForm />} />
-        <Route path="/payment/summary" element={<PaymentSummary />} />
-        <Route path="/payment/summary/Success" element={<SuccessPayment />} />
+
       </Routes>
     </BrowserRouter>
 
