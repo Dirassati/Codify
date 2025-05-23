@@ -64,8 +64,6 @@ const createParentInscription = async (parentData) => {
     }
   }
 };
-
-// Step 2: Add Student to Parent Inscription
 const addStudentToInscription = async (parentInscriptionId, studentData) => {
   const {
     student_last_name,
@@ -84,7 +82,6 @@ const addStudentToInscription = async (parentInscriptionId, studentData) => {
   try {
     await client.query("BEGIN");
 
-    // Step 2: Add student information to the eleveInscription table
     const studentQuery = `
       INSERT INTO "eleveInscription" (
         parent_inscription_id, student_last_name, student_first_name, student_grade, 
@@ -138,17 +135,17 @@ const findUserByEmail = async (email) => {
 };
 
 const getAllParentsSorted = async () => {
-  return await knex("parentInscription").orderBy("created_at", "asc");
+  return await knex("parentInscription");
 };
 
 const getAllStudentsSorted = async () => {
-  return await knex("eleveInscription").orderBy("created_at", "asc");
+  return await knex("eleveInscription");
 };
 
 const getStudentsByParentIdSorted = async (parentId) => {
-  return await knex("eleveInscription")
-    .where({ parent_inscription_id: parentId })
-    .orderBy("created_at", "asc");
+  return await knex("eleveInscription").where({
+    parent_inscription_id: parentId,
+  });
 };
 
 const getStudentById = async (studentId) => {

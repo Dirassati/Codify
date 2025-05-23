@@ -1,30 +1,31 @@
 const pool = require('../db/db');
 const { hashPassword } = require('../utils/passwordUtils');
 
-const createAccount = async (email, matricule, password, user_role, roleData) => {
+const createAccount = async (email, password, user_role, roleData) => {
   const hashedPassword = await hashPassword(password);
 
   const client = await pool.connect();
 
   try {
-    await client.query('BEGIN');
+    await client.query('BEGIN'); 
 
-    // Insert into users table
     const userQuery = `
-      INSERT INTO users (email, matricule, password, user_role)
+      INSERT INTO users (email, password, user_role, matricule)
       VALUES ($1, $2, $3, $4)
       RETURNING *`;
-    const userValues = [email || null, matricule || null, hashedPassword, user_role];
+    const userValues = [email, hashedPassword, user_role, matricule];
     const userResult = await client.query(userQuery, userValues);
     const user = userResult.rows[0];
 
-    // Insert into role-specific table
     switch (user_role) {
       case 'parents':
         await client.query(
-          `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil,card_id)
-           VALUES ($1, $2, $3, $4, $5, $6, $7,$8)`,
-          [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil,roleData.card_id]
+          `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil, card_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil, roleData.card_id]
+          `INSERT INTO parents (id, last_name, first_name, phone_number, address, profession, etat_civil, card_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.phone_number, roleData.address, roleData.profession, roleData.etat_civil, roleData.card_id]
         );
         break;
 
@@ -36,9 +37,12 @@ const createAccount = async (email, matricule, password, user_role, roleData) =>
           throw new Error('Parent ID does not exist');
         }
         await client.query(
-          `INSERT INTO eleve (id, matricule, last_name, first_name, address, grade, gender, nationality, birth_date, blood_type, allergies, chronic_illnesses, date_inscription, parent_id)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
-          [user.id, matricule, roleData.last_name, roleData.first_name, roleData.address, roleData.grade, roleData.gender, roleData.nationality, roleData.birth_date, roleData.blood_type, roleData.allergies, roleData.chronic_illnesses, roleData.date_inscription, roleData.parent_id]
+          `INSERT INTO eleve (id, last_name, first_name, address, grade_id, gender, nationality, birth_date, blood_type, allergies, chronic_illnesses, date_inscription, parent_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.address, roleData.grade_id, roleData.gender, roleData.nationality, roleData.birth_date, roleData.blood_type, roleData.allergies, roleData.chronic_illnesses, roleData.date_inscription, roleData.parent_id]
+          `INSERT INTO eleve (id, last_name, first_name, address, grade_id, gender, nationality, birth_date, blood_type, allergies, chronic_illnesses, date_inscription, parent_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+          [user.id, roleData.last_name, roleData.first_name, roleData.address, roleData.grade_id, roleData.gender, roleData.nationality, roleData.birth_date, roleData.blood_type, roleData.allergies, roleData.chronic_illnesses, roleData.date_inscription, roleData.parent_id]
         );
         break;
 
@@ -76,9 +80,8 @@ const modifyAccount = async (userId, email, password, roleData) => {
   const client = await pool.connect();
 
   try {
-    await client.query('BEGIN'); 
+    await client.query('BEGIN');
 
-    // Fetch the current user data
     const userResult = await client.query('SELECT email, user_role FROM users WHERE id = $1', [userId]);
     const currentUser = userResult.rows[0];
 
@@ -86,9 +89,6 @@ const modifyAccount = async (userId, email, password, roleData) => {
       throw new Error('User not found');
     }
 
-    const role = currentUser.user_role; // Fetch the role from the database
-
-    // Check for email conflict (if email is provided and different from current email)
     if (email && email !== currentUser.email) {
       const emailCheck = await client.query('SELECT id FROM users WHERE email = $1', [email]);
       if (emailCheck.rows.length > 0) {
@@ -96,7 +96,6 @@ const modifyAccount = async (userId, email, password, roleData) => {
       }
     }
 
-    // Update the users table (only if email or password is provided)
     let userQuery = 'UPDATE users SET ';
     const userValues = [];
     let index = 1;
@@ -114,7 +113,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
       index++;
     }
 
-  
+
     userQuery = userQuery.slice(0, -2);
 
     userQuery += ` WHERE id = $${index} RETURNING *`;
@@ -123,9 +122,8 @@ const modifyAccount = async (userId, email, password, roleData) => {
     const updatedUserResult = await client.query(userQuery, userValues);
     const updatedUser = updatedUserResult.rows[0];
 
-    // Update the role-specific table (only if roleData is provided)
     if (roleData) {
-      let roleQuery = `UPDATE ${role} SET `;
+      let roleQuery = `UPDATE ${currentUser.user_role} SET `
       const roleValues = [];
       index = 1;
 
@@ -135,7 +133,7 @@ const modifyAccount = async (userId, email, password, roleData) => {
         index++;
       }
 
-    
+
       roleQuery = roleQuery.slice(0, -2);
 
       roleQuery += ` WHERE id = $${index}`;
@@ -144,68 +142,66 @@ const modifyAccount = async (userId, email, password, roleData) => {
       await client.query(roleQuery, roleValues);
     }
 
-    await client.query('COMMIT'); // Commit the transaction
+    await client.query('COMMIT');
     return updatedUser;
   } catch (err) {
-    await client.query('ROLLBACK'); // Rollback the transaction if something goes wrong
+    await client.query('ROLLBACK');
+    await client.query('ROLLBACK');
     throw err;
   } finally {
-    client.release(); // Release the client back to the pool
+    client.release();
+    client.release();
   }
 };
 
 const deactivate_Account = async (userId) => {
-    const client = await pool.connect();
-  
-    try {
-      await client.query('BEGIN'); // Start the transaction
-  
-      // Update the user's status to 'inactive'
-      const result = await client.query(
-        'UPDATE users SET status = $1 WHERE id = $2 RETURNING *',
-        ['inactive', userId]
-      );
-  
-      if (result.rows.length === 0) {
-        throw new Error('User not found');
-      }
-  
-      await client.query('COMMIT'); // Commit the transaction
-      return result.rows[0]; // Return the updated user
-    } catch (err) {
-      await client.query('ROLLBACK'); // Rollback the transaction if something goes wrong
-      throw err;
-    } finally {
-      client.release(); // Release the client back to the pool
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    const result = await client.query(
+      'UPDATE users SET status = $1 WHERE id = $2 RETURNING *',
+      ['inactive', userId]
+    );
+
+    if (result.rows.length === 0) {
+      throw new Error('User not found');
     }
-  };
 
-  const activate_Account = async (userId) => {
-    const client = await pool.connect();
-  
-    try {
-      await client.query('BEGIN'); // Start the transaction
-  
-      // Update the user's status to 'active'
-      const result = await client.query(
-        'UPDATE users SET status = $1 WHERE id = $2 RETURNING *',
-        ['active', userId]
-      );
-  
-      if (result.rows.length === 0) {
-        throw new Error('User not found');
-      }
-  
-      await client.query('COMMIT'); // Commit the transaction
-      return result.rows[0]; // Return the updated user
-    } catch (err) {
-      await client.query('ROLLBACK'); // Rollback the transaction if something goes wrong
-      throw err;
-    } finally {
-      client.release(); // Release the client back to the pool
+    await client.query('COMMIT');
+    return result.rows[0];
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+};
+
+const activate_Account = async (userId) => {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    const result = await client.query(
+      'UPDATE users SET status = $1 WHERE id = $2 RETURNING *',
+      ['active', userId]
+    );
+
+    if (result.rows.length === 0) {
+      throw new Error('User not found');
     }
-  };
 
+    await client.query('COMMIT');
+    return result.rows[0];
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+};
 
-
-module.exports = { createAccount, modifyAccount, deactivate_Account, activate_Account};
+module.exports = { createAccount, modifyAccount, deactivate_Account, activate_Account };

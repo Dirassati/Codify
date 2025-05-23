@@ -1,7 +1,3 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
 exports.up = function (knex) {
     return knex.schema
       .createTable('users', (table) => {
@@ -12,7 +8,7 @@ exports.up = function (knex) {
         table.timestamp('created_at').defaultTo(knex.fn.now());
         table.timestamp('updated_at').defaultTo(knex.fn.now());
         table.string('status', 10).defaultTo('active').checkIn(['active', 'inactive']);
-        table.check('?? IS NOT NULL OR ?? IS NOT NULL', ['email', 'matricule']);
+        table.check(knex.raw('email IS NOT NULL OR matricule IS NOT NULL')); 
       })
       .createTable('parents', (table) => {
         table.integer('id').primary().references('id').inTable('users').onDelete('CASCADE');
@@ -61,10 +57,6 @@ exports.up = function (knex) {
       });
   };
   
-  /**
-   * @param { import("knex").Knex } knex
-   * @returns { Promise<void> }
-   */
   exports.down = function (knex) {
     return knex.schema
       .dropTableIfExists('admin')

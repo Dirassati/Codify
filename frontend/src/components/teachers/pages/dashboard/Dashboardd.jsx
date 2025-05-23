@@ -39,6 +39,7 @@ const Dashboardd = () => {
           </svg>
         </div>
         <div className="profile-icon">
+
           <div className="avatar"></div>
         </div>
       </div>
