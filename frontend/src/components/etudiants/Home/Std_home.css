@@ -1,0 +1,136 @@
+.std-home-container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+
+  background-color: white;
+}
+.search-wrappe {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  margin-bottom: 3rem;
+}
+.schedule-container {
+  padding: 20px;
+}
+
+.schedule-header {
+  background-color: #4285f4;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 20px;
+}
+
+.schedule-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.timetable {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.timetable-header {
+  display: flex;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.day-column {
+  width: 100px;
+  flex-shrink: 0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.time-slot-header {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-weight: 500;
+  border-right: 1px solid #e0e0e0;
+  min-width: 80px;
+}
+
+.timetable-body {
+  background-color: white;
+}
+
+.timetable-row {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.day-label {
+  width: 100px;
+  flex-shrink: 0;
+  padding: 15px 10px;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.day-number {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.day-name {
+  font-size: 14px;
+  color: #666;
+}
+
+.time-slot {
+  flex: 1;
+  min-height: 80px;
+  padding: 10px;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-width: 80px;
+}
+
+.time-slot.highlighted {
+  background-color: #e8f0fe;
+}
+
+.time-slot.empty {
+  background-color: white;
+}
+
+.class-name {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.room-name {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .timetable {
+    overflow-x: auto;
+  }
+
+  .time-slot-header,
+  .time-slot {
+    min-width: 60px;
+    padding: 8px 5px;
+  }
+
+  .day-column,
+  .day-label {
+    width: 80px;
+  }
+}

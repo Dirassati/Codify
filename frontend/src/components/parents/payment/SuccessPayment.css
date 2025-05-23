@@ -1,0 +1,59 @@
+.success-page {
+  display: flex;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.success-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.confirmation {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.checkmark {
+  width: 100px;
+  height: 100px;
+}
+
+.checkmark-circle {
+  stroke: #4CAF50;
+  stroke-width: 2;
+}
+
+.checkmark-check {
+  stroke: #4CAF50;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+h2 {
+  margin: 20px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.generate-receipt-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.generate-receipt-btn:hover {
+  background-color: #45a049;
+}
