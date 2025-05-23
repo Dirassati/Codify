@@ -17,7 +17,7 @@ const StudentRow = ({ name, grade, paymentStatus }) => {
   };
 
   const handleClick = () => {
-    navigate('/paymentForm');
+    navigate('/parent/payment/Form');
   };
 
   return (
