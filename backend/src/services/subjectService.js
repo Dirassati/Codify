@@ -1,12 +1,12 @@
 const db = require("../db/db");
 
-const createSubject = async (name, description) => {
+const createSubject = async (name, description, classroom_type = 'class') => {
   const query = `
-    INSERT INTO subjects (name, description)
-    VALUES ($1, $2)
+    INSERT INTO subjects (name, description, classroom_type)
+    VALUES ($1, $2, $3)
     RETURNING *;
   `;
-  const values = [name, description];
+  const values = [name, description, classroom_type];
 
   const { rows } = await db.query(query, values);
   return rows[0];
@@ -14,17 +14,19 @@ const createSubject = async (name, description) => {
 
 const listSubjects = async () => {
   const { rows } = await db.query(`
-    SELECT id, name, description 
+    SELECT id, name, description, classroom_type 
     FROM subjects
     ORDER BY name ASC
   `);
   
   return rows.map(row => ({
-    subject: row.name,  
-    description: row.description
+    subject: row.name,
+    description: row.description,
+    classroom_type: row.classroom_type
   }));
 };
 
 module.exports = {
-  createSubject, listSubjects
+  createSubject, 
+  listSubjects
 };
