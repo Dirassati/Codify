@@ -19,9 +19,6 @@ const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
 const cron = require("node-cron");
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
 
-const express = require('express');
-const dotenv = require('dotenv');
-const accountRoutes = require('./src/routes/accountRoutes');
 const authenRoutes = require('./src/routes/authenRoutes');
 const chatRoutes = require('./src/routes/chatRoutes');
 const http = require('http');
@@ -53,7 +50,6 @@ app.use(express.json());
 
 // Routes
 app.use("/api", accountRoutes);
-app.use("/api", accountRoutes);
 app.use("/api", authRoutes);
 app.use("/api/inscription", inscriptionRoutes);
 app.use("/api", classroomRoutes);
@@ -77,10 +73,12 @@ app.use('/api/admin/parents/search', require('./src/routes/ParentsearchRoutes'))
 
 //socket.io
 const io = socketConfig(server);
-setupSocket(io); 
+setupSocket(io);
 
 //chats
 app.use('/api/chats', chatRoutes);
+//add teacher 
+app.use('/api/admin/addteacher',require('./src/routes/addTeacherRoutes'))
 
 // Test endpoint
 app.get("/", (req, res) => {

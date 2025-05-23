@@ -1,4 +1,4 @@
-/*
+
 exports.up = function(knex) {
     return knex.schema
       // 2. Create Chats Table
@@ -8,7 +8,7 @@ exports.up = function(knex) {
           .references('id').inTable('users').onDelete('CASCADE');
         table.integer('user2_id').unsigned().notNullable()
           .references('id').inTable('users').onDelete('CASCADE');
-        table.boolean('is_approved').defaultTo(false).notNullable();
+        table.boolean('is_approved').defaultTo(true).notNullable();
         table.timestamp('created_at').defaultTo(knex.fn.now());
         
         // Composite index for user pairs
@@ -37,4 +37,3 @@ exports.up = function(knex) {
       .dropTableIfExists('messages')
       .dropTableIfExists('chats')
   };
-*/

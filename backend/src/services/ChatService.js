@@ -6,13 +6,15 @@ const canChat = async (senderId, receiverId) => {
     User.findById(senderId),
     User.findById(receiverId)
   ]);
+  console.log(sender.user_role);
+  console.log(receiver.user_role);
   const allowedPairs = {
-    student: ['parent', 'teacher', 'admin'],
-    parent: ['student', 'teacher', 'admin'],
-    teacher: ['student', 'parent', 'admin'],
-    admin: ['student', 'parent', 'teacher']
+    eleve: ['parent', 'enseignant', 'admin'],
+    parent: ['eleve', 'enseignant', 'admin'],
+    enseignant: ['eleve', 'enseignant', 'admin'],
+    admin: ['eleve', 'parent', 'enseignant']
   };
-  return allowedPairs[sender.role]?.includes(receiver.role);
+  return allowedPairs[sender.user_role]?.includes(receiver.user_role);
 };
 
 const startChat = async (senderId, receiverId) => {

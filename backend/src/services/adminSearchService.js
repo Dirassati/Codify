@@ -1,4 +1,4 @@
-/*
+/* Unused file
 const pool = require('../config/db');
 
 class AdminSearchService {

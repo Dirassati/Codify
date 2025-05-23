@@ -1,4 +1,4 @@
-const { saveMessage } = require('../models/Message');
+const { saveMessage , markAsRead } = require('../models/Message');
 
 const setupSocket = (io) => {
   io.use(require('../middleware/socketAuth'));
@@ -7,6 +7,9 @@ const setupSocket = (io) => {
     socket.on('joinChat', (chatId) => {
       socket.join(`chat_${chatId}`);
     });
+
+    // Mark messages as read when joining
+     markAsRead(chatId, socket.user.id);
 
     socket.on('sendMessage', async (data) => {
       try {
@@ -19,6 +22,9 @@ const setupSocket = (io) => {
       } catch (err) {
         socket.emit('error', err.message);
       }
+    });
+    socket.on('disconnect', () => {
+      console.log(`User ${socket.user.id} disconnected`);
     });
   });
 };

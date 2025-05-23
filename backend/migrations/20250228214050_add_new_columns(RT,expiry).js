@@ -1,4 +1,4 @@
-/*
+
 exports.up = function(knex) {
   return knex.schema.alterTable('users', (table) => {
     table.text('reset_token').nullable();
@@ -12,4 +12,3 @@ exports.down = function(knex) {
     table.dropColumn('reset_token_expires');
   });
 };
-*/

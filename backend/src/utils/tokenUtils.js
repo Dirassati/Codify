@@ -23,7 +23,6 @@ const verifyToken = (token) => {
 
 module.exports = { generateToken, verifyToken };
 const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
 
 module.exports = {
   // Generate 4-digit code
