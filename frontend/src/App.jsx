@@ -39,6 +39,12 @@ import Courses from './components/teachers/pages/courses/Courses'
 import Notes from './components/teachers/pages/notes/Notes'
 import Eventss from './components/teachers/pages/events/Eventss'
 import AllClasses from './components/teachers/pages/classes/AllClasses'
+import ParentHome from './components/parents/home/ParentHome'
+import Paiment from './components/parents/payment/Paiment'
+import ParentProfile from './components/parents/profile/ParentProfile'
+import Reregistration from './components/parents/reregistration/Reregistration'
+import ParentAddChild from './components/parents/addChild/ParentAddChild'
+import Notifications from './components/parents/notifications/Notifications'
 
 
 function App() {
@@ -78,19 +84,27 @@ function App() {
           <Route path='LatestActivities' element={<Activities />}></Route>
 
         </Route>
-        <Route path='/parent' element={<Parent />}></Route>
-   
-         <Route path='/student' element={<Student />}>
-         <Route path='Home' element={< Homes/> }/>
-         <Route path='Subjects' element={< Subjects/> }/>
-         <Route path='Notes' element={< Notes_std/> }/>
-          <Route path='Profile' element={< Profile/> }/>
+        <Route path='/parent' element={<Parent />}>
+          <Route path='Home' element={< ParentHome />} />
+          <Route path='payment' element={<Paiment />} />
+          <Route path='Re-registartion' element={< Reregistration />} />
+          <Route path='Profile' element={< ParentProfile />} />
+          <Route path='AddChildFormule' element={<ParentAddChild />} />
+           <Route path='Notifications' element={<Notifications />} />
+
+        </Route>
+
+        <Route path='/student' element={<Student />}>
+          <Route path='Home' element={< Homes />} />
+          <Route path='Subjects' element={< Subjects />} />
+          <Route path='Notes' element={< Notes_std />} />
+          <Route path='Profile' element={< Profile />} />
         </Route>
 
 
         <Route path='/teacher' element={<Teacher />}>
-          <Route path='Dashboard' element={<Dashboardd /> }/>
-          <Route path='Students' element={<Studentss /> }/>
+          <Route path='Dashboard' element={<Dashboardd />} />
+          <Route path='Students' element={<Studentss />} />
           <Route path='Classes' element={<AllClasses />} />
           <Route path='Classe/:id' element={<Classe />} />
           <Route path='Homework' element={<Homework />} />

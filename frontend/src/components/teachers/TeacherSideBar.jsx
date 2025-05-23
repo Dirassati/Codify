@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 
 function TeacherSideBar(props) {
 
-    const [showLogout, setShowLogout] = useState(false);
+  
     const [index, setIndex] = useState(1);
 
     const toggleLogout = () => {

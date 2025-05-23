@@ -1,0 +1,40 @@
+.single-notification{
+    font-family: Poppins;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+letter-spacing: 0%;
+font-family: Poppins;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+letter-spacing: 0%;
+width:100%;
+height: 112px;
+border-left: 4px solid #4C96F6;
+border-top: 1px solid #DCDEE4;
+display: flex;
+gap :3px;
+padding-left: 10px;
+align-items: center;
+}
+
+.single-notification .icon{
+    width: 20px;
+height: 20px;
+border-radius: 50px;
+border: 1.5px solid red;
+display: flex;
+justify-content: center;align-items: center;
+color: red;
+
+}
+
+.single-notification .report{
+    color: red;
+}
+
+.single-notification .action-link{
+    cursor: pointer;
+    color: #696F8C;
+}

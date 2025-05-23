@@ -21,14 +21,14 @@ position: relative;
   }
 
 
-  .tteacher  .logout-confirmation{
+  .logout-confirmation{
     z-index: 90;
     width: 600px;
     border-radius: 20px;
     border-width: 1px;
     position: absolute;
     top: 200px;
-    right: 300px;
+    right: 500px;
     border: 1px solid #18A0FB;
     background-color: #fff;
     padding: 20px;
@@ -36,7 +36,7 @@ position: relative;
     font-family: Roboto;
   }
 
-  .tteacher  .logout-confirmation p{
+  .logout-confirmation p{
     font-family: Roboto;
 font-weight: 600;
 font-size: 15px;
@@ -46,7 +46,7 @@ color: #000000A1;
 
   }
 
-  .tteacher  .logout-confirmation div{
+    .logout-confirmation div{
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -54,7 +54,7 @@ color: #000000A1;
     gap: 20px;
   }
 
-  .tteacher  .logout-confirmation button{
+  .logout-confirmation button{
     width: 180px;
 height:40px;
 border-width: 1px;
@@ -64,12 +64,12 @@ display: block;
 cursor: pointer;
   }
 
-  .tteacher  .logout-confirmation .annuler{
+  .logout-confirmation .annuler{
     color: #18A0FB;
     background-color: #fff;
   }
 
-.tteacher  .logout-confirmation .confirmer{
+  .logout-confirmation .confirmer{
   background-color: #18A0FB;
   color:#fff;
 }
