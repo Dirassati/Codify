@@ -40,12 +40,6 @@ app.use(
   })
 );
 
-app.use(
-  cors({
-    origin: "http://localhost:5173", // or an array of allowed origins
-    credentials: true,
-  })
-);
 
 app.use(express.json());
 
