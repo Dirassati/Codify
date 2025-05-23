@@ -21,6 +21,7 @@ position: relative;
   }
 
 
+
   .logout-confirmation{
     z-index: 90;
     width: 600px;
@@ -73,3 +74,4 @@ cursor: pointer;
   background-color: #18A0FB;
   color:#fff;
 }
+

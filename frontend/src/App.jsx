@@ -39,12 +39,19 @@ import Courses from './components/teachers/pages/courses/Courses'
 import Notes from './components/teachers/pages/notes/Notes'
 import Eventss from './components/teachers/pages/events/Eventss'
 import AllClasses from './components/teachers/pages/classes/AllClasses'
+
 import ParentHome from './components/parents/home/ParentHome'
 import Paiment from './components/parents/payment/Paiment'
 import ParentProfile from './components/parents/profile/ParentProfile'
 import Reregistration from './components/parents/reregistration/Reregistration'
 import ParentAddChild from './components/parents/addChild/ParentAddChild'
 import Notifications from './components/parents/notifications/Notifications'
+
+import Payment from './components/parents/payment/Payment';
+import PForm from './components/parents/payment/PForm';
+import PaymentSummary from './components/parents/payment/PaymentSummary';
+import SuccessPayment from './components/parents/payment/SuccessPayment';
+
 
 
 function App() {
@@ -84,6 +91,7 @@ function App() {
           <Route path='LatestActivities' element={<Activities />}></Route>
 
         </Route>
+
         <Route path='/parent' element={<Parent />}>
           <Route path='Home' element={< ParentHome />} />
           <Route path='payment' element={<Paiment />} />
@@ -99,6 +107,15 @@ function App() {
           <Route path='Subjects' element={< Subjects />} />
           <Route path='Notes' element={< Notes_std />} />
           <Route path='Profile' element={< Profile />} />
+
+        <Route path='/parent' element={<Parent />}></Route>
+   
+         <Route path='/student' element={<Student />}>
+         <Route path='Home' element={< Homes/> }/>
+         <Route path='Subjects' element={< Subjects/> }/>
+         <Route path='Notes' element={< Notes_std/> }/>
+          <Route path='Profile' element={< Profile/> }/>
+
         </Route>
 
 
@@ -112,6 +129,10 @@ function App() {
           <Route path='Notes' element={<Notes />} />
           <Route path='Events' element={<Eventss />} />
         </Route>
+        <Route path="/payment" element={<Payment />} />
+         <Route path="/paymentForm" element={<PForm />} />
+         <Route path="/payment/summary" element={<PaymentSummary />} />
+         <Route path="/payment/summary/Success" element={<SuccessPayment />} />
       </Routes>
     </BrowserRouter>
 

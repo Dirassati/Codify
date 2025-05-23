@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -63,6 +64,7 @@ const Studentss = ({ apiUrl }) => {
 
   if (isLoading) return <div className="loading">Loading students...</div>
   if (error) return <div className="error">Error: {error}</div>
+
 
   return (
     <div className="students-container">
