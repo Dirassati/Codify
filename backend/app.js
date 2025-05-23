@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const cron = require("node-cron");
 const accountRoutes = require("./src/routes/accountRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const inscriptionRoutes = require("./src/routes/inscriptionRoutes");
@@ -13,11 +14,12 @@ const specializationRoutes = require("./src/routes/specializationRoutes");
 const studentRoutes = require('./src/routes/studentRoutes');
 const parentRoutes = require('./src/routes/parentRoutes');
 const teacherRoutes = require('./src/routes/teacherRoutes');
+const timetableRoutes = require('./src/routes/timetableRoutes');
+const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
+const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
 const errorMiddleware = require("./src/middleware/errorMiddleware");
 const { testConnection } = require("./testDbConnection");
-const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
-const cron = require("node-cron");
-const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
+
 
 const authenRoutes = require('./src/routes/authenRoutes');
 const chatRoutes = require('./src/routes/chatRoutes');
@@ -79,6 +81,7 @@ setupSocket(io);
 app.use('/api/chats', chatRoutes);
 //add teacher 
 app.use('/api/admin/addteacher',require('./src/routes/addTeacherRoutes'))
+app.use('/api/timetable', timetableRoutes);
 
 // Test endpoint
 app.get("/", (req, res) => {

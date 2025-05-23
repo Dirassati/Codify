@@ -36,7 +36,7 @@ setFilter("validated");
 <AddStudentFormule  />
 : */}
 <div>
-<Header title="Students" role="Admin" />
+<Header title="Students" />
 {/* <SearchBar title="student" /> */}
     <div className='search-bar'>
             <div className="input-field">

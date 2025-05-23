@@ -1,248 +1,135 @@
-import axios from "axios";
-import './studentss.css'
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import leftArrowIcon from "../../../../assets/icons/leftArrow.svg";
-import rightArrowIcon from "../../../../assets/icons/rightArrow.svg";
-import searchIcon from '../../../../assets/icons/search.svg'
-import SingleStudent from "./SingleStudent";
-import Header from "../../../adminPannel/Pages/Header/Header";
-import { FaSearch } from 'react-icons/fa';
-function Studentss() {
-  const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [studentsSelected, setStudentsSelected] = useState([]);
-  const [allChecked, setAllChecked] = useState(false);
-  const [studentsDisplayed, setStudentsDisplayed] = useState([]);
-  const [studentsPageSelected, setStudentsPageSelected] = useState(1);
-  const [studentsPages, setStudentsPages] = useState([]);
-  const [studentsPagesStart, setStudentsPagesStart] = useState(1);
-  const [students, setStudents] = useState([
-    {
-      id: 3,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-      class: "1mt",
+"use client"
 
-    }, {
-      id: 4,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-      class: "1mt",
-    },
-    {
-      id: 5,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-      class: "1mt",
-    },
-    {
-      id: 6,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-      class: "1mt"
-    },
-    {
-      id: 7,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-      class: "1mt"
-    },
-    {
-      id: 8,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-      class: "1mt"
-    }, {
-      id: 9,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-      class: "1mt"
-    },
-    {
-      id: 10,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-    },
-    {
-      id: 11,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-    },
-    {
-      id: 12,
-      student_last_name: "senouci",
-      student_first_name: "jalil",
-    }
+import { useState, useEffect } from "react"
+import "./Studentss.css"
+import { FaSearch, FaChevronLeft, FaChevronRight } from "react-icons/fa"
 
-  ])
-
-  const navigate = useNavigate();
-
-
-  const itemsPerPage = 5;
-  const [totalPages, setTotalPages] = useState(0);
-
-  // useEffect(() => {
-  //   const fetchStudents = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const response = await axios.get(
-  //         `http://localhost:5000/api/inscription/students/status/${filter}`
-  //       );
-  //       console.log(response.data);
-  //       setstudents(response.data);
-  //     } catch (err) {
-  //       console.error(err);
-  //       setMessage(
-  //         err.response?.data?.message || "getting students failed  failed"
-  //       );
-  //       console.log(
-  //         err.response?.data?.message || " getting students failed failed"
-  //       );
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchStudents();
-  // }, [filter]);
+const Studentss = ({ apiUrl }) => {
+  const [students, setStudents] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+  const studentsPerPage = 5
 
   useEffect(() => {
-    // Set displayed students based on current page and filter
-
-    setTotalPages(Math.ceil(students.length / itemsPerPage));
-
-    const start = (studentsPageSelected - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    setStudentsDisplayed(students.slice(start, end));
-  }, [studentsPageSelected, students]);
-
-  useEffect(() => {
-    // Update page numbers whenever filter changes
-    setStudentsPages(Array.from({ length: totalPages }, (_, i) => i + 1));
-    if (studentsPageSelected > totalPages) {
-      setStudentsPageSelected(1);
+    const fetchStudents = async () => {
+      try {
+        if (apiUrl) {
+          const response = await fetch(apiUrl)
+          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`)
+          const data = await response.json()
+          setStudents(data)
+        } else {
+          const sampleData = [
+            { id: "20223658474", firstName: "Amine", lastName: "william", class: "1 SA 2" },
+            { id: "20223658474", firstName: "Samanta", lastName: "william", class: "1 MT 2" },
+            { id: "20223658474", firstName: "Samanta", lastName: "william", class: "2 Mt 1" },
+            { id: "20223658474", firstName: "Samanta", lastName: "william", class: "2 SA 1" },
+            { id: "20223658474", firstName: "Samanta", lastName: "william", class: "2 SA 1" },
+            { id: "20223658474", firstName: "Samanta", lastName: "william", class: "2 SA 1" },
+            { id: "20223658474", firstName: "Samanta", lastName: "william", class: "3 MT 3" },
+          ]
+          setStudents(sampleData)
+        }
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setIsLoading(false)
+      }
     }
-  }, [students.length, totalPages]);
 
-  useEffect(() => {
-    // console.log("Displayed students:", studentsDisplayed);
-  }, [studentsDisplayed]);
+    fetchStudents()
+  }, [apiUrl])
 
-  function handleCheckClick(id) {
-    if (studentsSelected.includes(id)) {
-      setStudentsSelected((prev) =>
-        prev.filter((studentSelected) => studentSelected !== id)
-      );
-    } else {
-      setStudentsSelected((prev) => [...prev, id]);
-    }
-  }
+  const filteredStudents = students.filter(
+    (student) =>
+      student.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      student.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      student.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      student.class.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
-  function handleCheckAll() {
-    if (allChecked) {
-      setStudentsSelected([]);
-    } else {
-      setStudentsSelected(students.map((student) => student.id));
-    }
-    setAllChecked((prev) => !prev);
-  }
+  const totalPages = Math.ceil(filteredStudents.length / studentsPerPage)
+  const indexOfLastStudent = currentPage * studentsPerPage
+  const indexOfFirstStudent = indexOfLastStudent - studentsPerPage
+  const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent)
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  const nextPage = () => setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev))
+  const prevPage = () => setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev))
+  const isHighlighted = (index) => index % 2 === 0
+
+  if (isLoading) return <div className="loading">Loading students...</div>
+  if (error) return <div className="error">Error: {error}</div>
 
   return (
+    <div className="students-container">
+      <h1 className="students-title">Students</h1>
 
-    <div className="studentss">
-      <div className='classes-title'>
-        Students
+      <div className="search-container">
+        <FaSearch className="search-icon" />
+        <input
+          type="text"
+          placeholder="Search"
+          className="search-input"
+          value={searchQuery}
+          onChange={(e) => {
+            setSearchQuery(e.target.value)
+            setCurrentPage(1) // reset to first page on search
+          }}
+        />
       </div>
-    
-              <div className="search-container">
-                 <input type="text" placeholder="selecte class" className="search-input" />
-                 <span className="search-icon"> <FaSearch /></span>
-               </div>
 
-      <div className="all-students">
-        <div className="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  <input
-                    type="checkbox"
-                    checked={allChecked}
-                    onChange={handleCheckAll}
-                  />
-                </th>
-
-                <th>Id</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Class</th>
-
-
+      <div className="table-container">
+        <table className="students-table">
+          <thead >
+            <tr >
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Class</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentStudents.map((student, index) => (
+              <tr key={index} className={isHighlighted(index) ? "highlighted-row" : ""}>
+                <td>{student.id}</td>
+                <td>{student.firstName}</td>
+                <td>{student.lastName}</td>
+                <td>{student.class}</td>
               </tr>
-            </thead>
-            <tbody>
-              {studentsDisplayed.map((student) => (
-                <SingleStudent
-                  student={student}
-                  studentsSelected={studentsSelected}
-                  changed={handleCheckClick}
-                  key={student.id}
-                />
-              ))}
-            </tbody>
-          </table>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-          <div className="footer">
-            <div className="left">
-              Showing <span>{(studentsPageSelected - 1) * itemsPerPage + 1}</span>
-              -
-              <span>
-                {Math.min(
-                  studentsPageSelected * itemsPerPage,
-                  students.length
-                )}
-              </span>{" "}
-              from
-              <span> {students.length}</span> data
-            </div>
-            <div className="right">
-              <img
-                src={leftArrowIcon}
-                alt="leftIcon"
-                onClick={() => {
-                  if (studentsPagesStart > 1) {
-                    setStudentsPagesStart((prev) => prev - 1);
-                  }
-                }}
-              />
-              {studentsPages
-                .slice(studentsPagesStart - 1, studentsPagesStart + 2)
-                .map((page, i) => (
-                  <div
-                    className={studentsPageSelected === page ? "clicked" : ""}
-                    key={i}
-                    onClick={() => setStudentsPageSelected(page)}
-                  >
-                    {page}
-                  </div>
-                ))}
-              <img
-                src={rightArrowIcon}
-                alt="rightIcon"
-                onClick={() => {
-                  if (studentsPagesStart < studentsPages.length - 2) {
-                    setStudentsPagesStart((prev) => prev + 1);
-                  }
-                }}
-              />
-            </div>
-          </div>
+      <div className="pagination">
+        <div className="pagination-info">
+          Showing {indexOfFirstStudent + 1}-{Math.min(indexOfLastStudent, filteredStudents.length)} from {filteredStudents.length} data
+        </div>
+        <div className="pagination-controls">
+          <button className="pagination-arrow" onClick={prevPage} disabled={currentPage === 1}>
+            <FaChevronLeft />
+          </button>
+
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              className={`pagination-number ${currentPage === index + 1 ? "active" : ""}`}
+              onClick={() => paginate(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button className="pagination-arrow" onClick={nextPage} disabled={currentPage === totalPages}>
+            <FaChevronRight />
+          </button>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Studentss;
+export default Studentss
