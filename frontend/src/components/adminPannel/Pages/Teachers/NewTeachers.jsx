@@ -242,6 +242,7 @@ function NewTeachers() {
             </div>
           </div> {/* Closing tag for new-teacher-form__section_first */}
 
+
           <div className="new-teacher-form__section_second">
             <h2 className="new-teacher-form__title">Education</h2>
 

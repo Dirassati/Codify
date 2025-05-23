@@ -1,6 +1,5 @@
 .side-bar.teacher{
 background-color: #18A0FB;
-
 }
 
 .side-bar.teacher .links  .name,
@@ -12,16 +11,4 @@ background-color: #18A0FB;
 .side-bar.teacher .links .link.clicked *{
 color: #65D7F0;
 }
-
-.side-bar.teacher .links .link.logout{
-    margin-top: 100px;
-    border:none;
-    background-color: #18A0FB;
-}
-
-.side-bar.teacher .links .link.logout:hover{
-    opacity: 0.8;
-}
-
-
 
