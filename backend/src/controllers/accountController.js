@@ -1,13 +1,8 @@
-const {
-  createAccount,
-  modifyAccount,
-  deactivate_Account,
-  activate_Account,
-} = require("../services/accountService");
+const { createAccount, modifyAccount, deactivate_Account, activate_Account } = require("../services/accountService");
 const { sendEmail } = require("../utils/mailer");
 
 const register = async (req, res) => {
-  const { email, password, user_role, ...roleData } = req.body;
+  const { email, password, user_role, matricule, ...roleData } = req.body;
 
   // Validate input
   if (!email && !matricule) {
@@ -21,40 +16,26 @@ const register = async (req, res) => {
   }
 
   try {
-    const user = await createAccount(
-      email,
-      matricule,
-      password,
-      user_role,
-      roleData
-    );
+    const user = await createAccount(email, matricule, password, user_role, roleData);
 
     const subject = `Accès à votre compte Dirassati`;
-
     const text = `
-Bonjour ${user.name},
-
-- Email: ${user.email}
-- Mot de passe: ${user.password}
-
-
-Merci de vous connecter à la plateforme pour compléter les informations nécessaires.
-Cordialement,
-L'équipe Dirassati
-`;
-
+      Bonjour ${user.name},
+      * Email: ${user.email}
+      * Mot de passe: ${user.password}
+      Merci de vous connecter à la plateforme pour compléter les informations nécessaires.
+      Cordialement,
+      L'équipe Dirassati
+    `;
     const html = `
-<h2>Bonjour ${user.name},</h2>
-
-<ul>
-  <li><strong>Email:</strong> ${user.email}</li>
-  <li><strong>Mot de passe:</strong> ${user.password}</li>
-</ul>
-
-
-<p>Merci de vous connecter à la plateforme pour compléter les informations nécessaires.</p>
-<p>Cordialement,<br/>L'équipe Dirassati</p>
-`;
+      <h2>Bonjour ${user.name},</h2>
+      <ul>
+        <li><strong>Email:</strong> ${user.email}</li>
+        <li><strong>Mot de passe:</strong> ${user.password}</li>
+      </ul>
+      <p>Merci de vous connecter à la plateforme pour compléter les informations nécessaires.</p>
+      <p>Cordialement,<br/>L'équipe Dirassati</p>
+    `;
 
     // Send email
     await sendEmail(user.email, subject, text, html);
@@ -62,13 +43,11 @@ L'équipe Dirassati
       message: "Account created successfully",
       user, // Return the created user
     });
+
   } catch (err) {
     console.error(err);
-
     if (err.code === "23505") {
-      return res
-        .status(400)
-        .json({ message: "Email or matricule already exists" });
+      return res.status(400).json({ message: "Email or matricule already exists" });
     }
 
     if (err.message === "Parent ID does not exist") {
@@ -96,7 +75,6 @@ const updateAccount = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-
     if (err.message === "Email already exists") {
       return res.status(400).json({ message: "Email already exists" });
     }
@@ -127,7 +105,6 @@ const deactivateAccount = async (req, res) => {
     });
   } catch (err) {
     console.error("Deactivate Account Error:", err);
-
     if (err.message === "User not found") {
       return res.status(404).json({ message: "User not found" });
     }
@@ -147,7 +124,6 @@ const activateAccount = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-
     if (err.message === "User not found") {
       return res.status(404).json({ message: "User not found" });
     }

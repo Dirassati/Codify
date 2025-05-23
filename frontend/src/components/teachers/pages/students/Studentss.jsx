@@ -64,6 +64,7 @@ const Studentss = ({ apiUrl }) => {
   if (isLoading) return <div className="loading">Loading students...</div>
   if (error) return <div className="error">Error: {error}</div>
 
+
   return (
     <div className="students-container">
       <h1 className="students-title">Students</h1>
