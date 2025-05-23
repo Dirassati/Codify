@@ -1,5 +1,4 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 const cron = require("node-cron");
 const accountRoutes = require("./src/routes/accountRoutes");
@@ -35,7 +34,11 @@ app.use(
 
 app.use(
   cors({
+<<<<<<< HEAD
+    origin: "http://localhost:5173", // or an array of allowed origins
+=======
     origin: "http://localhost:5173",
+>>>>>>> 865e87dea714864c488b0681b11e3c8b876cd644
     credentials: true,
   })
 );

@@ -159,6 +159,7 @@ align-items: center;
   .new-teacher-form__submit-button:hover {
     background-color: #2563eb;
   }
+
   .spinner {
     width: 20px;
     height: 20px;
@@ -174,4 +175,5 @@ align-items: center;
       transform: rotate(360deg);
     }
   }
+
   

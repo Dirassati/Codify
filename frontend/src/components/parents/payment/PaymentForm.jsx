@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 const PaymentForm = () => {
  const navigate = useNavigate();
   const handleConfirm = () => {
-    navigate('/payment/summary');
+    navigate('/parent/payment/summary');
   };
   return (
     <div className="payment-form-container">

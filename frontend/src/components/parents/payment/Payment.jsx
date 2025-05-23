@@ -1,7 +1,7 @@
-import Header from './Header';
-import Sidebar from './Sidebar';
+import SearchHeader from '../SearchHeader'
 import StudentRow from './StudentRow';
 import './Payment.css';
+
 
 const Payment = () => {
   const students = [
@@ -12,11 +12,11 @@ const Payment = () => {
 
   return (
     <div className="payment-page">
-      <Sidebar />
+    
       <div className="main-content">
-        <Header />
+        <SearchHeader />
         <div className="content">
-          <h2 className="title">Dirassati</h2>
+       
           <div className="table-header">
             <input type="checkbox" />
             <span>Student Name</span>
