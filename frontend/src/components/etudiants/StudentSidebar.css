@@ -1,0 +1,92 @@
+/* StudentSidebar.css */
+.student-sidebar {
+  max-width: 135.73px;
+  height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.student-sidebar .title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.student-sidebar .title img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.student-sidebar .title h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #444;
+  text-align: center;
+  margin: 0;
+}
+
+.student-sidebar .links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 25px;
+}
+
+.student-sidebar .link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #aaa;
+  transition: all 0.2s ease-in-out;
+}
+
+.student-sidebar .link .icon-wrapper {
+  background-color: transparent;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.student-sidebar .link .icon-wrapper .MuiSvgIcon-root {
+  font-size: 27px; /* Bigger icon */
+}
+
+.student-sidebar .link .name {
+  font-size: 14px; /* Bigger text */
+  margin-top: 6px;
+  text-align: center;
+  text-transform: lowercase;
+}
+
+.student-sidebar .link.clicked .icon-wrapper {
+  background-color: #4d9eff;
+}
+
+.student-sidebar .link.clicked .icon-wrapper .MuiSvgIcon-root {
+  color: white;
+}
+
+.student-sidebar .link.clicked .name {
+  color: #4d9eff;
+  font-weight: 600;
+}
+
+.student-sidebar hr {
+  width: 60%;
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 15px 0;
+}
