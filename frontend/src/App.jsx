@@ -14,10 +14,9 @@ import Homes from './components/etudiants/Home/Std_Home'
 import Subjects from './components/etudiants/Subjects/Subjects'
 import Notes_std from './components/etudiants/Notes/Notes'
 import Profile from './components/etudiants/Profile/Profile'
-import Homes from './components/etudiants/Home/Std_Home'
-import Subjects from './components/etudiants/Subjects/Subjects'
-import Notes_std from './components/etudiants/Notes/Notes'
-import Profile from './components/etudiants/Profile/Profile'
+
+
+
 import Sparent from './components/signup/parent/Sparent'
 import Sstudent from './components/signup/student/Sstudent'
 import Dashboard from './components/adminPannel/Pages/Dashboard/Dashboard'
@@ -47,7 +46,6 @@ import Payment from './components/parents/payment/Payment';
 import PForm from './components/parents/payment/PForm';
 import PaymentSummary from './components/parents/payment/PaymentSummary';
 import SuccessPayment from './components/parents/payment/SuccessPayment';
-import AllClasses from './components/teachers/pages/classes/AllClasses'
 import ParentHome from './components/parents/home/ParentHome'
 import Paiment from './components/parents/payment/Paiment'
 import ParentProfile from './components/parents/profile/ParentProfile'
