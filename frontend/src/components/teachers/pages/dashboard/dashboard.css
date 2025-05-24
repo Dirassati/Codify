@@ -297,4 +297,61 @@
     font-size: 14px;
     color: #8a94a6;
   }
-  
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .dashboard-container {
+      padding: 10px;
+    }
+    
+    .stats-container {
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .schedule-grid {
+      overflow-x: auto;
+    }
+    
+    .time-slots,
+    .schedule-row {
+      min-width: 800px;
+    }
+    
+    .notification-dropdown {
+      width: 280px;
+      right: 10px;
+    }
+  }
+
+  /* Loading and error states */
+  .loading-state,
+  .error-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: #8a94a6;
+    font-size: 16px;
+  }
+
+  .error-state {
+    color: #ff7a59;
+  }
+
+  /* Enhanced class cells for better data display */
+  .class-cell.has-class {
+    background-color: #f8f9ff;
+    border-color: #0099ff;
+  }
+
+  .class-cell.has-class:hover {
+    background-color: #f0f4ff;
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+  }
+
+  /* Subject indicator */
+  .class-subject {
+    font-size: 11px;
+    color: #0099ff;
+    margin-top: 2px;
+  }
