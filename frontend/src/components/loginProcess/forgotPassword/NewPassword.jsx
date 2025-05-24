@@ -29,8 +29,8 @@ async function handleClick() {
     }
 else{
     try {
-        const res =axios.post('',{token,password1});
-        console.log(res.data)
+        const res =axios.post('http://localhost:5000/api/auth/reset-password',{token,password1});
+        console.log(res.message)
     } catch (error) {
         console.log(error.response?.data?.message || "failed");
     }

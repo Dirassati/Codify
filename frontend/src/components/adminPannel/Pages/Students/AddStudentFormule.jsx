@@ -15,6 +15,7 @@ function AddStudentFormule() {
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [error,setError]=useState(null);
   const [birthCertificateFile, setBirthCertificateFile] = useState(null);
   const [proofOfResidenceFile, setProofOfResidenceFile] = useState(null);
   const [previousSchoolRecords, setPreviousSchoolRecords] = useState(null);
@@ -171,6 +172,7 @@ function AddStudentFormule() {
   async function createParentAcc(e) {
     e.preventDefault();
     setParentExist(true);
+    setIsLoading(true);
     try {
 
       const response = await axios.post("http://localhost:5000/api/inscription/parent", parentInfo);
@@ -278,6 +280,31 @@ function AddStudentFormule() {
       console.log("parent data already here");
       setAddChild(true);
     }
+  }
+
+
+  if (isLoading) {
+    return (
+      <div className="profile-container">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading  data...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="profile-container">
+        <div className="error-container">
+          <p className="error-message">{error}</p>
+          <button className="retry-button" onClick={() => window.location.reload()}>
+            Retry
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (

@@ -1,12 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './allclasses.css'
 import Classe from './Classe'
 import { useNavigate } from 'react-router-dom'
 
 function AllClasses() {
+    const [loading,seLoading]=useState(false);
+      const [error,setError]=useState(null);
+const [classes,setClasses]=useState([])
+
 const navigate=useNavigate();
 
-    const classes = [
+
+useEffect(()=>{
+//fetch
+
+ const data = [
         {
             id:1,
             title: "2J",
@@ -58,10 +66,37 @@ const navigate=useNavigate();
         },
 
     ]
+    setClasses(data)
+},[])
+   
 
 
     const [index,setIndex]=useState(null)
 
+
+      if (loading) {
+    return (
+      <div className="notes-container">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading semester data...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="notes-container">
+        <div className="error-container">
+          <p className="error-message">{error}</p>
+          <button className="retry-button" onClick={() => window.location.reload()}>
+            Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
     return (
         <div className='allclasses'>
 

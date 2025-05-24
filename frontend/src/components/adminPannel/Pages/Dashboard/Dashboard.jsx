@@ -7,9 +7,13 @@ import schoolperformance from '../../../../assets/images/schoolperformance.svg'
 import schoolfinance from '../../../../assets/images/schoolfinance.svg'
 import schoolcalendar from '../../../../assets/images/schoolcalendar.svg'
 import unpaiedstudents from '../../../../assets/images/unpaidstudent.svg'
-
+import { useNavigate } from 'react-router-dom'
+import { usePageContext } from '../../../../contexts/PageContext'
 
 function Dashboard() {
+const navigate=useNavigate();
+const {setPage}=usePageContext();
+
   return (
     <div className='dashboard'>
       <Header title="Dashboard" />
@@ -50,28 +54,25 @@ function Dashboard() {
           </div>
 
 
-<div className=" charts school-performance">
+<div className=" charts chart school-performance" onClick={()=>{navigate('/adminpannel/Finance');setPage(5)}}>
   <img src={schoolperformance} alt="school performance chart" />
 </div>
 
 <div className="charts school-calendar-finance">
-  <div >
+  <div className='chart'>
     <img src={schoolfinance} alt="school finance chart" />
   </div>
-  <div >
+  <div className='chart'>
     <img src={schoolcalendar} alt="school calendar" />
   </div>
 </div>
 
-<div className=" charts school-performance">
+<div className=" charts chart school-performance" onClick={()=>{navigate('/adminpannel/Finance');setPage(5)}} >
   <img src={unpaiedstudents} alt="school performance chart" />
 </div>
         </div>
 
-        <div className="right-bar">
-
-
-        </div>
+   
       </div>
     </div>
   )

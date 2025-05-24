@@ -1,43 +1,22 @@
 import React, { useState,useEffect } from 'react'
 import SearchHeader from '../SearchHeader'
 import SingleChild from '../home/SingleChild'
+import {useAuth} from '../../../contexts/AuthContext'
+import axios from 'axios'
 function Reregistration() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [children,setChildren]=useState([]);
+  const {user}=useAuth();
 
   useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true)
       try {
-        // In a real app, this would be a fetch call to your API
-        // const response = await fetch('/api/profile')
-        // const data = await response.json()
-
-        // Simulating API response delay
-        await new Promise((resolve) => setTimeout(resolve, 800))
-
-        // Sample data that would come from the API
-         const children = [
-    {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    },
-     {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    },
-     {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    }
-
-  ];
-
-     setChildren(children);
+  
+ const response =await axios.get(`http://localhost:5000/parents/${user.id}/children`);
+console.log(response.data);
+        setChildren(response.data);
        
         setLoading(false)
       } catch (err) {
