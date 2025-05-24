@@ -65,7 +65,6 @@ const createParentInscription = async (parentData) => {
   }
 };
 
-
 const addStudentToInscription = async (parentInscriptionId, studentData) => {
   const {
     student_last_name,

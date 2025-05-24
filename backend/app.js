@@ -15,6 +15,7 @@ const parentRoutes = require('./src/routes/parentRoutes');
 const teacherRoutes = require('./src/routes/teacherRoutes');
 const timetableRoutes = require('./src/routes/timetableRoutes');
 const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
+const notesRoutes = require('./src/routes/notesRoutes');
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
 const errorMiddleware = require("./src/middleware/errorMiddleware");
 const { testConnection } = require("./testDbConnection");
@@ -34,6 +35,7 @@ const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5000;
  
+
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -76,6 +78,8 @@ app.use('/api/chats', chatRoutes);
 //add teacher 
 app.use('/api/admin/addteacher',require('./src/routes/addTeacherRoutes'))
 app.use('/api/timetable', timetableRoutes);
+app.use('/api/notes', notesRoutes);
+notesService.initializeNotesForNewStudents();
 
 // Test endpoint
 app.get("/", (req, res) => {
