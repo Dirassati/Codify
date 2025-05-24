@@ -23,7 +23,7 @@ module.exports = {
     }
   },
 
-  async assignSubjectsToGrade(req, res) {
+ async assignSubjectsToGrade(req, res) {
     try {
       const { gradeId, subjects, specializationId } = req.body;
       const grade = await gradeService.getGradeById(gradeId);
@@ -42,6 +42,15 @@ module.exports = {
         const spec = await specializationService.getSpecializationById(specializationId);
         if (!spec) {
           return res.status(404).json({ message: "Specialization not found" });
+        }
+      }
+
+      // Validate subjects data including coefficient
+      for (const subject of subjects) {
+        if (subject.coefficient && (isNaN(subject.coefficient) || subject.coefficient <= 0)) {
+          return res.status(400).json({ 
+            message: "Coefficient must be a positive number" 
+          });
         }
       }
 

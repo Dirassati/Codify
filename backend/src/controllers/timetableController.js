@@ -61,7 +61,7 @@ const generateAndSave = async (req, res) => {
       warnings: result.warnings
     });
   } catch (error) {
-    console.error('🛑 Error during timetable generation:', error);
+    console.error('Error during timetable generation:', error);
     res.status(500).json({ success: false, error: 'Internal server error' });
   }
 };
@@ -113,7 +113,7 @@ const getTimetable = async (req, res) => {
 
     res.status(200).json({ success: true, timetable: formatted });
   } catch (error) {
-    console.error('🛑 Error fetching timetable:', error);
+    console.error('Error fetching timetable:', error);
     res.status(500).json({ success: false, error: 'Internal server error' });
   }
 };
@@ -184,8 +184,6 @@ const getTeacherTimetable = async (req, res) => {
 };
 
 module.exports = {
-  dryRun,
-  generateAndSave,
   getTimetable,
   generateAllGroupsDryRun,
   getStudentTimetable,
