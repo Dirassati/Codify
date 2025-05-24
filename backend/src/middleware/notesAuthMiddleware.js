@@ -1,6 +1,6 @@
 const { verifyToken } = require('../utils/tokenUtils');
 
-const authenticate = (req, res, next) => {
+const notesAuthenticate = (req, res, next) => {
   const token = req.header('Authorization');
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.'});
@@ -18,4 +18,4 @@ const authenticate = (req, res, next) => {
   }
 };
 
-module.exports = { authenticate }; 
+module.exports = notesAuthenticate;

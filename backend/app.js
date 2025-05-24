@@ -15,9 +15,9 @@ const parentRoutes = require('./src/routes/parentRoutes');
 const teacherRoutes = require('./src/routes/teacherRoutes');
 const timetableRoutes = require('./src/routes/timetableRoutes');
 const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
+const notesRoutes = require('./src/routes/notesRoutes');
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
-const errorMiddleware = require("./src/middleware/errorMiddleware");
-const { testConnection } = require("./testDbConnection");
+const notesService = require('./src/services/notesService');
 
 
 dotenv.config();
@@ -25,20 +25,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
  
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
 
 app.use(
   cors({
-<<<<<<< HEAD
-    origin: "http://localhost:5173", // or an array of allowed origins
-=======
     origin: "http://localhost:5173",
->>>>>>> 865e87dea714864c488b0681b11e3c8b876cd644
     credentials: true,
   })
 );
@@ -46,7 +36,6 @@ app.use(
 app.use(express.json());
 
 // Routes
-app.use("/api", accountRoutes);
 app.use("/api", accountRoutes);
 app.use("/api", authRoutes);
 app.use("/api/inscription", inscriptionRoutes);
@@ -61,6 +50,8 @@ app.use('/api', parentRoutes);
 app.use('/api', teacherRoutes);
 app.use("/api/reinscription", reinscriptionRoutes);
 app.use('/api/timetable', timetableRoutes);
+app.use('/api/notes', notesRoutes);
+notesService.initializeNotesForNewStudents();
 
 // Test endpoint
 app.get("/", (req, res) => {
