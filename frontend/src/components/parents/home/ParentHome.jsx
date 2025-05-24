@@ -6,45 +6,23 @@ import { useState, useEffect } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom'
 import { FaBell, FaSearch } from 'react-icons/fa';
+import {useAuth} from '../../../contexts/AuthContext'
+import axios from 'axios'
 
 function ParentHome() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [children, setChildren] = useState([]);
-
+const {user}=useAuth();
   useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true)
       try {
-        // In a real app, this would be a fetch call to your API
-        // const response = await fetch('/api/profile')
-        // const data = await response.json()
+  const response =await axios.get(`http://localhost:5000/parents/${user.id}/children`);
+console.log(response.data);
 
-        // Simulating API response delay
-        await new Promise((resolve) => setTimeout(resolve, 800))
-
-        // Sample data that would come from the API
-        const children = [
-          {
-            student_first_name: "student1",
-            student_last_name: "ss",
-            student_grade: "VV"
-          },
-          {
-            student_first_name: "student1",
-            student_last_name: "ss",
-            student_grade: "VV"
-          },
-          {
-            student_first_name: "student1",
-            student_last_name: "ss",
-            student_grade: "VV"
-          }
-
-        ];
-
-        setChildren(children);
+        setChildren(response.data);
 
         setLoading(false)
       } catch (err) {
@@ -98,20 +76,6 @@ function ParentHome() {
 
         <button className='add-child-btn' onClick={() => { navigate('/parent/AddChildFormule') }}><AddIcon /> Add Child</button>
       </div>
-      {/* <div className="search-wrappe">
-            <div className="search-field">
-              <div className="search-container">
-                <input type="text" className="search-input" placeholder="Search" />
-                <img src={SearchIcon} alt="Search" className="search-icon" />
-                <div className="notification-icon" onClick={()=>{navigate('/parent/Notifications')}}>
-                  <img src={NotificationIcon} alt="Notifications" />
-                </div>
-               
-              </div>
-             
-            </div>
-              <button className='add-child-btn' onClick={()=>{navigate('/parent/AddChildFormule')}}><AddIcon /> Add Child</button>
-      </div> */}
 
       <div className='children all-students'>
 

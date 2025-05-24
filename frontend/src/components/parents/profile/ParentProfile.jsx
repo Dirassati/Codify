@@ -5,6 +5,10 @@ import { useState, useEffect } from "react"
 import { Eye, EyeOff, Upload } from "lucide-react"
 // import "./profile.css"
 import SearchHeader from '../SearchHeader'
+import {useAuth} from '../../../contexts/AuthContext'
+import axios from 'axios'
+
+
 const ParentProfile = () => {
   const [profileData, setProfileData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -16,6 +20,7 @@ const ParentProfile = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+const {user}=useAuth();
 
   // Form states
   const [formData, setFormData] = useState({
@@ -37,28 +42,13 @@ const ParentProfile = () => {
     const fetchProfileData = async () => {
       setLoading(true)
       try {
-        // In a real app, this would be a fetch call to your API
-        // const response = await fetch('/api/profile')
-        // const data = await response.json()
 
-        // Simulating API response delay
-        await new Promise((resolve) => setTimeout(resolve, 800))
-
-        // Sample data that would come from the API
-        const data = {
-          firstName: "malak",
-          lastName: "saadi",
-         phoneNumber: "+000000",
-    email: "aaa@gmail.com",
-          address: "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
-          profession: "teacher",
-    civilStatus: "none",
-    childsNumber: "3",
-        }
-
-        setProfileData(data)
+      const response =await axios .get(`http://localhost:5000/api/inscription/parents/${user.id}`);
+      
+console.log(response.data)
+        setProfileData(response.data)
         setFormData({
-          ...data,
+          ...response.data,
           currentPassword: "",
           newPassword: "",
           confirmPassword: "",
@@ -95,8 +85,20 @@ const ParentProfile = () => {
       alert("New password and confirm password do not match!")
       return
     }
-    // In a real app, you would send the password update to your API
-    alert("Password updated successfully!")
+    
+    try {
+      const response=await axios.post("http://localhost:5000/api/auth/change-password",{
+  newPassword: formData.newPassword,
+  currentPassword: formData.currentPassword,
+  userId: user.id
+}
+
+)
+alert("Password updated successfully!")
+    } catch (error) {
+      console.log("error changing the password");
+      setError("changing password failed")
+    }
   }
 
   const handleFileSelect = (file) => {

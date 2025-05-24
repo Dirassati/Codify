@@ -11,10 +11,10 @@ function ForgotPassword() {
   async  function handleClick() {
    
 try {
-    const res=axios.post('',{email});
-        console.log(res.data);
-        // navigate('/verification');
-        // localStorage.setItem("email",email);
+    const res=axios.post('http://localhost:5000/api/auth/forgot-password',{email});
+        console.log(res.resetToken);
+        navigate('/verification');
+        localStorage.setItem("resetToken",res.resetToken);
         
 } catch (error) {
     console.log(error.response?.data?.message||"failed");

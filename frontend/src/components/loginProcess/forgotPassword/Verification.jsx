@@ -6,7 +6,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 function Verification() {
   const navigate = useNavigate();
-  const email = localStorage.getItem("email");
+  const resetToken = localStorage.getItem("resetToken");
   const [values, setValues] = useState(["", "", "", ""]);
   const inputsRef = useRef([]);
 
@@ -65,9 +65,9 @@ function Verification() {
 
       navigate('/newpassword');
       try {
-        const res = axios.post('', { email, code });
-        console.log(res.data);
-        localStorage.setItem("token",res.data.token);
+        const res = axios.post('http://localhost:5000/api/auth/verify-reset-code', { code,resetToken });
+        console.log(res.message);
+        localStorage.setItem("token",res.token);
       } catch (error) {
         console.log(error.response?.data?.message || "failed");
       }
@@ -82,8 +82,8 @@ function Verification() {
 
     console.log("send new code");
     try {
-      const res = axios.post('', { email });
-      console.log(res.data);
+      const res = axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+      console.log(res.message);
       // navigate('/verification');
       setResend(prev => !prev);
 

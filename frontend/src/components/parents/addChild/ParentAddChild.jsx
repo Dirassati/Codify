@@ -8,6 +8,7 @@ import axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../contexts/AuthContext';
 
 
 
@@ -24,7 +25,7 @@ const navigate = useNavigate();
   const [previousSchoolRecords, setPreviousSchoolRecords] = useState(null);
   const [immunizationRecords, setImmunizationRecords] = useState(null);
 const [message,setMessage]=useState("");
-
+const {user}=useAuth();
 
 
 
@@ -171,35 +172,34 @@ setIsLoading(true);
     // }
 
 
-    // const parentId=localStorage.getItem('parentId');
-   
+ 
+try {
+   //  user.id is parent id
+   const parentId=user.id;
+  const res=await axios.post(`http://localhost:5000/api/inscription/${parentId}/students`,formData,
+    {
+      headers:{"Content-Type": "multipart/form-data",}
+    },
+  );
 
-// try {
+  console.log(res.data.student);
+  navigate('/parent/home')
   
-//   const res=await axios.post(`http://localhost:5000/api/inscription/${parentId}/students`,formData,
-//     {
-//       headers:{"Content-Type": "multipart/form-data",}
-//     },
-//   );
+} catch (err) {
+  console.error(err);
+  setMessage(err.response?.data?.message || "adding student failed failed");
+  console.log(err.response?.data?.message || "adding student failed failed")
+}
 
-//   console.log(res.data.student);
-//   navigate('/addchild?')
-  
-// } catch (err) {
-//   console.error(err);
-//   setMessage(err.response?.data?.message || "adding student failed failed");
-//   console.log(err.response?.data?.message || "adding student failed failed")
-// }
-
-// finally{
-//   setIsLoading(false);
-// }
+finally{
+  setIsLoading(false);
+}
 
 
 
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key}:`, value);
-    // }
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
   }
 
   return (

@@ -11,9 +11,10 @@ import logo from "../../assets/images/logoo1.svg"
 
 function ParentSideBar(props) {
     const [index, setIndex] = useState(1);
-      
+      const navigate=useNavigate();
     useEffect(() => {
-        setIndex(1)
+        setIndex(1);
+    
     }, [])
 
     const menuItems = [
