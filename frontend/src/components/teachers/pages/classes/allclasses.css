@@ -1,12 +1,14 @@
 .allclasses{
+  
     padding: 20px;
     font-family: Arial, sans-serif;
 }
 
 .classes-container{
+    justify-content: center;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2px;
+    grid-template-columns: 300px 300px 300px;
+    gap: 20px;
 }
 
 .classes-title{
@@ -21,7 +23,7 @@ margin-bottom: 50px;
 
 .group-card {
     padding: 10px;
-    width: 322px;
+    width: 250px;
     min-height: 180px;
     background-color: #FCFDFF;
     border-radius: 20px;
