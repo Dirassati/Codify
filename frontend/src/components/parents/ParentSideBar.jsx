@@ -8,14 +8,13 @@ import LogoutIcon from "@mui/icons-material/Logout"
 import SettingsIcon from "@mui/icons-material/Settings"
 import { Link, useNavigate } from "react-router-dom"
 import logo from "../../assets/images/logoo1.svg"
+import { usePageContext } from "../../contexts/PageContext";
 
 function ParentSideBar(props) {
-    const [index, setIndex] = useState(1);
+  const {page,setPage}=usePageContext();
+ 
       const navigate=useNavigate();
-    useEffect(() => {
-        setIndex(1);
-    
-    }, [])
+
 
     const menuItems = [
         { id: 1, label: "home", icon: <HomeIcon />, route: "home" },
@@ -57,10 +56,10 @@ function ParentSideBar(props) {
       key={item.id}
       to={item.route}
       onClick={
-        ()=>{   setIndex(item.id)}
+        ()=>{   setPage(item.id)}
        
       }
-      className={`link ${index === item.id ? "clicked" : ""}`}
+      className={`link ${page === item.id ? "clicked" : ""}`}
     >
       <div className="icon-wrapper">{item.icon}</div>
       <div className="name">{item.label}</div>
