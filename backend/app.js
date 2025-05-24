@@ -1,5 +1,4 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 const cron = require("node-cron");
 const accountRoutes = require("./src/routes/accountRoutes");
@@ -19,8 +18,6 @@ const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
 const notesRoutes = require('./src/routes/notesRoutes');
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
 const notesService = require('./src/services/notesService');
-const errorMiddleware = require("./src/middleware/errorMiddleware");
-const { testConnection } = require("./testDbConnection");
 
 
 dotenv.config();

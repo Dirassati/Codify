@@ -1,7 +1,8 @@
-import Sidebar from './Sidebar';
-import Header from './Header';
+
+import SarchHeader from '../SearchHeader';
 import './PaymentSummary.css';
 import { useNavigate } from 'react-router-dom';
+import SearchHeader from '../SearchHeader';
 
   
 
@@ -10,13 +11,13 @@ const PaymentSummary = () => {
     const navigate = useNavigate();
 
   const handleConfirmPayment = () => {
-    navigate('/payment/summary/Success');
+    navigate('/parent/payment/Success');
   };
   return (
     <div className="payment-page">
-      <Sidebar />
+ 
       <div className="main-content">
-        <Header />
+        <SearchHeader />
         <div className="payment-summary-container">
           <div className="payment-details">
             <h2 className="title">Payment</h2>

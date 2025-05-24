@@ -68,11 +68,11 @@
   transform: translate(-50%, -50%);
 }
 
-.form-group {
+.payment-form-container .form-group {
   margin-bottom: 20px;
 }
 
-.form-group label {
+.payment-form-container .form-group label {
   display: block;
   font-size: 14px;
   color: #1e40af;
@@ -80,7 +80,7 @@
   margin-bottom: 5px;
 }
 
-.input-field {
+.payment-form-container .input-field {
   width: 100%;
   padding: 10px;
   border: 1px solid #e0e0e0;
@@ -91,7 +91,7 @@
   outline: none;
 }
 
-.input-field.small {
+.payment-form-container .input-field.small {
   width: 100px;
 }
 

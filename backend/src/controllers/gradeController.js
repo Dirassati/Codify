@@ -45,7 +45,6 @@ module.exports = {
         }
       }
 
-      // Validate subjects data including coefficient
       for (const subject of subjects) {
         if (subject.coefficient && (isNaN(subject.coefficient) || subject.coefficient <= 0)) {
           return res.status(400).json({ 
