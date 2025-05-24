@@ -51,6 +51,7 @@ module.exports = {
   forgotPassword: async (req, res) => {
     try {
       const { email } = req.body;
+      console.log("email :",email);
       const user = await userModel.findByEmail(email);
       
       if (!user) return res.status(200).json({ message: 'If email exists, a code was sent' });
@@ -76,7 +77,8 @@ module.exports = {
   verifyResetCode: async (req, res) => {
     try {
       const { code , resetToken } = req.body;
-
+      console.log('code ',code);
+      console.log('reset token ',resetToken);
       const { email, purpose, exp } = jwt.verify(resetToken, process.env.JWT_SECRET);
     if (purpose !== 'password_reset_request'|| Date.now() >= exp * 1000) {
       return res.status(400).json({ message: 'Invalid token' });
@@ -100,6 +102,8 @@ module.exports = {
   resetPassword: async (req, res) => {
     try {
       const { token, newPassword } = req.body;
+      console.log('token ',token);
+      console.log('newPassword ',newPassword);
       const { userId } = jwt.verify(token, process.env.JWT_SECRET);
       
       if (!userId) return res.status(401).json({ message: 'Invalid token' });
@@ -117,6 +121,8 @@ module.exports = {
   changePassword: async (req, res) => {
     try {
       const { currentPassword, newPassword } = req.body;
+      console.log("currentPassword",currentPassword);
+      console.log("newPassword",newPassword);
       const user = await userModel.findById(req.user.id);
       
       const validPassword = await bcrypt.compare(currentPassword, user.password);

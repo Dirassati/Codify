@@ -26,6 +26,7 @@ const http = require('http');
 const socketConfig = require('./src/config/socket');
 const setupSocket = require('./src/services/SocketService'); 
 /*const searchRoutes = require('./routes/searchRoutes');*/
+const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();

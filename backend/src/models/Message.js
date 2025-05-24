@@ -9,7 +9,7 @@ const saveMessage = async (chatId, senderId, content) => {
   return rows[0];
 };
 // Get paginated messages
-  getMessages: async (chat_id, limit = 50, offset = 0) => {
+  const getMessages= async (chat_id, limit = 50, offset = 0) => {
     const { rows } = await db.query(
       `SELECT m.*, u.username as sender_name
        FROM messages m
@@ -23,7 +23,7 @@ const saveMessage = async (chatId, senderId, content) => {
   };
 
   // Mark messages as read
-  markAsRead: async (chat_id, user_id) => {
+  const markAsRead = async (chat_id, user_id) => {
     await db.query(
       `UPDATE messages
        SET is_read = true
