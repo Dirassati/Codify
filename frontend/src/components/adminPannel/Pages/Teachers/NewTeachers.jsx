@@ -212,7 +212,8 @@ function NewTeachers() {
                   />
                 </div>
               </div>
-            </div>
+            
+
 
             <div className="new-teacher-form__row">
               <div className="new-teacher-form__group">
@@ -240,8 +241,11 @@ function NewTeachers() {
                 />
               </div>
             </div>
-          </div> {/* Closing tag for new-teacher-form__section_first */}
 
+            
+
+            
+          </div>
 
           <div className="new-teacher-form__section_second">
             <h2 className="new-teacher-form__title">Education</h2>
@@ -331,6 +335,7 @@ function NewTeachers() {
             >
               {loading ? <div className="spinner"></div> : 'Submit'}
             </button>
+          </div>
           </div>
         </form>
       </div>

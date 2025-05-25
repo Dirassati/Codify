@@ -1,0 +1,55 @@
+.parent-home h2{
+font-family: Poppins;
+font-weight: 700;
+font-size: 32px;
+line-height: 100%;
+letter-spacing: 0%;
+color:#18A0FB;
+
+}
+
+
+.parent-header-left{
+  display: flex;
+  width :600px;
+  gap: 20px;
+}
+
+.parent-home .parent-header {
+   
+    
+  display: flex;
+  justify-content: space-between;
+    
+}
+
+/* .parent-home .ssearch-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+} */
+
+.parent-home  .add-child-btn{
+border: none;
+font-family: Poppins;
+font-weight: 400;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+background-color: #4C96F6;
+color: #fff;
+cursor: pointer;
+width: 207px;
+height: 60px;
+gap: 10px;
+border-radius: 40px;
+padding-top: 16px;
+padding-right: 43px;
+padding-bottom: 16px;
+padding-left: 43px;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+

@@ -3,6 +3,7 @@
     grid-template-columns: 300px 1fr;
     height: 100vh;
     overflow: hidden;
+position: relative;
   }
   
   .tteacher .sidebar {
@@ -18,3 +19,59 @@
     height: 100vh;
     overflow-y: auto;
   }
+
+
+
+  .logout-confirmation{
+    z-index: 90;
+    width: 600px;
+    border-radius: 20px;
+    border-width: 1px;
+    position: absolute;
+    top: 200px;
+    right: 500px;
+    border: 1px solid #18A0FB;
+    background-color: #fff;
+    padding: 20px;
+    color: #18A0FB;
+    font-family: Roboto;
+  }
+
+  .logout-confirmation p{
+    font-family: Roboto;
+font-weight: 600;
+font-size: 15px;
+line-height: 100%;
+letter-spacing: 0%;
+color: #000000A1;
+
+  }
+
+    .logout-confirmation div{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .logout-confirmation button{
+    width: 180px;
+height:40px;
+border-width: 1px;
+border-radius: 7px;
+border: 1px solid #18A0FB;
+display: block;
+cursor: pointer;
+  }
+
+  .logout-confirmation .annuler{
+    color: #18A0FB;
+    background-color: #fff;
+  }
+
+  .logout-confirmation .confirmer{
+  background-color: #18A0FB;
+  color:#fff;
+}
+

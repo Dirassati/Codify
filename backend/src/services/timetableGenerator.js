@@ -59,7 +59,7 @@ class OptimizedTimetableGenerator {
           results[group.id] = result;
           result.success ? successCount++ : failureCount++;
         } catch (error) {
-          console.error(`❌ Failed group ${group.id}:`, error.message);
+          console.error(`Failed group ${group.id}:`, error.message);
           results[group.id] = { success: false, error: error.message };
           failureCount++;
         }
@@ -70,7 +70,7 @@ class OptimizedTimetableGenerator {
              conflicts.classroomConflicts > 0 || 
              conflicts.groupConflicts > 0) && 
              this.conflictResolutionAttempts < this.maxConflictResolutionAttempts) {
-        console.log(`🔄 Resolving conflicts (attempt ${this.conflictResolutionAttempts + 1})`);
+        console.log(`Resolving conflicts (attempt ${this.conflictResolutionAttempts + 1})`);
         await this.resolveConflicts(results, sortedGroups);
         conflicts = this.checkGlobalConflicts();
         this.conflictResolutionAttempts++;
@@ -99,7 +99,7 @@ class OptimizedTimetableGenerator {
         summary: this.generateSummary(results)
       };
     } catch (error) {
-      console.error('❌ Global generation failed:', error);
+      console.error('Global generation failed:', error);
       return { success: false, error: error.message };
     }
   }
@@ -184,7 +184,7 @@ class OptimizedTimetableGenerator {
   }
 
   async generateAndSaveGroupTimetable(group, strictMode = true) {
-    console.log(`🧪 Generating timetable for group ${group.id} (${group.level})`);
+    console.log(`Generating timetable for group ${group.id} (${group.level})`);
     
     const subjects = await this.getGroupSubjects(group);
     const timetable = this.initializeTimetable();
@@ -243,10 +243,10 @@ class OptimizedTimetableGenerator {
       }
       
       await client.query('COMMIT');
-      console.log(`✅ Successfully saved timetable for group ${groupId}`);
+      console.log(`Successfully saved timetable for group ${groupId}`);
     } catch (error) {
       await client.query('ROLLBACK');
-      console.error(`❌ Transaction failed for group ${groupId}:`, error);
+      console.error(`Transaction failed for group ${groupId}:`, error);
       throw error;
     } finally {
       client.release();
@@ -364,7 +364,7 @@ class OptimizedTimetableGenerator {
     if (!teacherCache.has(subjectId)) {
       const teacher = await this.getTeacherForSubject(groupId, subjectId);
       if (!teacher) {
-        console.warn(`⚠️ No teacher for subject ${subjectId} in group ${groupId}`);
+        console.warn(`No teacher for subject ${subjectId} in group ${groupId}`);
         return null;
       }
       teacherCache.set(subjectId, teacher);
@@ -376,7 +376,7 @@ class OptimizedTimetableGenerator {
     if (!classroomCache.has(subject.id)) {
       const classrooms = await this.getAvailableClassrooms(group, subject);
       if (!classrooms.length) {
-        console.warn(`⚠️ No classrooms available for ${subject.name}`);
+        console.warn(`No classrooms available for ${subject.name}`);
         return [];
       }
       classroomCache.set(subject.id, classrooms);
@@ -469,7 +469,7 @@ class OptimizedTimetableGenerator {
       return currentResult;
     }
 
-    console.log(`🔁 Attempting to assign remaining sessions for group ${group.id}`);
+    console.log(`Attempting to assign remaining sessions for group ${group.id}`);
     
     const levelConfig = this.sessionDistribution[group.level];
     const teacherCache = new Map();
@@ -721,7 +721,7 @@ class OptimizedTimetableGenerator {
   validateTimetable(timetable) {
     for (const [day, sessions] of Object.entries(timetable)) {
       if (sessions.length < this.minSessionsPerDay) {
-        console.warn(`⚠️ Only ${sessions.length} session(s) scheduled on ${day}`);
+        console.warn(`Only ${sessions.length} session(s) scheduled on ${day}`);
       }
 
       let lastEnd = 0;
@@ -759,11 +759,11 @@ class OptimizedTimetableGenerator {
   logResults(groupId, tracker) {
     const unassigned = tracker.filter(t => t.assigned < t.required);
     if (unassigned.length > 0) {
-      console.warn(`⚠️ Unassigned sessions for group ${groupId}:`, unassigned.map(
+      console.warn(`Unassigned sessions for group ${groupId}:`, unassigned.map(
         u => `${u.name} (${u.assigned}/${u.required})`
       ));
     } else {
-      console.log(`✅ All sessions assigned for group ${groupId}`);
+      console.log(`All sessions assigned for group ${groupId}`);
     }
   }
 

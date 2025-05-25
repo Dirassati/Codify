@@ -6,6 +6,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import eyeOpened from '../../../assets/icons/eyeopened.svg'
 import eyeClosed from '../../../assets/icons/eyeclosed.svg'
+import axios from 'axios';
 
 function NewPassword() {
     const navigate = useNavigate();
@@ -13,11 +14,28 @@ function NewPassword() {
     const [shown1, setShown1] = useState(false);
     const [password2, setPassword2] = useState("");
     const [shown2, setShown2] = useState(false);
+    const [message,setMessage]=useState("");
+const token=localStorage.getItem("token");
+    // const maskePassword = (password) => {
+    //     return password.replace(/./g, "*"); // Replace every character with '*'
+    // };
 
-    const maskePassword = (password) => {
-        return password.replace(/./g, "*"); // Replace every character with '*'
-    };
 
+async function handleClick() {
+    console.log(password1);
+    console.log(password2);
+    if (password1!==password2) {
+        setMessage("the fields must be the same");
+    }
+else{
+    try {
+        const res =axios.post('',{token,password1});
+        console.log(res.data)
+    } catch (error) {
+        console.log(error.response?.data?.message || "failed");
+    }
+}
+}
 
     return (
         <div className='forgot-password-container'>
@@ -59,7 +77,7 @@ function NewPassword() {
 
 
                     </div>
-                    <button onClick={() => { navigate('/success') }}>Continue</button>
+                    <button onClick={handleClick }>Continue</button>
                 </div>
             </div>
         </div>

@@ -14,6 +14,9 @@ import Homes from './components/etudiants/Home/Std_Home'
 import Subjects from './components/etudiants/Subjects/Subjects'
 import Notes_std from './components/etudiants/Notes/Notes'
 import Profile from './components/etudiants/Profile/Profile'
+
+
+
 import Sparent from './components/signup/parent/Sparent'
 import Sstudent from './components/signup/student/Sstudent'
 import Dashboard from './components/adminPannel/Pages/Dashboard/Dashboard'
@@ -33,7 +36,7 @@ import StudentCard from './components/adminPannel/Pages/Students/StudentCard'
 import NewTeachers from './components/adminPannel/Pages/Teachers/NewTeachers'
 import Dashboardd from './components/teachers/pages/dashboard/Dashboardd'
 import Studentss from './components/teachers/pages/students/Studentss'
-import Classes from './components/teachers/pages/classes/Classes'
+import Classe from './components/teachers/pages/classes/Classe'
 import Homework from './components/teachers/pages/homework/Homework'
 import Courses from './components/teachers/pages/courses/Courses'
 import Notes from './components/teachers/pages/notes/Notes'
@@ -43,6 +46,12 @@ import Payment from './components/parents/payment/Payment';
 import PForm from './components/parents/payment/PForm';
 import PaymentSummary from './components/parents/payment/PaymentSummary';
 import SuccessPayment from './components/parents/payment/SuccessPayment';
+import ParentHome from './components/parents/home/ParentHome'
+
+import ParentProfile from './components/parents/profile/ParentProfile'
+import Reregistration from './components/parents/reregistration/Reregistration'
+import ParentAddChild from './components/parents/addChild/ParentAddChild'
+import Notifications from './components/parents/notifications/Notifications'
 
 
 function App() {
@@ -82,29 +91,50 @@ function App() {
           <Route path='LatestActivities' element={<Activities />}></Route>
 
         </Route>
-        <Route path='/parent' element={<Parent />}></Route>
-   
-         <Route path='/student' element={<Student />}>
-         <Route path='Home' element={< Homes/> }/>
-         <Route path='Subjects' element={< Subjects/> }/>
-         <Route path='Notes' element={< Notes_std/> }/>
-          <Route path='Profile' element={< Profile/> }/>
+    
+
+        <Route path='/student' element={<Student />}>
+          <Route path='Home' element={< Homes />} />
+          <Route path='Subjects' element={< Subjects />} />
+          <Route path='Notes' element={< Notes_std />} />
+          <Route path='Profile' element={< Profile />} />
+        </Route>
+
+
+        <Route path='/parent' element={<Parent />}>
+          <Route path='Home' element={< ParentHome />} />
+          <Route path='Re-registartion' element={< Reregistration />} />
+          <Route path='Profile' element={< ParentProfile />} />
+          <Route path='AddChildFormule' element={<ParentAddChild />} />
+          <Route path='Notifications' element={<Notifications />} />
+          <Route path="payment" element={<Payment />} />
+
+      <Route path="payment/Success" element={<SuccessPayment />} />
+          <Route path="payment/summary" element={<PaymentSummary />} />
+           <Route path="payment/Form" element={<PForm />} />
+
+        </Route>
+
+
+        <Route path='/student' element={<Student />}>
+          <Route path='Home' element={< Homes />} />
+          <Route path='Subjects' element={< Subjects />} />
+          <Route path='Notes' element={< Notes_std />} />
+          <Route path='Profile' element={< Profile />} />
         </Route>
 
 
         <Route path='/teacher' element={<Teacher />}>
-          <Route path='Dashboard' element={<Dashboardd /> }/>
-          <Route path='Students' element={<Studentss /> }/>
-          <Route path='Classes' element={<Classes />} />
+          <Route path='Dashboard' element={<Dashboardd />} />
+          <Route path='Students' element={<Studentss />} />
+          <Route path='Classes' element={<AllClasses />} />
+          <Route path='Classe/:id' element={<Classe />} />
           <Route path='Homework' element={<Homework />} />
           <Route path='Courses' element={<Courses />} />
           <Route path='Notes' element={<Notes />} />
           <Route path='Events' element={<Eventss />} />
         </Route>
-        <Route path="/payment" element={<Payment />} />
-         <Route path="/paymentForm" element={<PForm />} />
-         <Route path="/payment/summary" element={<PaymentSummary />} />
-         <Route path="/payment/summary/Success" element={<SuccessPayment />} />
+
       </Routes>
     </BrowserRouter>
 
