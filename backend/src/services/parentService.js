@@ -20,24 +20,21 @@ exports.listParentsWithChildrenCount = async () => {
     GROUP BY p.id, u.email
     ORDER BY p.last_name ASC
   `;
-  
+
   const { rows } = await pool.query(query);
   return rows;
 };
 
-
-
 exports.getParentWithChildren = async (parentId) => {
-  const parentCheck = await pool.query(
-    `SELECT id FROM parents WHERE id = $1`,
-    [parentId]
-  );
+  const parentCheck = await pool.query(`SELECT id FROM parents WHERE id = $1`, [
+    parentId,
+  ]);
 
   if (parentCheck.rows.length === 0) {
     return {
       error: true,
       statusCode: 404,
-      message: "Parent not found"
+      message: "Parent not found",
     };
   }
 
@@ -63,7 +60,45 @@ exports.getParentWithChildren = async (parentId) => {
   );
 
   return {
-    children: children.rows
+    children: children.rows,
   };
 };
 
+exports.getParentByCardId = async (cardId) => {
+  const query = `
+  SELECT id FROM PARENTS WHERE card_id=$1
+  `;
+  const parentId = pool.query(query);
+  return parentId;
+};
+
+exports.getParentById = async (parentId) => {
+  if (!parentId) {
+    throw new Error("Parent ID is required");
+  }
+  try {
+    const { rows } = await pool.query(
+      `
+      SELECT p.*, u.email 
+      FROM parents p
+      JOIN users u ON p.id = u.id
+      WHERE p.id = $1
+    `,
+      [parentId]
+    );
+
+    if (rows.length === 0 || !rows[0].email) {
+      throw new Error("Parent not found or missing email");
+    }
+    if (!rows[0].email) {
+      console.warn(`Parent ${parentId} has no email address`);
+      // Still return the parent but without email
+      return parent;
+    }
+
+    return rows[0];
+  } catch (error) {
+    console.error(`Error fetching parent ${parentId}:`, error);
+    throw error;
+  }
+};

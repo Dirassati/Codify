@@ -19,7 +19,7 @@ exports.listStudents = async () => {
     LEFT JOIN specializations s ON e.specialization_id = s.id
     ORDER BY e.last_name ASC
   `;
-  
+
   const { rows } = await pool.query(query);
   return rows;
 };
@@ -42,21 +42,21 @@ exports.listStudentsByGroup = async (groupId) => {
     WHERE e.group_id = $1
     ORDER BY e.last_name ASC 
   `;
-  
+
   const { rows } = await pool.query(query, [groupId]);
   return rows;
 };
 
 const SPECIALIZATIONS_BY_GRADE = {
-  '1-lycee': [1, 4],
-  '2-lycee': [5, 6, 7, 9, 10, 11],
-  '3-lycee': [5, 6, 7, 9, 10, 11]
+  "1-lycee": [1, 4],
+  "2-lycee": [5, 6, 7, 9, 10, 11],
+  "3-lycee": [5, 6, 7, 9, 10, 11],
 };
 
 exports.assignSpecialization = async (studentId, specializationId) => {
   const client = await pool.connect();
   try {
-    await client.query('BEGIN');
+    await client.query("BEGIN");
 
     const studentRes = await client.query(
       `SELECT e.id, g.name as grade_name, g.level 
@@ -71,8 +71,12 @@ exports.assignSpecialization = async (studentId, specializationId) => {
     const { grade_name, level } = studentRes.rows[0];
     const gradeKey = `${grade_name}-${level.toLowerCase()}`;
 
-    if (!SPECIALIZATIONS_BY_GRADE[gradeKey]?.includes(Number(specializationId))) {
-      throw new Error(`Spécialisation non autorisée pour ce niveau (${gradeKey})`);
+    if (
+      !SPECIALIZATIONS_BY_GRADE[gradeKey]?.includes(Number(specializationId))
+    ) {
+      throw new Error(
+        `Spécialisation non autorisée pour ce niveau (${gradeKey})`
+      );
     }
 
     await client.query(
@@ -81,22 +85,22 @@ exports.assignSpecialization = async (studentId, specializationId) => {
     );
 
     const specRes = await client.query(
-      'SELECT name FROM specializations WHERE id = $1',
+      "SELECT name FROM specializations WHERE id = $1",
       [specializationId]
     );
 
-    await client.query('COMMIT');
+    await client.query("COMMIT");
 
     return {
       studentId,
       specialization: {
         id: specializationId,
-        name: specRes.rows[0]?.name || 'Inconnue'
+        name: specRes.rows[0]?.name || "Inconnue",
       },
-      grade: { name: grade_name, level }
+      grade: { name: grade_name, level },
     };
   } catch (error) {
-    await client.query('ROLLBACK');
+    await client.query("ROLLBACK");
     throw error;
   } finally {
     client.release();
@@ -127,7 +131,7 @@ exports.getAvailableSpecializations = async (studentId) => {
 
   return {
     grade: { name: grade_name, level },
-    specializations: rows
+    specializations: rows,
   };
 };
 
@@ -178,44 +182,67 @@ exports.getStudentDetails = async (studentId) => {
     ORDER BY
       sub.name ASC, en.last_name ASC
   `;
-  
+
   const { rows } = await pool.query(query, [studentId]);
-  
+
   if (rows.length === 0) {
     throw new Error("Étudiant non trouvé");
   }
-  
+
   const result = {
     student_id: rows[0].student_id,
     last_name: rows[0].last_name,
     first_name: rows[0].first_name,
-    group_name: rows[0].group_name || '-',
-    grade: rows[0].grade_name ? {
-      name: rows[0].grade_name,
-      level: rows[0].grade_level
-    } : { name: '-', level: '-' },
-    classroom: rows[0].classroom_name || '-',
-    specialization: rows[0].specialization_name || '-',
-    teachers_subjects: []
+    group_name: rows[0].group_name || "-",
+    grade: rows[0].grade_name
+      ? {
+          name: rows[0].grade_name,
+          level: rows[0].grade_level,
+        }
+      : { name: "-", level: "-" },
+    classroom: rows[0].classroom_name || "-",
+    specialization: rows[0].specialization_name || "-",
+    teachers_subjects: [],
   };
-  
+
   const seenCombinations = new Set();
-  
-  rows.forEach(row => {
+
+  rows.forEach((row) => {
     if (row.teacher_last_name && row.subject_name) {
       const key = `${row.teacher_last_name}-${row.teacher_first_name}-${row.subject_name}`;
       if (!seenCombinations.has(key)) {
         seenCombinations.add(key);
         result.teachers_subjects.push({
           teacher: {
-            last_name: row.teacher_last_name || '-',
-            first_name: row.teacher_first_name || '-'
+            last_name: row.teacher_last_name || "-",
+            first_name: row.teacher_first_name || "-",
           },
-          subject: row.subject_name || '-'
+          subject: row.subject_name || "-",
         });
       }
     }
   });
-  
+
   return result;
+};
+
+exports.getParentByStudentId = async (studentId) => {
+  const { rows } = await pool.query(
+    `
+    SELECT p.id, p.first_name, p.last_name, u.email
+    FROM parents p
+    JOIN eleve s ON s.parent_id = p.id
+    LEFT JOIN users u ON p.id = u.id
+    WHERE s.id = $1
+  `,
+    [studentId]
+  );
+
+  if (!rows.length) {
+    console.error(`No parent found for student ${studentId}`);
+    return null;
+  }
+
+  // Return the first row as a plain object
+  return rows[0];
 };

@@ -34,10 +34,10 @@ module.exports = {
   async distributeStudents() {
     const client = await pool.connect();
     try {
-      await client.query('BEGIN');
+      await client.query("BEGIN");
 
       const { rows: students } = await client.query(
-        "SELECT * FROM eleve WHERE group_id IS NULL"
+        "SELECT * FROM eleve WHERE group_id = 0"
       );
 
       let assignedCount = 0;
@@ -45,21 +45,23 @@ module.exports = {
       for (const student of students) {
         const { id: studentId, grade_id, specialization_id } = student;
 
-        const { rows: [group] } = await client.query(
+        const {
+          rows: [group],
+        } = await client.query(
           `SELECT * FROM groups 
            WHERE grade_id = $1 
            AND (specialization_id = $2 OR (specialization_id IS NULL AND $2 IS NULL))
            AND student_number < 20 
            ORDER BY student_number ASC 
-           LIMIT 1`, 
+           LIMIT 1`,
           [grade_id, specialization_id]
         );
 
         if (group) {
-          await client.query(
-            "UPDATE eleve SET group_id = $1 WHERE id = $2",
-            [group.id, studentId]
-          );
+          await client.query("UPDATE eleve SET group_id = $1 WHERE id = $2", [
+            group.id,
+            studentId,
+          ]);
           await client.query(
             "UPDATE groups SET student_number = student_number + 1 WHERE id = $1",
             [group.id]
@@ -68,10 +70,10 @@ module.exports = {
         }
       }
 
-      await client.query('COMMIT');
+      await client.query("COMMIT");
       return { count: assignedCount };
     } catch (error) {
-      await client.query('ROLLBACK');
+      await client.query("ROLLBACK");
       throw error;
     } finally {
       client.release();
@@ -124,48 +126,50 @@ module.exports = {
       `);
 
       const groupsMap = new Map();
-      
-      rows.forEach(row => {
+
+      rows.forEach((row) => {
         if (!groupsMap.has(row.group_id)) {
           groupsMap.set(row.group_id, {
             group_id: row.group_id,
             group_name: row.group_name,
-            classroom: row.classroom_id ? {
-              classroom_id: row.classroom_id,
-              classroom_name: row.classroom_name,
-              building: row.building,
-              room_number: row.room_number
-            } : null,
-            teachers: new Map()
+            classroom: row.classroom_id
+              ? {
+                  classroom_id: row.classroom_id,
+                  classroom_name: row.classroom_name,
+                  building: row.building,
+                  room_number: row.room_number,
+                }
+              : null,
+            teachers: new Map(),
           });
         }
-        
+
         const group = groupsMap.get(row.group_id);
-        
+
         if (row.teacher_id) {
           if (!group.teachers.has(row.teacher_id)) {
             group.teachers.set(row.teacher_id, {
               teacher_id: row.teacher_id,
               teacher_name: `${row.teacher_first_name} ${row.teacher_last_name}`,
-              subjects: []
+              subjects: [],
             });
           }
-          
+
           if (row.subject_id) {
             group.teachers.get(row.teacher_id).subjects.push({
               subject_id: row.subject_id,
-              subject_name: row.subject_name
+              subject_name: row.subject_name,
             });
           }
         }
       });
-      
-      return Array.from(groupsMap.values()).map(group => ({
+
+      return Array.from(groupsMap.values()).map((group) => ({
         ...group,
-        teachers: Array.from(group.teachers.values())
+        teachers: Array.from(group.teachers.values()),
       }));
     } finally {
       client.release();
     }
-  }
+  },
 };
