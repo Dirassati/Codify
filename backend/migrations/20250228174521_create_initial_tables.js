@@ -1,7 +1,3 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
 exports.up = function (knex) {
   return knex.schema
     .createTable("users", (table) => {
@@ -11,10 +7,16 @@ exports.up = function (knex) {
       table.string("password", 255).notNullable();
       table.timestamp("created_at").defaultTo(knex.fn.now());
       table.timestamp("updated_at").defaultTo(knex.fn.now());
+
+      // Modified constraints to be compatible with PostgreSQL
       table
-        .string("status", 20)
-        .defaultTo("active")
-        .checkIn(["active", "inactive", "re-inscription"]);
+        .enu("status", ["active", "inactive"], {
+          useNative: true,
+          enumName: "user_status",
+        })
+        .defaultTo("active");
+
+      // Alternative check constraint syntax
       table.check("?? IS NOT NULL OR ?? IS NOT NULL", ["email", "matricule"]);
     })
     .createTable("parents", (table) => {
@@ -88,15 +90,15 @@ exports.up = function (knex) {
     });
 };
 
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
 exports.down = function (knex) {
-  return knex.schema
-    .dropTableIfExists("admin")
-    .dropTableIfExists("eleve")
-    .dropTableIfExists("enseignant")
-    .dropTableIfExists("parents")
-    .dropTableIfExists("users");
+  return (
+    knex.schema
+      .dropTableIfExists("admin")
+      .dropTableIfExists("eleve")
+      .dropTableIfExists("enseignant")
+      .dropTableIfExists("parents")
+      .dropTableIfExists("users")
+      // For PostgreSQL, drop the enum type if it exists
+      .raw("DROP TYPE IF EXISTS user_status")
+  );
 };

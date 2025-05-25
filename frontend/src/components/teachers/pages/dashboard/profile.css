@@ -1,0 +1,125 @@
+.profile {
+    z-index: 90;
+    width: 600px;
+    border-radius: 20px;
+    border-width: 1px;
+    position: absolute;
+    top: 100px;
+    right: 300px;
+    border: 1px solid #18A0FB;
+    background-color: #fff;
+    padding: 20px;
+    color: #18A0FB;
+    font-family: Roboto;
+}
+
+.profile-title {
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: start;
+
+}
+
+.profile-picture {
+    margin-bottom: 20px;
+    width: 100px;
+    height: 80px;
+    border-radius: 50px;
+    background-color: rgb(80, 80, 201);
+}
+
+.profile-button {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    color: #18A0FB;
+    border: 1px solid #18A0FB;
+    width: fit-content;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.profile .data-container .input-container {
+    margin-bottom: 10px;
+    width: 100%;
+    height: 40px;
+    border-radius: 7px;
+    border-width: 1px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile .data-container .input-container input {
+    width: 48%;
+    height: 100%;
+    border-radius: 7px;
+    border-width: 1px;
+    border: 1px solid #18A0FB;
+    padding-left: 10px;
+}
+
+.profile .data-container .input input {
+    width: 100%;
+    height: 40px;
+
+    border-radius: 7px;
+    border-width: 1px;
+    border: 1px solid #18A0FB;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+
+.profile .change-password {
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: start;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.profile .buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: end;
+}
+
+.profile .buttons button {
+    width: 180px;
+    height: 40px;
+    border-radius: 7px;
+    border-width: 1px;
+    border: 1px solid #18A0FB;
+    cursor: pointer;
+}
+
+.profile .buttons button.annuler {
+    background-color: #fff;
+    color: #18A0FB;
+}
+
+.profile .buttons button.confirmer {
+    background-color: #18A0FB;
+    color: #fff;
+}
+
+
+.profile .data-container p {
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    color: #5D5E5E;
+    text-align: center;
+    margin-bottom: 20px;
+}

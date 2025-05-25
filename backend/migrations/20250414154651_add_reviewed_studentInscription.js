@@ -1,13 +1,3 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-
 exports.up = function (knex) {
   return knex.schema.table("eleveInscription", function (table) {
     table
