@@ -6,7 +6,6 @@ exports.up = async function (knex) {
   await knex.schema.alterTable("users", (table) => {
     table.string("user_role", 255);
   });
-
 };
 
 exports.down = async function (knex) {
@@ -14,7 +13,10 @@ exports.down = async function (knex) {
     table.dropColumn("matricule");
   });
 
-  await knex.schema.alterTable("users", (table) => {
-    table.dropColumn("role");
-  });
+  const hasValidatedColumn = await knex.schema.hasColumn("users", "role");
+  if (hasValidatedColumn) {
+    await knex.schema.alterTable("users", (table) => {
+      table.dropColumn("role");
+    });
+  }
 };

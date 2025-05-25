@@ -1,9 +1,13 @@
-const { createAccount, modifyAccount, deactivate_Account, activate_Account } = require("../services/accountService");
+const {
+  createAccount,
+  modifyAccount,
+  deactivate_Account,
+  activate_Account,
+} = require("../services/accountService");
 const { sendEmail } = require("../utils/mailer");
 
 const register = async (req, res) => {
   const { email, password, user_role, matricule, ...roleData } = req.body;
-
   // Validate input
   if (!email && !matricule) {
     return res.status(400).json({ message: "Email or matricule is required" });
@@ -16,7 +20,13 @@ const register = async (req, res) => {
   }
 
   try {
-    const user = await createAccount(email, matricule, password, user_role, roleData);
+    const user = await createAccount(
+      email,
+      matricule,
+      password,
+      user_role,
+      roleData
+    );
 
     const subject = `Accès à votre compte Dirassati`;
     const text = `
@@ -43,11 +53,12 @@ const register = async (req, res) => {
       message: "Account created successfully",
       user, // Return the created user
     });
-
   } catch (err) {
     console.error(err);
     if (err.code === "23505") {
-      return res.status(400).json({ message: "Email or matricule already exists" });
+      return res
+        .status(400)
+        .json({ message: "Email or matricule already exists" });
     }
 
     if (err.message === "Parent ID does not exist") {

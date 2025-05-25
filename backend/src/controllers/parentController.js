@@ -39,3 +39,25 @@ exports.listParentChildren = catchAsync(async (req, res) => {
   });
 });
 
+exports.getParentByCardId = catchAsync(async(req,res)=>{
+  const cardId = req.body;
+  const parentId = parentService.getParentByCardId(cardId);
+   if (result.error) {
+    return res.status(result.statusCode).json({
+      status: "error",
+      message: result.message
+    });
+  }
+  if (!parentId) {
+    return res.status(result.statusCode).json({
+      status:"error",
+      message:"this cardId doesn't exists"
+    })
+  }
+  res.status(200).json({
+    status: "success",
+    parentId: parentId,
+  });
+
+})
+
