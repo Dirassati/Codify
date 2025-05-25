@@ -1,7 +1,7 @@
 const pool = require('../db/db');
 const { hashPassword } = require('../utils/passwordUtils');
 
-const createAccount = async (email, matricule, password, user_role, roleData) => {
+const createAccount = async (email, password, user_role, matricule, roleData) => {
   const hashedPassword = await hashPassword(password);
   const client = await pool.connect();
 

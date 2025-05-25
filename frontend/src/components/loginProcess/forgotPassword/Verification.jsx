@@ -1,12 +1,14 @@
+//link succesful
 import { useState, useRef, useEffect } from 'react';
 import './verification.css'
 import Header from './Header'
 import { Navigate, useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 
 function Verification() {
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
+  const resetToken = localStorage.getItem("resetToken");
   const [values, setValues] = useState(["", "", "", ""]);
   const inputsRef = useRef([]);
 
@@ -62,16 +64,16 @@ function Verification() {
       console.log(email);
       console.log(code);
       // const num = parseInt(code, 10); 
-
-      navigate('/newpassword');
+      console.log(resetToken);
       try {
-        const res = axios.post('', { email, code });
+        const res = await axios.post('http://localhost:5000/api/auth/verify-reset-code',{ code,  resetToken });
         console.log(res.data);
-        localStorage.setItem("token",res.data.token);
+        localStorage.setItem("token",res.data.token); 
+        navigate('/newpassword');
       } catch (error) {
         console.log(error.response?.data?.message || "failed");
       }
-
+      
     }
 
 

@@ -17,12 +17,22 @@ const timetableRoutes = require('./src/routes/timetableRoutes');
 const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
 const notesRoutes = require('./src/routes/notesRoutes');
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
-const notesService = require('./src/services/notesService');
+const errorMiddleware = require("./src/middleware/errorMiddleware");
+const { testConnection } = require("./testDbConnection");
+const notesService = require("./src/services/notesService");
 
-
+const authenRoutes = require('./src/routes/authenRoutes');
+const chatRoutes = require('./src/routes/chatRoutes');
+const http = require('http');
+const socketConfig = require('./src/config/socket');
+const setupSocket = require('./src/services/SocketService'); 
+/*const searchRoutes = require('./routes/searchRoutes');*/
+const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
+
 const PORT = process.env.PORT || 5000;
  
 
@@ -32,6 +42,7 @@ app.use(
     credentials: true,
   })
 );
+
 
 app.use(express.json());
 
@@ -49,6 +60,23 @@ app.use('/api', studentRoutes);
 app.use('/api', parentRoutes);
 app.use('/api', teacherRoutes);
 app.use("/api/reinscription", reinscriptionRoutes);
+app.use('/api', accountRoutes);
+//for password reset/change
+app.use("/api/auth", authenRoutes);
+//for admin search functionality
+/*app.use('/api/search', searchRoutes);*/
+app.use('/api/admin/students/search', require('./src/routes/StudentsearchRoutes'));
+app.use('/api/admin/teachers/search', require('./src/routes/TeachersearchRoutes'));
+app.use('/api/admin/parents/search', require('./src/routes/ParentsearchRoutes'));
+
+//socket.io
+const io = socketConfig(server);
+setupSocket(io);
+
+//chats
+app.use('/api/chats', chatRoutes);
+//add teacher 
+app.use('/api/admin/addteacher',require('./src/routes/addTeacherRoutes'))
 app.use('/api/timetable', timetableRoutes);
 app.use('/api/notes', notesRoutes);
 notesService.initializeNotesForNewStudents();
