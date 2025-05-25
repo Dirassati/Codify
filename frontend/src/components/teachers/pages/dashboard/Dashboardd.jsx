@@ -1,42 +1,169 @@
-import { useRef, useState } from "react"
+"use client"
+
+import { useRef, useState, useEffect } from "react"
 import "./dashboard.css"
 import Profile from "./Profile"
 import UseClickOutside from "../../../../functions/UseClickOutside"
 
 const Dashboardd = () => {
-  const profileRef=useRef();
-  const notificationsRef=useRef();
+  const profileRef = useRef()
+  const notificationsRef = useRef()
   const [showNotifications, setShowNotifications] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
+  const [timetableData, setTimetableData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  // You'll need to replace this with the actual teacher ID
+  const teacherId = 160
+
   const toggleNotifications = () => {
-    setShowNotifications(!showNotifications);
-    setShowProfile(false);
+    setShowNotifications(!showNotifications)
+    setShowProfile(false)
   }
 
   const toggleProfile = () => {
-    setShowProfile(!showProfile);
-    setShowNotifications(false);
+    setShowProfile(!showProfile)
+    setShowNotifications(false)
   }
 
-const annuler =()=>{
-  setShowProfile(false);
-}
-
-const addProfileInfo =(info)=>{
-//http requests 
-}
-
-const changePassword =(info)=>{
-  //http requests 
+  const annuler = () => {
+    setShowProfile(false)
   }
 
-  UseClickOutside(notificationsRef,()=>{setShowNotifications(false)});
+  const addProfileInfo = (info) => {
+    //http requests
+  }
+
+  const changePassword = (info) => {
+    //http requests
+  }
+
+  // Fetch timetable data from API
+  useEffect(() => {
+    const fetchTimetable = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch( ` http://localhost:5000/api/timetable/teacher/${teacherId}`)
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch timetable data")
+        }
+
+        const data = await response.json()
+
+        if (data.success) {
+          setTimetableData(data.timetable)
+        } else {
+          throw new Error("API returned unsuccessful response")
+        }
+      } catch (err) {
+        setError(err.message)
+        console.error("Error fetching timetable:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTimetable()
+  }, [teacherId])
+
+  // Map French day names to display format
+  const dayMapping = {
+    Dimanche: { number: "1/1", name: "(Sun)" },
+    Lundi: { number: "1/2", name: "(Mon)" },
+    Mardi: { number: "1/3", name: "(Tue)" },
+    Mercredi: { number: "1/4", name: "(Wed)" },
+    Jeudi: { number: "1/5", name: "(Thu)" },
+    Vendredi: { number: "1/6", name: "(Fri)" },
+    Samedi: { number: "1/7", name: "(Sat)" },
+  }
+
+  // Time slots for the grid
+  const timeSlots = ["08:00", "09:00", "10:00", "11:00", "12:00", "Break", "13:00", "14:00", "15:00", "16:00"]
+
+  // Function to get class info for a specific day and time slot
+  const getClassForTimeSlot = (day, timeSlotIndex) => {
+    if (!timetableData || !timetableData[day]) return null
+
+    const dayClasses = timetableData[day]
+
+    // Find a class that matches this time slot
+    for (const classInfo of dayClasses) {
+      const [startTime] = classInfo.timeslot.split("-")
+      const startHour = Number.parseInt(startTime.split(":")[0])
+      const startMinute = Number.parseInt(startTime.split(":")[1])
+
+      // Map time slot index to actual hours
+      let slotHour
+      if (timeSlotIndex === 5) return null // Break slot
+      if (timeSlotIndex < 5) {
+        slotHour = 8 + timeSlotIndex
+      } else {
+        slotHour = 8 + timeSlotIndex // Accounting for break
+      }
+
+      // Check if this class starts at this time slot
+      if (
+        startHour === slotHour ||
+        (startHour < slotHour && startHour + Math.floor(classInfo.duration / 60) > slotHour)
+      ) {
+        return {
+          group: classInfo.group,
+          classroom: classInfo.classroom,
+          subject: classInfo.subject,
+        }
+      }
+    }
+
+    return null
+  }
+
+  // Render schedule rows
+  const renderScheduleRows = () => {
+    const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+
+    return days.map((day) => {
+      const dayInfo = dayMapping[day]
+
+      return (
+        <div key={day} className="schedule-row">
+          <div className="day-label">
+            <div className="day-number">{dayInfo.number}</div>
+            <div className="day-name">{dayInfo.name}</div>
+          </div>
+          {timeSlots.map((timeSlot, index) => {
+            if (timeSlot === "Break") {
+              return <div key={index} className="class-cell empty"></div>
+            }
+
+            const classInfo = getClassForTimeSlot(day, index)
+
+            return (
+              <div key={index} className={`class-cell ${!classInfo ? "empty" : ""}`}>
+                {classInfo && (
+                  <>
+                    <div className="class-info">{classInfo.group}</div>
+                    <div className="class-room">{classInfo.classroom}</div>
+                  </>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      )
+    })
+  }
+
+  UseClickOutside(notificationsRef, () => {
+    setShowNotifications(false)
+  })
+
   return (
     <div className="dashboard-container">
       <div className="header-icons">
-        <div className="notification-icon" onClick={toggleNotifications}ref={notificationsRef}>
+        <div className="notification-icon" onClick={toggleNotifications} ref={notificationsRef}>
           <svg
-          
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -64,8 +191,6 @@ const changePassword =(info)=>{
         </div>
 
         <div className="profile-icon" onClick={toggleProfile}>
-
-
           <div className="avatar"></div>
         </div>
       </div>
@@ -73,9 +198,7 @@ const changePassword =(info)=>{
       {showNotifications && (
         <div className="notification-dropdown" ref={notificationsRef}>
           <h2 className="notification-title">Notification</h2>
-
           <div className="notification-subtitle">Home Work</div>
-
           <div className="notification-card">
             <div className="notification-content">
               <div className="notification-header">
@@ -99,7 +222,6 @@ const changePassword =(info)=>{
               <p className="notification-description">Description Course: xxxxxx</p>
             </div>
           </div>
-
           <div className="notification-card">
             <div className="notification-content">
               <div className="notification-header">
@@ -123,7 +245,6 @@ const changePassword =(info)=>{
               <p className="notification-description">Description Course: Axxxxxx</p>
             </div>
           </div>
-
           <div className="notification-card">
             <div className="notification-content">
               <div className="notification-header">
@@ -150,11 +271,13 @@ const changePassword =(info)=>{
         </div>
       )}
 
+      {showProfile && (
+        <div ref={profileRef}>
+          <Profile annuler={annuler} changePassword={changePassword} addProfileInfo={addProfileInfo} />
+        </div>
+      )}
 
-
-{showProfile &&<div ref={profileRef}><Profile annuler={annuler} changePassword={changePassword} addProfileInfo={addProfileInfo} /></div>}
-
-      <h1 className="dashboard-title">Dashboardd</h1>
+      <h1 className="dashboard-title">Dashboard</h1>
 
       <div className="stats-container">
         <div className="stat-card">
@@ -223,7 +346,6 @@ const changePassword =(info)=>{
             <div className="stat-value">40</div>
           </div>
         </div>
-        
       </div>
 
       <div className="schedule-container">
@@ -234,231 +356,22 @@ const changePassword =(info)=>{
         <div className="schedule-grid">
           <div className="time-slots">
             <div className="day-label"></div>
-            <div className="time-slot">08:00</div>
-            <div className="time-slot">09:00</div>
-            <div className="time-slot">10:00</div>
-            <div className="time-slot">11:00</div>
-            <div className="time-slot">12:00</div>
-            <div className="time-slot">Break</div>
-            <div className="time-slot">13:00</div>
-            <div className="time-slot">14:00</div>
-            <div className="time-slot">15:00</div>
-            <div className="time-slot">16:00</div>
+            {timeSlots.map((slot, index) => (
+              <div key={index} className="time-slot">
+                {slot}
+              </div>
+            ))}
           </div>
 
-          <div className="schedule-row">
-            <div className="day-label">
-              <div className="day-number">1/1</div>
-              <div className="day-name">(Sun)</div>
+          {loading ? (
+            <div style={{ padding: "20px", textAlign: "center", color: "#8a94a6" }}>Loading timetable...</div>
+          ) : error ? (
+            <div style={{ padding: "20px", textAlign: "center", color: "#ff7a59" }}>
+              Error loading timetable: {error}
             </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell empty"></div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell empty"></div>
-          </div>
-
-          <div className="schedule-row">
-            <div className="day-label">
-              <div className="day-number">1/2</div>
-              <div className="day-name">(Mon)</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell empty"></div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-          </div>
-
-          <div className="schedule-row">
-            <div className="day-label">
-              <div className="day-number">1/3</div>
-              <div className="day-name">(Tue)</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell empty"></div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-          </div>
-
-          <div className="schedule-row">
-            <div className="day-label">
-              <div className="day-number">1/4</div>
-              <div className="day-name">(Wed)</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell empty"></div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-          </div>
-
-          <div className="schedule-row">
-            <div className="day-label">
-              <div className="day-number">1/5</div>
-              <div className="day-name">(Thu)</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell empty"></div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell empty"></div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-            <div className="class-cell">
-              <div className="class-info">3s1</div>
-              <div className="class-room">salle 12</div>
-            </div>
-          </div>
+          ) : (
+            renderScheduleRows()
+          )}
         </div>
       </div>
     </div>

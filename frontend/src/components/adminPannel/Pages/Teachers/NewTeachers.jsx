@@ -1,7 +1,9 @@
 "use client"
 
-import { useState } from "react";
-import "./NewTeachers.css";
+
+import { useState } from "react"
+import "./new-teachers.css"
+
 
 function NewTeachers() {
   const [formData, setFormData] = useState({
@@ -39,7 +41,7 @@ function NewTeachers() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!formData.photo) {
       alert("Please upload a photo");
@@ -94,7 +96,7 @@ function NewTeachers() {
     } catch (error) {
       alert("Error: " + error.message);
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   };
 
@@ -280,7 +282,7 @@ function NewTeachers() {
         </form>
       </div>
     </div>
-  );
+  )
 }
 
 export default NewTeachers;
