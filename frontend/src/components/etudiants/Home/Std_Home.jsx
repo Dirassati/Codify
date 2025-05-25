@@ -4,16 +4,14 @@ import { useState, useEffect } from "react"
 import SearchField from "../SearchField"
 import "./Std_Home.css"
 
-const Std_Home = ({ studentId = "159" }) => {
+const Std_Home = ({ studentId = "29" }) => {
   const [scheduleData, setScheduleData] = useState(null)
   const [filteredSchedule, setFilteredSchedule] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Function to parse timeslot string and extract time
   const parseTimeslot = (timeslotString) => {
     try {
-      // Parse the timeslot format: ["2025-05-23 11:15:00+01","2025-05-23 12:15:00+01")
       const cleanString = timeslotString.replace(/[[\]"()]/g, "")
       const [startTime, endTime] = cleanString.split(",")
 
@@ -40,25 +38,20 @@ const Std_Home = ({ studentId = "159" }) => {
     }
   }
 
-  // Function to convert time to slot index
   const timeToSlotIndex = (hour, minute) => {
     if (hour === 8) return 0
     if (hour === 9) return 1
     if (hour === 10) return 2
     if (hour === 11) return 3
     if (hour === 12) return 4
-    if (hour === 13) return 6 // Skip break slot (index 5)
+    if (hour === 13) return 6
     if (hour === 14) return 7
     if (hour === 15) return 8
     if (hour === 16) return 9
-
-    // For times with minutes, find closest slot
-    if (hour === 10 && minute === 15) return 3 // 10:15 -> 11:00 slot
-
-    return 0 // Default fallback
+    if (hour === 10 && minute === 15) return 3
+    return 0
   }
 
-  // Transform API data to component format
   const transformApiData = (apiData) => {
     const dayMapping = {
       Dimanche: { id: 1, name: "Dim", fullName: "(Sun)" },
@@ -103,13 +96,11 @@ const Std_Home = ({ studentId = "159" }) => {
     return { days, timeSlots, classes }
   }
 
-  // Helper function to find a class for a specific day and time slot
   const getClassForSlot = (day, timeSlot) => {
     if (!filteredSchedule) return null
     return filteredSchedule.classes.find((classItem) => classItem.day === day && classItem.timeSlot === timeSlot)
   }
 
-  // Fetch schedule data from backend
   useEffect(() => {
     const fetchScheduleData = async () => {
       try {
@@ -117,6 +108,8 @@ const Std_Home = ({ studentId = "159" }) => {
         setError(null)
 
         const response = await fetch(`http://localhost:5000/api/timetable/student/${studentId}`)
+        const tdata= await response.json()
+        console.log(tdata)
 
         if (!response.ok) {
           throw new Error(`Failed to fetch schedule: ${response.status}`)
@@ -135,7 +128,6 @@ const Std_Home = ({ studentId = "159" }) => {
         console.error("Error fetching schedule:", err)
         setError(err.message)
 
-        // Fallback to empty schedule
         const fallbackData = {
           days: [
             { id: 1, name: "Dim", fullName: "(Sun)" },
@@ -179,7 +171,6 @@ const Std_Home = ({ studentId = "159" }) => {
     })
   }
 
-  // No student ID provided
   if (!studentId) {
     return (
       <div className="std-home-container">
@@ -191,7 +182,6 @@ const Std_Home = ({ studentId = "159" }) => {
     )
   }
 
-  // Loading state
   if (loading) {
     return (
       <div className="std-home-container">
@@ -203,7 +193,6 @@ const Std_Home = ({ studentId = "159" }) => {
     )
   }
 
-  // No data state
   if (!scheduleData || !filteredSchedule) {
     return (
       <div className="std-home-container">

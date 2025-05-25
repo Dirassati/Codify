@@ -6,130 +6,39 @@ import SearchField from '../SearchField'
 
 const Notes = () => {
   const [semesters, setSemesters] = useState([])
-  const [activeSemester, setActiveSemester] = useState(1)
+  const [activeSemester, setActiveSemester] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Simulate API fetch
+  // Fetch from backend
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        // In a real app, this would be a fetch call to your API
-        // const response = await fetch('/api/semesters')
-        // const data = await response.json()
+        const response = await fetch("http://localhost:5000/api/notes/summary/16/1")
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
 
-        // Simulating API response delay
-        await new Promise((resolve) => setTimeout(resolve, 800))
+        const json = await response.json()
 
-        // Sample data that would come from the API
-        const data = [
-          {
-            name: "Semester 01",
-            subjects: [
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Physics",
-                continuousAssessment: "14/20",
-                assignment: "13/20",
-                exam: "16/20",
-                average: "15.78",
-              },
-            ],
-          },
-          {
-            name: "Semester 02",
-            subjects: [
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-            ],
-          },
-          {
-            name: "Semester 03",
-            subjects: [
-              {
-                name: "Computer Science",
-                continuousAssessment: "17/20",
-                assignment: "16/20",
-                exam: "18/20",
-                average: "17.67",
-              },
-              {
-                name: "Statistics",
-                continuousAssessment: "15/20",
-                assignment: "14/20",
-                exam: "16/20",
-                average: "15.67",
-              },
-            ],
-          },
-        ]
+        // Format data to fit existing structure
+        const semesterData = {
+          name: "Semester 01",
+          subjects: json.data.map(subject => ({
+            name: subject.name,
+            continuousAssessment: subject.continuousAssessment || "-",
+            assignment: subject.assignment || "-",
+            exam: subject.exam || "-",
+            average: subject.average || "-"
+          }))
+        }
 
-        setSemesters(data)
-        setLoading(false)
+        setSemesters([semesterData])
       } catch (err) {
         console.error("Error fetching semester data:", err)
         setError("Failed to load semester data. Please try again later.")
+      } finally {
         setLoading(false)
       }
     }
@@ -137,7 +46,6 @@ const Notes = () => {
     fetchData()
   }, [])
 
-  // Get the current semester's subjects
   const currentSemesterSubjects = semesters[activeSemester]?.subjects || []
 
   if (loading) {
@@ -166,9 +74,10 @@ const Notes = () => {
 
   return (
     <div className="notes-container_teacher">
-       <div className="search-wrappe">
-  <SearchField />
-</div>
+      <div className="search-wrappe">
+        <SearchField />
+      </div>
+
       <div className="semester-tabs">
         {semesters.map((semester, index) => (
           <button
@@ -181,7 +90,6 @@ const Notes = () => {
         ))}
       </div>
 
-      {/* Grades table */}
       <div className="grades-table-container">
         <table className="grades-table">
           <thead>
