@@ -3,8 +3,13 @@ const { addTeacher } = require('../services/addTeacherService');
 
 const createTeacher = async (req, res) => {
   try {
+        const teacherData = {
+      ...req.body,
+      photo: req.file?.path  // Add uploaded photo path to data
+    };
+
     // Use your existing service
-    const teacher = await addTeacher(req.body);
+    const teacher = await addTeacher(teacherData);
 
     // Successful response
     res.status(201).json({

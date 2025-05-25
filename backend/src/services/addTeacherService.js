@@ -1,5 +1,6 @@
 const { createAccount} = require("../services/accountService");
 const { checkMatriculeExists } = require('../utils/dbValidators');
+const uploadToCloudinary = require('../utils/uploadToCloudinary');
 
 const addTeacher = async (teacherData) => {
     const {
@@ -47,7 +48,7 @@ const addTeacher = async (teacherData) => {
         degree,
         field,
         level,
-        employment_date
+        employment_date,
       },
       
     );

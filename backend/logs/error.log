@@ -2,3 +2,16 @@
 {"level":"error","message":"Error in notes initialization: column \"created_at\" of relation \"notes\" does not exist","timestamp":"2025-05-23T19:05:09.538Z"}
 {"level":"error","message":"Error in getStudentsForGrading: error: invalid input syntax for type integer: \"summary\"","timestamp":"2025-05-23T21:09:02.197Z"}
 {"level":"error","message":"Failed to fetch students grades: error: invalid input syntax for type integer: \"summary\"","timestamp":"2025-05-23T21:09:02.199Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:36:50.036Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:36:54.481Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:43:54.523Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:43:56.866Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T04:49:39.029Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T05:56:06.714Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T17:32:36.446Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T17:32:40.377Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T17:44:14.387Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T17:44:18.858Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T18:10:32.962Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T18:10:37.352Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T19:10:32.532Z"}

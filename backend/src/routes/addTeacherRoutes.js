@@ -9,7 +9,7 @@ const upload = multer({ dest: 'uploads/teachers/' });
 
 // POST /api/teachers
 
-router.post('/',authentmiddleware,adminAuth,upload.single('photo'),validateTeacher,createTeacher);
+router.post('/',upload.single('photo'),validateTeacher,createTeacher);
 /* unecessary at the moment
 // GET /api/teachers/:id
 router.get('/:id',

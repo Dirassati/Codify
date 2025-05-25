@@ -8,7 +8,7 @@ const teacherSchema = Joi.object({
   first_name: Joi.string().max(50).required(),
   phone_number: Joi.string().pattern(/^\+?[\d\s-]{10,15}$/),
   address: Joi.string().max(200),
-  gender: Joi.string().valid('male', 'female', 'other'),
+  gender: Joi.string().valid('Male', 'Female'),
   degree: Joi.string().valid('bachelor', 'master', 'phd').required(),
   field: Joi.string().max(50).required(),
   level: Joi.string().valid('junior', 'mid', 'senior'),

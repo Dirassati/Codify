@@ -19,7 +19,7 @@ const notesRoutes = require('./src/routes/notesRoutes');
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
 const errorMiddleware = require("./src/middleware/errorMiddleware");
 const { testConnection } = require("./testDbConnection");
-
+const notesService = require("./src/services/notesService");
 
 const authenRoutes = require('./src/routes/authenRoutes');
 const chatRoutes = require('./src/routes/chatRoutes');
