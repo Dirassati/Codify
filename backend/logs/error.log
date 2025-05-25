@@ -1,0 +1,4 @@
+{"level":"error","message":"Error in notes initialization: column \"created_at\" of relation \"notes\" does not exist","timestamp":"2025-05-23T19:05:04.761Z"}
+{"level":"error","message":"Error in notes initialization: column \"created_at\" of relation \"notes\" does not exist","timestamp":"2025-05-23T19:05:09.538Z"}
+{"level":"error","message":"Error in getStudentsForGrading: error: invalid input syntax for type integer: \"summary\"","timestamp":"2025-05-23T21:09:02.197Z"}
+{"level":"error","message":"Failed to fetch students grades: error: invalid input syntax for type integer: \"summary\"","timestamp":"2025-05-23T21:09:02.199Z"}

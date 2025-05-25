@@ -24,7 +24,7 @@ module.exports = {
     return rows[0];
   },
 
-  async assignSubjectsToGrade(gradeId, subjects, specializationId = null) {
+ async assignSubjectsToGrade(gradeId, subjects, specializationId = null) {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -41,9 +41,16 @@ module.exports = {
       for (const subject of subjects) {
         await client.query(
           `INSERT INTO grade_subjects_specialization
-           (grade_id, subject_id, specialization_id, weekly_hours, is_double_session)
-           VALUES ($1, $2, $3, $4, $5)`,
-          [gradeId, subject.subjectId, specializationId, subject.weeklyHours, subject.isDoubleSession]
+           (grade_id, subject_id, specialization_id, weekly_hours, is_double_session, coefficient)
+           VALUES ($1, $2, $3, $4, $5, $6)`,
+          [
+            gradeId, 
+            subject.subjectId, 
+            specializationId, 
+            subject.weeklyHours, 
+            subject.isDoubleSession,
+            subject.coefficient || 1.0 // Default to 1.0 if not provided
+          ]
         );
       }
 
@@ -55,7 +62,6 @@ module.exports = {
       client.release();
     }
   },
-
   async getGradeSubjects(gradeId, specializationId = null) {
     const grade = await this.getGradeById(gradeId);
     if (!grade) throw new Error('Grade not found');
