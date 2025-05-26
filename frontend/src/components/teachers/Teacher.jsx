@@ -35,7 +35,6 @@ function Teacher() {
             <button className='confirmer' onClick={handlleLogout}>déconnecter</button>
             <button className='annuler' onClick={()=>{setShowLogoutConfirmation(false)}}>annuler</button>
           </div>
-
         </div>
       }
 
