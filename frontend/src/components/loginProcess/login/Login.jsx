@@ -48,7 +48,7 @@ function Login() {
         // Store the token in localStorage (or context)
         localStorage.setItem("token", response.data.token);
         // Store the user infos  in  context
-        setUser(response.user.data);
+        setUser(response.user.user.data);
 
         // Redirect to dashboard, etc.
         if (response.data.user.user_role === "enseignant") {
