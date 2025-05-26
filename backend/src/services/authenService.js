@@ -2,7 +2,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const User = require("../models/User");
+<<<<<<< HEAD
 const transporter = require("../utils/mailer");
+=======
+const transporter = require("../config/mailer");
+>>>>>>> 8e89c22a012d1052857f90ff89f75f129913d5c1
 
 const authService = {
     generateToken: (email) => {

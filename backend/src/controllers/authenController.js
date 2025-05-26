@@ -43,7 +43,11 @@ module.exports = authController;
 //new code version
 const bcrypt = require('bcrypt');
 const { generateResetCode, generateJWT } = require('../utils/tokenUtils');
+<<<<<<< HEAD
 const emailService = require('../utils/mailer');
+=======
+const emailService = require('../config/mailer');
+>>>>>>> 8e89c22a012d1052857f90ff89f75f129913d5c1
 const userModel = require('../models/User');
 const jwt = require('jsonwebtoken');
 

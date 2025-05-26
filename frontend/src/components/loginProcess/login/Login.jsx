@@ -48,14 +48,19 @@ function Login() {
         // Store the token in localStorage (or context)
         localStorage.setItem("token", response.data.token);
         // Store the user infos  in  context
-        setUser(response.data.user);
 
+        setUser(response.data.user); 
+        console.log(response);
         // Redirect to dashboard, etc.
         if (response.data.user.user_role === "enseignant") {
+
+          localStorage.setItem("teacherId", response.data.user.user.id); // Store teacher ID
           navigate("/teacher");
         } else if (response.data.user.user_role === "parents") {
           navigate("/parent");
         } else if (response.data.user.user_role === "eleve") {
+
+          localStorage.setItem("studentId", response.data.user.user.id);// Store student ID
           navigate("/student");
         } else {
           navigate("/adminpannel/dashboard");

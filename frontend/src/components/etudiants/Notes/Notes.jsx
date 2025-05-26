@@ -2,143 +2,72 @@
 
 import { useState, useEffect } from "react"
 import "./notes.css"
-import SearchField from '../SearchField'
+import SearchField from "../SearchField"
 
 const Notes = () => {
   const [semesters, setSemesters] = useState([])
-  const [activeSemester, setActiveSemester] = useState(1)
+  const [activeSemester, setActiveSemester] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("")
 
-  // Simulate API fetch
+  const studentId = localStorage.getItem("studentId") || "1"
+  const totalSemesters = 3
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllSemesters = async () => {
       setLoading(true)
+      setError(null)
+
       try {
-        // In a real app, this would be a fetch call to your API
-        // const response = await fetch('/api/semesters')
-        // const data = await response.json()
+        if (!studentId) {
+          throw new Error("Student ID not found in localStorage")
+        }
 
-        // Simulating API response delay
-        await new Promise((resolve) => setTimeout(resolve, 800))
+        const semesterPromises = []
 
-        // Sample data that would come from the API
-        const data = [
-          {
-            name: "Semester 01",
-            subjects: [
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Physics",
-                continuousAssessment: "14/20",
-                assignment: "13/20",
-                exam: "16/20",
-                average: "15.78",
-              },
-            ],
-          },
-          {
-            name: "Semester 02",
-            subjects: [
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-              {
-                name: "Mathematics",
-                continuousAssessment: "16/20",
-                assignment: "12/20",
-                exam: "15/20",
-                average: "16.23",
-              },
-            ],
-          },
-          {
-            name: "Semester 03",
-            subjects: [
-              {
-                name: "Computer Science",
-                continuousAssessment: "17/20",
-                assignment: "16/20",
-                exam: "18/20",
-                average: "17.67",
-              },
-              {
-                name: "Statistics",
-                continuousAssessment: "15/20",
-                assignment: "14/20",
-                exam: "16/20",
-                average: "15.67",
-              },
-            ],
-          },
-        ]
+        for (let sem = 1; sem <= totalSemesters; sem++) {
+          semesterPromises.push(
+            fetch(`http://localhost:5000/api/notes/summary/${studentId}/${sem}`).then(async (res) => {
+              if (!res.ok) throw new Error(`Failed to fetch semester ${sem}`)
 
-        setSemesters(data)
-        setLoading(false)
+              const json = await res.json()
+              console.log(`Semester ${sem} response:`, json)
+
+              const subjects = Array.isArray(json.data?.subjects)
+                ? json.data.subjects.map(subject => ({
+                    name: subject.subject_name,
+                    continuousAssessment: subject.note_cc ?? "-",
+                    assignment: subject.note_devoir ?? "-",
+                    exam: subject.note_examen ?? "-",
+                    average: subject.moyenne_matiere ?? "-"
+                  }))
+                : []
+
+              return {
+                name: `Semester ${sem < 10 ? `0${sem}` : sem}`,
+                subjects
+              }
+            })
+          )
+        }
+
+        const allSemesterData = await Promise.all(semesterPromises)
+        setSemesters(allSemesterData)
       } catch (err) {
         console.error("Error fetching semester data:", err)
         setError("Failed to load semester data. Please try again later.")
+      } finally {
         setLoading(false)
       }
     }
 
-    fetchData()
-  }, [])
+    fetchAllSemesters()
+  }, [studentId])
 
-  // Get the current semester's subjects
-  const currentSemesterSubjects = semesters[activeSemester]?.subjects || []
+  const currentSemesterSubjects = (semesters[activeSemester]?.subjects || []).filter(subject =>
+    subject.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
   if (loading) {
     return (
@@ -166,9 +95,10 @@ const Notes = () => {
 
   return (
     <div className="notes-container_teacher">
-       <div className="search-wrappe">
-  <SearchField />
-</div>
+      <div className="search-wrappe">
+        <SearchField value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+      </div>
+
       <div className="semester-tabs">
         {semesters.map((semester, index) => (
           <button
@@ -181,7 +111,6 @@ const Notes = () => {
         ))}
       </div>
 
-      {/* Grades table */}
       <div className="grades-table-container">
         <table className="grades-table">
           <thead>
@@ -207,7 +136,7 @@ const Notes = () => {
             ) : (
               <tr>
                 <td colSpan={5} className="no-data">
-                  No subjects found for this semester
+                  No matching subjects found for this semester
                 </td>
               </tr>
             )}

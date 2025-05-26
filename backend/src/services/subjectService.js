@@ -1,6 +1,6 @@
 const db = require("../db/db");
 
-const createSubject = async (name, description, classroom_type = 'class') => {
+const createSubject = async (name, description, classroom_type = "class") => {
   const query = `
     INSERT INTO subjects (name, description, classroom_type)
     VALUES ($1, $2, $3)
@@ -18,15 +18,28 @@ const listSubjects = async () => {
     FROM subjects
     ORDER BY name ASC
   `);
-  
-  return rows.map(row => ({
+
+  return rows.map((row) => ({
     subject: row.name,
     description: row.description,
-    classroom_type: row.classroom_type
+    classroom_type: row.classroom_type,
   }));
 };
 
+const getSubjectById = async (subjectId) => {
+  try {
+    const { rows } = await db.query("SELECT * FROM subjects WHERE id = $1", [
+      subjectId,
+    ]);
+    return rows[0] || null;
+  } catch (error) {
+    console.error(`Error fetching parent ${subjectId}:`, error);
+    throw error;
+  }
+};
+
 module.exports = {
-  createSubject, 
-  listSubjects
+  getSubjectById,
+  createSubject,
+  listSubjects,
 };

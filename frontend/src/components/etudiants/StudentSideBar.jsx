@@ -10,13 +10,12 @@ import LogoutIcon from "@mui/icons-material/Logout"
 import SettingsIcon from "@mui/icons-material/Settings"
 import { Link } from "react-router-dom"
 import logo from "../../assets/images/logoo1.svg"
+import { usePageContext } from "../../contexts/PageContext"
 
 function StudentSidebar() {
-  const [index, setIndex] = useState(1)
+  
 
-  useEffect(() => {
-    setIndex(1)
-  }, [])
+const {page,setPage}=usePageContext();
 
   const menuItems = [
     { id: 1, label: "home", icon: <HomeIcon />, route: "home" },
@@ -43,8 +42,8 @@ function StudentSidebar() {
             <Link
               key={item.id}
               to={item.route}
-              onClick={() => setIndex(item.id)}
-              className={`link ${index === item.id ? "clicked" : ""}`}
+              onClick={() => setPage(item.id)}
+              className={`link ${page === item.id ? "clicked" : ""}`}
             >
               <div className="icon-wrapper">{item.icon}</div>
               <div className="name">{item.label}</div>
