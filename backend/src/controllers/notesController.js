@@ -65,7 +65,10 @@ class NotesController {
         success: true,
         data
       });
+<<<<<<< HEAD
       console.log(data)
+=======
+>>>>>>> 8275847e6153040f4d1e07659e5ba6efac363622
     } catch (error) {
       logger.error(`Failed to fetch student grades summary: ${error}`);
       const statusCode = error.message.includes('not found') ? 404 : 400;

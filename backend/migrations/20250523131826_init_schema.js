@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /*exports.up = async function(knex) {
+=======
+exports.up = async function(knex) {
+>>>>>>> 8275847e6153040f4d1e07659e5ba6efac363622
   await knex.schema.alterTable('grade_subjects_specialization', (table) => {
     table.decimal('coefficient', 3, 1).notNullable().defaultTo(1.0);
   });
@@ -36,4 +40,8 @@ exports.down = async function(knex) {
   await knex.schema.alterTable('grade_subjects_specialization', (table) => {
     table.dropColumn('coefficient');
   });
+<<<<<<< HEAD
 };*/
+=======
+};
+>>>>>>> 8275847e6153040f4d1e07659e5ba6efac363622

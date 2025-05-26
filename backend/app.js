@@ -17,9 +17,13 @@ const timetableRoutes = require('./src/routes/timetableRoutes');
 const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
 const notesRoutes = require('./src/routes/notesRoutes');
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
+<<<<<<< HEAD
 const errorMiddleware = require("./src/middleware/errorMiddleware");
 const { testConnection } = require("./testDbConnection");
 const notesService = require("./src/services/notesService");
+=======
+const notesService = require('./src/services/notesService');
+>>>>>>> 8275847e6153040f4d1e07659e5ba6efac363622
 
 const authenRoutes = require('./src/routes/authenRoutes');
 const chatRoutes = require('./src/routes/chatRoutes');
@@ -35,6 +39,7 @@ const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5000;
  
+<<<<<<< HEAD
 
 app.use(
   cors({
@@ -43,6 +48,15 @@ app.use(
   })
 );
 
+=======
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+>>>>>>> 8275847e6153040f4d1e07659e5ba6efac363622
 
 app.use(express.json());
 
