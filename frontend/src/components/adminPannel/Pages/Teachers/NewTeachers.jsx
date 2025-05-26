@@ -1,8 +1,8 @@
 "use client"
 
 
-import { useState } from "react";
-import "./NewTeachers.css";
+import { useState } from "react"
+import "./new-teachers.css"
 
 
 function NewTeachers() {
@@ -20,7 +20,6 @@ function NewTeachers() {
     photo: null,
     matricule: "",
     password: "",
-
   });
 
   const [loading, setLoading] = useState(false);
@@ -41,12 +40,10 @@ function NewTeachers() {
     }));
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (!formData.photo) {
-
       alert("Please upload a photo");
       return;
     }
@@ -68,17 +65,14 @@ function NewTeachers() {
         }
       });
 
-
       const response = await fetch("http://localhost:5000/api/admin/addteacher", {
         method: "POST",
         body: formDataToSend,
-
       });
 
       if (response.ok) {
         alert("Teacher added successfully!");
         // Reset form and file input
-
         setFormData({
           first_name: "",
           last_name: "",
@@ -93,7 +87,6 @@ function NewTeachers() {
           photo: null,
           matricule: "",
           password: "",
-
         });
         document.getElementById("photo").value = "";
       } else {
@@ -102,19 +95,15 @@ function NewTeachers() {
       }
     } catch (error) {
       alert("Error: " + error.message);
-
     } finally {
       setLoading(false)
     }
-
   };
-
 
   return (
     <div className="new-teacher-form">
       <div className="form-container">
         <h1 className="form-title">Add New Teacher</h1>
-
 
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="form-row">
@@ -137,14 +126,12 @@ function NewTeachers() {
                 onChange={handleChange}
                 required
               />
-
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
               <label>Email *</label>
-
               <input
                 type="email"
                 name="email"
@@ -162,14 +149,12 @@ function NewTeachers() {
                 onChange={handleChange}
                 required
               />
-
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
               <label>Matricule *</label>
-
               <input
                 type="text"
                 name="matricule"
@@ -188,14 +173,12 @@ function NewTeachers() {
                 onChange={handleChange}
                 required
               />
-
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
               <label>Gender *</label>
-
               <select
                 name="gender"
                 value={formData.gender}
@@ -205,7 +188,6 @@ function NewTeachers() {
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-
               </select>
             </div>
             <div className="form-group">
@@ -223,7 +205,6 @@ function NewTeachers() {
           <div className="form-row">
             <div className="form-group">
               <label>Degree *</label>
-
               <select
                 name="degree"
                 value={formData.degree}
@@ -235,7 +216,6 @@ function NewTeachers() {
                 <option value="master">Master</option>
                 <option value="phd">PhD</option>
               </select>
-
             </div>
             <div className="form-group">
               <label>Field *</label>
@@ -253,7 +233,6 @@ function NewTeachers() {
           <div className="form-row">
             <div className="form-group">
               <label>Teaching Level *</label>
-
               <select
                 name="level"
                 value={formData.level}
@@ -271,7 +250,6 @@ function NewTeachers() {
               <div className="file-upload">
                 <input
                   id="photo"
-
                   name="photo"
                   type="file"
                   onChange={handleFileChange}
@@ -288,7 +266,6 @@ function NewTeachers() {
 
           <div className="form-group">
             <label>Address *</label>
-
             <textarea
               name="address"
               value={formData.address}
@@ -307,6 +284,5 @@ function NewTeachers() {
     </div>
   )
 }
-
 
 export default NewTeachers;

@@ -1,28 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import SearchBar from '../Students/SearchBar';
 import './Teachers.css';
 
 const Teachers = () => {
-  const dummyData = Array.from({ length: 28 }, (_, i) => ({  // Updated to 114 items for testing
-    name: [
-      "Dimitres Viga", "Tom Housenburg", "Dana Benevista", "Salvadore Morbeau",
-      "Maria Historia", "Jack Sally", "Lula Beatrice", "Nella Vita",
-      "Nadia Laravel", "Dakota Farral", "Miranda Adila", "Indiana Barker"
-    ][i % 12],
-    subject: [
-      "Mathematics", "Science", "Art", "Biology",
-      "History", "Physics", "Algorithm", "English",
-      "Programming", "Science", "Art", "Biology"
-    ][i % 12],
-    image: `https://i.pravatar.cc/150?img=${i % 70 + 1}`
-  }));
-
+  const [teachers, setTeachers] = useState([]);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 12; // 12 items per page
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
-  const paginatedData = dummyData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const itemsPerPage = 12;
+
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/teachers/list");
+        const json = await response.json();
+        if (json.status === "success" && Array.isArray(json.data)) {
+          setTeachers(json.data);
+        } else {
+          console.error("Unexpected response structure:", json);
+        }
+      } catch (error) {
+        console.error("Error fetching teachers:", error);
+      }
+    };
+
+    fetchTeachers();
+  }, []);
+
+  const totalPages = Math.ceil(teachers.length / itemsPerPage);
+  const paginatedData = teachers.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   return (
     <div className="teachers-app">
@@ -32,9 +38,13 @@ const Teachers = () => {
         {paginatedData.map((item, idx) => (
           <div className="card" key={idx}>
             <div className="dots">⋮</div>
-            <img className="avatar" src={item.image} alt="Profile" />
-            <h3>{item.name}</h3>
-            <p>{item.subject}</p>
+            <img
+              className="avatar"
+              src="/images/teacher-logo.png"
+              alt="Teacher Logo"
+            />
+            <h3>{item.first_name} {item.last_name}</h3>
+            <p>{item.field || "Unknown Subject"}</p>
             <div className="icons">
               <button className="icon-btn">📞</button>
               <button className="icon-btn">✉️</button>
@@ -45,8 +55,7 @@ const Teachers = () => {
 
       <div className="pagination">
         <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>&lt;</button>
-
-        {[...Array(totalPages)].map((_, idx) => (  // This dynamically creates the pagination buttons
+        {[...Array(totalPages)].map((_, idx) => (
           <button
             key={idx}
             className={page === idx + 1 ? "active" : ""}
@@ -55,16 +64,14 @@ const Teachers = () => {
             {idx + 1}
           </button>
         ))}
-
         <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>&gt;</button>
       </div>
 
       <p className="info">
-        Showing {(page - 1) * itemsPerPage + 1}–{Math.min(page * itemsPerPage, dummyData.length)} from {dummyData.length} data
+        Showing {(page - 1) * itemsPerPage + 1}–{Math.min(page * itemsPerPage, teachers.length)} from {teachers.length} teachers
       </p>
       <Outlet />
     </div>
-    
   );
 };
 
