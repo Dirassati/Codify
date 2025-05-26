@@ -4,11 +4,22 @@ import { useState, useEffect } from "react"
 import SearchField from "../SearchField"
 import "./Std_Home.css"
 
-const Std_Home = ({ studentId = "29" }) => {
+const Std_Home = () => {
+  const [studentId, setStudentId] = useState(null)
   const [scheduleData, setScheduleData] = useState(null)
   const [filteredSchedule, setFilteredSchedule] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  // Get student ID from localStorage
+  useEffect(() => {
+    const idFromStorage = localStorage.getItem("studentId")
+    if (idFromStorage) {
+      setStudentId(idFromStorage)
+    } else {
+      setLoading(false)
+    }
+  }, [])
 
   const parseTimeslot = (timeslotString) => {
     try {
@@ -103,25 +114,25 @@ const Std_Home = ({ studentId = "29" }) => {
 
   useEffect(() => {
     const fetchScheduleData = async () => {
+      if (!studentId) return
+
       try {
         setLoading(true)
         setError(null)
 
         const response = await fetch(`http://localhost:5000/api/timetable/student/${studentId}`)
-        const tdata= await response.json()
+        const tdata = await response.json()
         console.log(tdata)
 
         if (!response.ok) {
           throw new Error(`Failed to fetch schedule: ${response.status}`)
         }
 
-        const apiData = await response.json()
-
-        if (!apiData.success) {
+        if (!tdata.success) {
           throw new Error("API returned unsuccessful response")
         }
 
-        const transformedData = transformApiData(apiData)
+        const transformedData = transformApiData(tdata)
         setScheduleData(transformedData)
         setFilteredSchedule(transformedData)
       } catch (err) {
@@ -176,7 +187,7 @@ const Std_Home = ({ studentId = "29" }) => {
       <div className="std-home-container">
         <div className="error-container">
           <h2>Student ID Required</h2>
-          <p>Please provide a valid student ID to view the schedule.</p>
+          <p>Please login or provide a valid student ID to view the schedule.</p>
         </div>
       </div>
     )
@@ -251,7 +262,9 @@ const Std_Home = ({ studentId = "29" }) => {
                       className={`time-slot ${classItem?.highlight ? "highlighted" : ""} ${!classItem ? "empty" : ""}`}
                       title={
                         classItem
-                          ? `${classItem.subject} - ${classItem.teacher} - ${classItem.room}${classItem.timeRange ? ` (${classItem.timeRange})` : ""}`
+                          ? `${classItem.subject} - ${classItem.teacher} - ${classItem.room}${
+                              classItem.timeRange ? ` (${classItem.timeRange})` : ""
+                            }`
                           : ""
                       }
                     >

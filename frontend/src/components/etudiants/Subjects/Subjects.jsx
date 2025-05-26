@@ -26,6 +26,7 @@ const schedule = {
 
 export default function Subjects() {
   const [selectedDay, setSelectedDay] = useState(27)
+const studentId = localStorage.getItem("studentId");
 
   // Get subjects for the selected day
   const getSubjectsForDay = (day) => {

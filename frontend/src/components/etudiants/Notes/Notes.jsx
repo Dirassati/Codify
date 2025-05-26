@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import "./notes.css"
-import SearchField from '../SearchField'
+import SearchField from "../SearchField"
 
 const Notes = () => {
   const [semesters, setSemesters] = useState([])
@@ -10,31 +10,43 @@ const Notes = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Fetch from backend
+  const studentId = localStorage.getItem("studentId")
+
+  const totalSemesters = 3 // You can change this or make it dynamic
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllSemesters = async () => {
       setLoading(true)
+      setError(null)
+
       try {
-        const response = await fetch("http://localhost:5000/api/notes/summary/16/1")
-        if (!response.ok) {
-          throw new Error("Network response was not ok")
+        if (!studentId) {
+          throw new Error("Student ID not found in localStorage")
         }
 
-        const json = await response.json()
+        const semesterPromises = []
 
-        // Format data to fit existing structure
-        const semesterData = {
-          name: "Semester 01",
-          subjects: json.data.map(subject => ({
-            name: subject.name,
-            continuousAssessment: subject.continuousAssessment || "-",
-            assignment: subject.assignment || "-",
-            exam: subject.exam || "-",
-            average: subject.average || "-"
-          }))
+        for (let sem = 1; sem <= totalSemesters; sem++) {
+          semesterPromises.push(
+            fetch(`http://localhost:5000/api/notes/summary/${studentId}/${sem}`).then(async (res) => {
+              if (!res.ok) throw new Error(`Failed to fetch semester ${sem}`)
+              const json = await res.json()
+              return {
+                name: `Semester ${sem < 10 ? `0${sem}` : sem}`,
+                subjects: json.data.map(subject => ({
+                  name: subject.name,
+                  continuousAssessment: subject.continuousAssessment || "-",
+                  assignment: subject.assignment || "-",
+                  exam: subject.exam || "-",
+                  average: subject.average || "-"
+                }))
+              }
+            })
+          )
         }
 
-        setSemesters([semesterData])
+        const allSemesterData = await Promise.all(semesterPromises)
+        setSemesters(allSemesterData)
       } catch (err) {
         console.error("Error fetching semester data:", err)
         setError("Failed to load semester data. Please try again later.")
@@ -43,8 +55,8 @@ const Notes = () => {
       }
     }
 
-    fetchData()
-  }, [])
+    fetchAllSemesters()
+  }, [studentId])
 
   const currentSemesterSubjects = semesters[activeSemester]?.subjects || []
 
