@@ -1,22 +1,15 @@
-import React from 'react'
+function SingleChild(props) {
+  return (
+    <tr>
+      <td className="name">
+        <span> {`${props.child.first_name}  ${props.child.last_name}`}</span>
+      </td>
 
-function SingleChild({child}) {
-    return (
-        <tr >
-           
-            <td className='name'>
-
-                <span> {`${child.student_first_name}  ${child.student_last_name}`}</span>
-            </td>
-
-
-            <td className='grade'>
-                <div>  {child.student_grade}</div>
-            </td>
-
-
-        </tr>
-    )
+      <td className="grade">
+        <div> {props.child.grade_level}</div>
+      </td>
+    </tr>
+  );
 }
 
-export default SingleChild
+export default SingleChild;

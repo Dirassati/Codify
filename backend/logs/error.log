@@ -2,3 +2,89 @@
 {"level":"error","message":"Error in notes initialization: column \"created_at\" of relation \"notes\" does not exist","timestamp":"2025-05-23T19:05:09.538Z"}
 {"level":"error","message":"Error in getStudentsForGrading: error: invalid input syntax for type integer: \"summary\"","timestamp":"2025-05-23T21:09:02.197Z"}
 {"level":"error","message":"Failed to fetch students grades: error: invalid input syntax for type integer: \"summary\"","timestamp":"2025-05-23T21:09:02.199Z"}
+<<<<<<< HEAD
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:36:50.036Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:36:54.481Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:43:54.523Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:43:56.866Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T04:49:39.029Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T05:56:06.714Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T17:32:36.446Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T17:32:40.377Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T17:44:14.387Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T17:44:18.858Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T18:10:32.962Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T18:10:37.352Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T19:10:32.532Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T19:19:45.673Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T19:19:49.503Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T19:51:04.781Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T19:51:08.688Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T20:51:04.245Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T21:16:57.628Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T21:17:00.717Z"}
+{"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T22:16:56.159Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-25T23:31:29.230Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-25T23:31:29.245Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-25T23:31:33.754Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-25T23:31:33.756Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-25T23:33:54.038Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-25T23:33:54.058Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-25T23:36:16.810Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-25T23:36:16.819Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-25T23:36:20.477Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-25T23:36:20.480Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-25T23:36:22.144Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-25T23:36:22.149Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-25T23:36:27.635Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-25T23:36:27.636Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-25T23:37:45.777Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-25T23:37:45.812Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-25T23:43:34.591Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-25T23:43:34.598Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-25T23:43:41.253Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-25T23:43:41.253Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-25T23:45:05.056Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-25T23:45:05.096Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-25T23:45:07.904Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-25T23:45:07.914Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-25T23:46:34.948Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-25T23:46:34.959Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:21:08.305Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:21:08.321Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:41:18.044Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:41:18.062Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:41:21.920Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:41:21.922Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:41:48.313Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:41:48.314Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:42:32.623Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:42:32.625Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T13:39:09.089Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T13:39:09.090Z"}
+{"level":"error","message":"Error in saveOrUpdateNote: Error: Invalid note type","timestamp":"2025-05-26T13:39:22.585Z"}
+{"level":"error","message":"Failed to save grade: Error: Invalid note type","timestamp":"2025-05-26T13:39:22.586Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:40.697Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:40.703Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:40.716Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:40.721Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:40.725Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:40.726Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:42.762Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:42.762Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:42.764Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:42.766Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:42.880Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:42.881Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:52.865Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:52.866Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:53.004Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:53.005Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:53.016Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:53.017Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T18:52:24.267Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T18:52:24.269Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T18:52:29.099Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T18:52:29.100Z"}
+=======
+>>>>>>> 8275847e6153040f4d1e07659e5ba6efac363622

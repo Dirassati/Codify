@@ -2,6 +2,7 @@
     position: relative;
     height: 100vh;
     display: flex;
+    justify-content: center;
     width: 100%;
 }
 
@@ -14,14 +15,14 @@
     align-items: center;
 }
 
-.dashboard .dashboard-container .right-bar {
+/* .dashboard .dashboard-container .right-bar {
     height: 250vh;
     width: 350px;
     background-color: #fff;
     position: absolute;
     right: 0px;
     top: 0;
-}
+} */
 
 .dashboard .dashboard-container .left-bar .school-data {
     width: 90%;
@@ -109,4 +110,9 @@
     width: 45%;
     height: 562px;
     border: 1px solid #F5F5F5
+}
+.dashboard   .chart:hover{
+  transform: translateY(-10px);
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
 }

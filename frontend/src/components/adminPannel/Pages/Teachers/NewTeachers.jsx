@@ -1,346 +1,289 @@
-import React, { useState } from "react";
-import Header from '../Header/Header';
-import './NewTeachers.css';
+
+"use client"
+
+
+import { useState } from "react"
+import "./new-teachers.css"
+
 
 function NewTeachers() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    dateOfBirth: '',
-    placeOfBirth: '',
-    city: '',
-    university: '',
-    degree: '',
-    educationStartDate: '',
-    educationEndDate: '',
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    address: "",
+    gender: "",
+    degree: "",
+    field: "",
+    level: "",
+    employment_date: "",
     photo: null,
-    matricule: '',
-    password: ''
+    matricule: "",
+    password: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file && !file.type.startsWith('image/')) {
-      alert('Please upload a valid image file.');
-      return;
-    }
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      photo: file
+      photo: file,
     }));
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (!formData.photo) {
-      alert('Please upload a photo.');
-      return;
-    }
+  //  if (!formData.photo) {
+  //    alert("Please upload a photo");
+    //  return;
+    //}
 
     setLoading(true);
-    setError(null);
 
     try {
-      // Simulate API call (replace with actual API call in production)
-      console.log("Sending data to https://fakeapi.com/teachers ...");
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate async operation
+      const formDataToSend = new FormData();
 
-      console.log('Form submitted:', formData);
-      alert('Teacher information submitted successfully!');
-
-      // Reset form after successful submission
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        address: '',
-        dateOfBirth: '',
-        placeOfBirth: '',
-        city: '',
-        university: '',
-        degree: '',
-        educationStartDate: '',
-        educationEndDate: '',
-        photo: null,
-        matricule: '',
-        password: ''
+      // Append form data fields correctly
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value) {
+          // If file, append directly
+          if (key === "photo") {
+            formDataToSend.append(key, value);
+          } else {
+            formDataToSend.append(key, value.toString());
+          }
+        }
       });
-    } catch (err) {
-      setError('Failed to submit the form. Please try again.');
-      console.error('Submission error:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const handleSaveDraft = () => {
-    console.log('Draft saved:', formData);
-    alert('Draft saved successfully!');
+      const response = await fetch("http://localhost:5000/api/admin/addteacher", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        alert("Teacher added successfully!");
+        // Reset form and file input
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          phone_number: "",
+          address: "",
+          gender: "",
+          degree: "",
+          field: "",
+          level: "",
+          employment_date: "",
+          photo: null,
+          matricule: "",
+          password: "",
+        });
+        document.getElementById("photo").value = "";
+      } else {
+        const errorData = await response.json();
+        alert("Error adding teacher: " + (errorData.error || "Unknown error"));
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+    } finally {
+      setLoading(false)
+    }
   };
 
   return (
     <div className="new-teacher-form">
-      <Header title="Add New Teacher" />
-      <div className="new-teacher-form__container">
-        <form onSubmit={handleSubmit}>
-          <div className="new-teacher-form__section_first">
-            <h2 className="new-teacher-form__title">Personal Details</h2>
+      <div className="form-container">
+        <h1 className="form-title">Add New Teacher</h1>
 
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label htmlFor="firstName">First Name *</label>
-                <input
-                  id="firstName"
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-              <div className="new-teacher-form__group">
-                <label htmlFor="lastName">Last Name *</label>
-                <input
-                  id="lastName"
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="form-row">
+            <div className="form-group">
+              <label>First Name *</label>
+              <input
+                type="text"
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleChange}
+                required
+              />
             </div>
-
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label htmlFor="email">Email *</label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-              <div className="new-teacher-form__group">
-                <label htmlFor="phone">Phone *</label>
-                <input
-                  id="phone"
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
+            <div className="form-group">
+              <label>Last Name *</label>
+              <input
+                type="text"
+                name="last_name"
+                value={formData.last_name}
+                onChange={handleChange}
+                required
+              />
             </div>
-
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label htmlFor="matricule">Matricule *</label>
-                <input
-                  id="matricule"
-                  type="text"
-                  name="matricule"
-                  value={formData.matricule}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-              <div className="new-teacher-form__group">
-                <label htmlFor="password">Mot de passe *</label>
-                <input
-                  id="password"
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-            </div>
-
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label htmlFor="address">Address *</label>
-                <textarea
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-              <div className="new-teacher-form__group">
-                <label htmlFor="photo-upload">Photo *</label>
-                <div className="new-teacher-form__file-upload">
-                  <label htmlFor="photo-upload" className="new-teacher-form__file-label">
-                    {formData.photo ? formData.photo.name : 'Drag and drop or click here to select file'}
-                  </label>
-                  <input
-                    id="photo-upload"
-                    type="file"
-                    onChange={handleFileChange}
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    required
-                    aria-required="true"
-                  />
-                </div>
-              </div>
-            
-
-
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label htmlFor="dateOfBirth">Date of Birth *</label>
-                <input
-                  id="dateOfBirth"
-                  type="date"
-                  name="dateOfBirth"
-                  value={formData.dateOfBirth}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-              <div className="new-teacher-form__group">
-                <label htmlFor="placeOfBirth">Place of Birth *</label>
-                <input
-                  id="placeOfBirth"
-                  type="text"
-                  name="placeOfBirth"
-                  value={formData.placeOfBirth}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-            </div>
-
-            
-
-            
           </div>
 
-          <div className="new-teacher-form__section_second">
-            <h2 className="new-teacher-form__title">Education</h2>
-
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label htmlFor="university">University *</label>
-                <input
-                  id="university"
-                  type="text"
-                  name="university"
-                  value={formData.university}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-              <div className="new-teacher-form__group">
-                <label htmlFor="degree">Degree *</label>
-                <input
-                  id="degree"
-                  type="text"
-                  name="degree"
-                  value={formData.degree}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Email *</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
             </div>
+            <div className="form-group">
+              <label>Phone Number *</label>
+              <input
+                type="tel"
+                name="phone_number"
+                value={formData.phone_number}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
 
-            <div className="new-teacher-form__row">
-              <div className="new-teacher-form__group">
-                <label htmlFor="educationStartDate">Start Date *</label>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Matricule *</label>
+              <input
+                type="text"
+                name="matricule"
+                value={formData.matricule}
+                onChange={handleChange}
+                required
+                placeholder="ABC-1234"
+              />
+            </div>
+            <div className="form-group">
+              <label>Password *</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Gender *</label>
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Employment Date *</label>
+              <input
+                type="date"
+                name="employment_date"
+                value={formData.employment_date}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Degree *</label>
+              <select
+                name="degree"
+                value={formData.degree}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Degree</option>
+                <option value="bachelor">Bachelor</option>
+                <option value="master">Master</option>
+                <option value="phd">PhD</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Field *</label>
+              <input
+                type="text"
+                name="field"
+                value={formData.field}
+                onChange={handleChange}
+                placeholder="e.g., Mathematics, Physics"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Teaching Level *</label>
+              <select
+                name="level"
+                value={formData.level}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Level</option>
+                <option value="junior">Junior</option>
+                <option value="mid">Mid</option>
+                <option value="senior">Senior</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Photo *</label>
+              <div className="file-upload">
                 <input
-                  id="educationStartDate"
-                  type="month"
-                  name="educationStartDate"
-                  value={formData.educationStartDate}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
+                  id="photo"
+                  name="photo"
+                  type="file"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                 
+                  style={{ display: "none" }}
                 />
-              </div>
-              <div className="new-teacher-form__group">
-                <label htmlFor="educationEndDate">End Date *</label>
-                <input
-                  id="educationEndDate"
-                  type="month"
-                  name="educationEndDate"
-                  value={formData.educationEndDate}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
-              </div>
-              <div className="new-teacher-form__group">
-                <label htmlFor="city">City *</label>
-                <input
-                  id="city"
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                />
+                <label htmlFor="photo" style={{ cursor: "pointer" }}>
+                  {formData.photo ? formData.photo.name : "Click to upload photo"}
+                </label>
               </div>
             </div>
           </div>
 
-          {error && <div className="new-teacher-form__error">{error}</div>}
+          <div className="form-group">
+            <label>Address *</label>
+            <textarea
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <div className="new-teacher-form__actions">
-            <button
-              type="button"
-              onClick={handleSaveDraft}
-              className="new-teacher-form__draft-button"
-              disabled={loading}
-            >
-              Save as Draft
+          <div className="form-actions">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? <span className="loading"></span> : "Add Teacher"}
             </button>
-            <button
-              type="submit"
-              className="new-teacher-form__submit-button"
-              disabled={loading}
-            >
-              {loading ? <div className="spinner"></div> : 'Submit'}
-            </button>
-          </div>
           </div>
         </form>
       </div>
     </div>
-  );
+  )
 }
 
 export default NewTeachers;

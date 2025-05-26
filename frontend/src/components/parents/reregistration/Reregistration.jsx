@@ -1,57 +1,37 @@
-import React, { useState,useEffect } from 'react'
-import SearchHeader from '../SearchHeader'
-import SingleChild from '../home/SingleChild'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import SearchHeader from "../SearchHeader";
+import SingleChild from "../home/SingleChild";
 function Reregistration() {
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [children,setChildren]=useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [children, setChildren] = useState([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchProfileData = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
-        // In a real app, this would be a fetch call to your API
-        // const response = await fetch('/api/profile')
-        // const data = await response.json()
+        const response = await axios.get(
+          `http://localhost:5000/api/parents/${user.id}/children`
+        );
+        console.log(response.data);
 
-        // Simulating API response delay
-        await new Promise((resolve) => setTimeout(resolve, 800))
+        setChildren(response.data.data);
 
-        // Sample data that would come from the API
-         const children = [
-    {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    },
-     {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    },
-     {
-      student_first_name:"student1",
-      student_last_name:"ss",
-      student_grade:"VV"
-    }
-
-  ];
-
-     setChildren(children);
-       
-        setLoading(false)
+        setLoading(false);
       } catch (err) {
-        console.error("Error fetching profile data:", err)
-        setError("Failed to load profile data. Please try again later.")
-        setLoading(false)
+        console.error("Error fetching profile data:", err);
+        setError("Failed to load profile data. Please try again later.");
+        setLoading(false);
       }
-    }
+    };
 
-    fetchProfileData()
-  }, [])
+    fetchProfileData();
+  }, []);
 
-
- if (loading) {
+  if (loading) {
     return (
       <div className="profile-container">
         <div className="loading-container">
@@ -59,7 +39,7 @@ function Reregistration() {
           <p>Loading data...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -67,49 +47,43 @@ function Reregistration() {
       <div className="profile-container">
         <div className="error-container">
           <p className="error-message">{error}</p>
-          <button className="retry-button" onClick={() => window.location.reload()}>
+          <button
+            className="retry-button"
+            onClick={() => window.location.reload()}
+          >
             Retry
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-      <div className='parent-home'>
-      
+    <div className="parent-home">
       <div className="search-wrappe">
         <SearchHeader />
       </div>
-    
-      <div className='children all-students'>
 
+      <div className="children all-students">
         <div className="table-wrapper">
-            <h2>Re-registration</h2>
+          <h2>Re-registration</h2>
           <table>
             <thead>
               <tr>
-             
                 <th>Name</th>
-                
+
                 <th>Grade</th>
               </tr>
             </thead>
             <tbody>
-              {children.map((child) => (
-                <SingleChild child={child}/>
-              ))}
+              {children &&
+                children.map((child) => <SingleChild child={child} />)}
             </tbody>
           </table>
-
         </div>
-
-
       </div>
-
-
     </div>
-  )
+  );
 }
 
-export default Reregistration
+export default Reregistration;

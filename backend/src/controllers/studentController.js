@@ -95,3 +95,30 @@ exports.getStudentDetails = catchAsync(async (req, res) => {
     throw error;
   }
 });
+
+exports.listStudentSubjects = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  
+  if (isNaN(Number(id))) {
+    return res.status(400).json({
+      success: false,
+      message: "ID étudiant invalide"
+    });
+  }
+
+  try {
+    const subjects = await studentService.listStudentSubjects(Number(id));
+    res.status(200).json({
+      success: true,
+      data: subjects
+    });
+  } catch (error) {
+    if (error.message === "Étudiant non trouvé ou aucune matière associée") {
+      return res.status(404).json({
+        success: false,
+        message: error.message
+      });
+    }
+    throw error;
+  }
+});

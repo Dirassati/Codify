@@ -11,56 +11,62 @@ import finance from '../../../assets/icons/finance.svg'
 import user from '../../../assets/icons/user.svg'
 import SchoolIcon from '@mui/icons-material/School';
 import {Link, Navigate, useNavigate} from 'react-router-dom'
+import { usePageContext } from '../../../contexts/PageContext'
 function Sidebar() {
 
 
-    const [index, setIndex] = useState(1);
+    
 const navigate=useNavigate();
+const {page,setPage}=usePageContext();
 
     useEffect(()=>{
-        if (index===1) {
+        if (page===1) {
             navigate('dashboard')
         }
     },[])
     return (
         <div className='side-bar'>
-            <div onClick={() => { setIndex(1) }} className="title">
+            <div onClick={() => { setPage(1) }} className="title">
                 <img src={logo} alt="logo" />
                 <h2>Dirassati</h2>
             </div>
 
             <div className="links">
-                <Link to='dashboard' onClick={() => { setIndex(1) }} className={`link ${index === 1 ? 'clicked' : ''}`}>
+                <Link to='dashboard' onClick={() => { setPage(1) }} className={`link ${page === 1 ? 'clicked' : ''}`}>
                     <img className='icon' src={home} alt="home" />
                     <div className="name">Dashboard</div>
                 </Link>
-                <Link to='Students' onClick={() => { setIndex(2) }} className={`link ${index === 2 ? 'clicked' : ''}`}>
+                <Link to='Students' onClick={() => { setPage(2) }} className={`link ${page === 2 ? 'clicked' : ''}`}>
                     <SchoolIcon className='icon' />
                     <div className="name">Students</div>
                 </Link>
-                <Link to='Teachers' onClick={() => { setIndex(3) }} className={`link ${index === 3 ? 'clicked' : ''}`}>
+                <Link to='Teachers' onClick={() => { setPage(3) }} className={`link ${page === 3 ? 'clicked' : ''}`}>
                     <img className='icon' src={Teacher} alt="teacher" />
                     <div className="name">Teachers</div>
                 </Link>
-                <Link to='Events' onClick={() => { setIndex(4) }} className={`link ${index === 4 ? 'clicked' : ''}`}>
+                <Link to='Events' onClick={() => { setPage(4) }} className={`link ${page === 4 ? 'clicked' : ''}`}>
                     <img className='icon' src={event} alt="event" />
                     <div className="name">Events</div>
                 </Link>
-                <Link to='Finance' onClick={() => { setIndex(5) }} className={`link ${index === 5 ? 'clicked' : ''}`}>
+                <Link to='Finance' onClick={() => { setPage(5) }} className={`link ${page === 5 ? 'clicked' : ''}`}>
                     <img className='icon' src={finance} alt="finance" />
                     <div className="name">Finance</div>
                 </Link>
-                <Link to='Food' onClick={() => { setIndex(6) }} className={`link ${index === 6 ? 'clicked' : ''}`}>
+                <Link to='Food' onClick={() => { setPage(6) }} className={`link ${page === 6 ? 'clicked' : ''}`}>
                     <img className='icon' src={food} alt="food" />
                     <div className="name">Food</div>
                 </Link>
-                <Link to='Users' onClick={() => { setIndex(7) }} className={`link ${index === 7 ? 'clicked' : ''}`}>
+                <Link to='Users' onClick={() => { setPage(7) }} className={`link ${page === 7 ? 'clicked' : ''}`}>
                     <img className='icon' src={user} alt="user" />
                     <div className="name">Users</div>
                 </Link>
-                <Link to='LatestActivities' onClick={() => { setIndex(8) }} className={`link ${index === 8 ? 'clicked' : ''}`}>
+                <Link to='Groupes' onClick={() => { setPage(8) }} className={`link ${page === 8 ? 'clicked' : ''}`}>
+                    <img className='icon' src={user} alt="user" />
+                    <div className="name">Groupes</div>
+                </Link>
+                <Link to='LatestActivities' onClick={() => { setPage(9) }} className={`link ${page === 9 ? 'clicked' : ''}`}>
                     <img className='icon' src={activity} alt="activity" />
-                    <div className="name">Latest Activities</div>
+                    <div className="name">Gradebook</div>
                 </Link>
             </div>
 

@@ -27,6 +27,7 @@ import Events from './components/adminPannel/Pages/Events/Events'
 import Food from './components/adminPannel/Pages/Food/Food'
 import Finance from './components/adminPannel/Pages/Finance/Finance'
 import Users from './components/adminPannel/Pages/User/Users'
+import Groupes from './components/adminPannel/Pages/Groupes/Groupes'
 import Activities from './components/adminPannel/Pages/Activity/Activities'
 import AddChild from './components/signup/student/AddChild'
 
@@ -88,6 +89,7 @@ function App() {
           <Route path='Food' element={<Food />}></Route>
           <Route path='Finance' element={<Finance />}></Route>
           <Route path='Users' element={<Users />}></Route>
+          <Route path='Groupes' element={<Groupes />}></Route>
           <Route path='LatestActivities' element={<Activities />}></Route>
 
         </Route>

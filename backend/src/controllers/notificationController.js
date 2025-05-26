@@ -6,7 +6,7 @@ class NotificationController {
    * Get user notifications
    */
   static getNotifications = catchAsync(async (req, res) => {
-    const userId = req.user.id;
+    const userId = req.params.userId;
     const { limit = 20, offset = 0, unread } = req.query;
 
     const notifications = await NotificationService.getUserNotifications(userId, {

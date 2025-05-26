@@ -5,6 +5,10 @@ import { useState, useEffect } from "react"
 import { Eye, EyeOff, Upload } from "lucide-react"
 // import "./profile.css"
 import SearchHeader from '../SearchHeader'
+import {useAuth} from '../../../contexts/AuthContext'
+import axios from 'axios'
+
+
 const ParentProfile = () => {
   const [profileData, setProfileData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -16,17 +20,17 @@ const ParentProfile = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+const {user}=useAuth();
 
   // Form states
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
+    first_name: "",
+    last_name: "",
+    phone_number: "",
     email: "",
     address: "",
     profession: "",
-    civilStatus: "",
-    childsNumber: "",
+    etat_civil: "",
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
@@ -37,28 +41,12 @@ const ParentProfile = () => {
     const fetchProfileData = async () => {
       setLoading(true)
       try {
-        // In a real app, this would be a fetch call to your API
-        // const response = await fetch('/api/profile')
-        // const data = await response.json()
 
-        // Simulating API response delay
-        await new Promise((resolve) => setTimeout(resolve, 800))
-
-        // Sample data that would come from the API
-        const data = {
-          firstName: "malak",
-          lastName: "saadi",
-         phoneNumber: "+000000",
-    email: "aaa@gmail.com",
-          address: "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
-          profession: "teacher",
-    civilStatus: "none",
-    childsNumber: "3",
-        }
-
-        setProfileData(data)
+      const response =await axios .get(`http://localhost:5000/api/parents/${user.id}`);
+      
+console.log(response.data)
         setFormData({
-          ...data,
+          ...response.data.data,
           currentPassword: "",
           newPassword: "",
           confirmPassword: "",
@@ -72,7 +60,7 @@ const ParentProfile = () => {
     }
 
     fetchProfileData()
-  }, [])
+  }, [true])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -95,8 +83,20 @@ const ParentProfile = () => {
       alert("New password and confirm password do not match!")
       return
     }
-    // In a real app, you would send the password update to your API
-    alert("Password updated successfully!")
+    
+    try {
+      const response=await axios.post("http://localhost:5000/api/auth/change-password",{
+  newPassword: formData.newPassword,
+  currentPassword: formData.currentPassword,
+  userId: user.id
+}
+
+)
+alert("Password updated successfully!")
+    } catch (error) {
+      console.log("error changing the password");
+      setError("changing password failed")
+    }
   }
 
   const handleFileSelect = (file) => {
@@ -188,7 +188,7 @@ const ParentProfile = () => {
   <SearchHeader />
 </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete={"off"}>
         {/* General Information Section */}
         <section className="profile-section">
           <h2 className="section-title">General</h2>
@@ -200,7 +200,7 @@ const ParentProfile = () => {
                 type="text"
                 id="firstName"
                 name="firstName"
-                value={formData.firstName}
+                value={formData.first_name}
                 onChange={handleInputChange}
                 required
               />
@@ -212,7 +212,7 @@ const ParentProfile = () => {
                 type="text"
                 id="lastName"
                 name="lastName"
-                value={formData.lastName}
+                value={formData.last_name}
                 onChange={handleInputChange}
                 required
               />
@@ -222,7 +222,7 @@ const ParentProfile = () => {
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="phone">Phone Number*</label>
-              <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} required />
+              <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phone_number} onChange={handleInputChange} required />
             </div>
 
             <div className="form-group">
@@ -234,6 +234,7 @@ const ParentProfile = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
+                 autoComplete={"off"}
               />
             </div>
           </div>
@@ -251,24 +252,11 @@ const ParentProfile = () => {
 
             <div className="form-group">
               <label htmlFor="field">civilStatus</label>
-              <input type="text" id="civilStatus" name="civilStatus" value={formData.civilStatus} onChange={handleInputChange} />
+              <input type="text" id="civilStatus" name="civilStatus" value={formData.etat_civil} onChange={handleInputChange} />
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="childsNumber">Number of registered children </label>
-              <input
-                type="text"
-                id="childsNumber"
-                name="childsNumber"
-                value={formData.childsNumber}
-                onChange={handleInputChange}
-              />
-            </div>
-
-
-          </div>
+   
         </section>
 
         <hr className="section-divider" />
@@ -287,6 +275,7 @@ const ParentProfile = () => {
                   name="currentPassword"
                   value={formData.currentPassword}
                   onChange={handleInputChange}
+                   autoComplete={"new-password"}
                 />
                 <button
                   type="button"

@@ -7,7 +7,7 @@ import "./allstudents.css";
 import Student from "./Student";
 
 function AllStudents({ filter }) {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [studentsSelected, setStudentsSelected] = useState([]);
   const [allChecked, setAllChecked] = useState(false);
@@ -37,7 +37,7 @@ function AllStudents({ filter }) {
       } catch (err) {
         console.error(err);
         setMessage(
-          err.response?.data?.message || "getting students failed  failed"
+          err.response?.data?.message || "getting students failed "
         );
         console.log(
           err.response?.data?.message || " getting students failed failed"
@@ -89,6 +89,30 @@ function AllStudents({ filter }) {
       setStudentsSelected(filteredStudents.map((student) => student.id));
     }
     setAllChecked((prev) => !prev);
+  }
+
+    if (isLoading) {
+    return (
+      <div className="notes-container">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading semester data...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (message) {
+    return (
+      <div className="notes-container">
+        <div className="error-container">
+          <p className="error-message">{message}</p>
+          <button className="retry-button" onClick={() => window.location.reload()}>
+            Retry
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
