@@ -226,7 +226,6 @@ exports.getStudentDetails = async (studentId) => {
   return result;
 };
 
-<<<<<<< HEAD
 exports.getParentByStudentId = async (studentId) => {
   const { rows } = await pool.query(
     `
@@ -247,7 +246,6 @@ exports.getParentByStudentId = async (studentId) => {
   // Return the first row as a plain object
   return rows[0];
 };
-=======
 exports.listStudentSubjects = async (studentId) => {
   const query = `
     SELECT 
@@ -274,4 +272,3 @@ exports.listStudentSubjects = async (studentId) => {
   
   return rows;
 };
->>>>>>> sara

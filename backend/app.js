@@ -16,11 +16,14 @@ const teacherRoutes = require("./src/routes/teacherRoutes");
 const timetableRoutes = require("./src/routes/timetableRoutes");
 const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
 const notesRoutes = require('./src/routes/notesRoutes');
+const absenceRoutes = require('./src/routes/absenceRoutes');
+const notificationRoutes = require('./src/routes/notificationRoutes');
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
 
 const errorMiddleware = require("./src/middleware/errorMiddleware");
 const { testConnection } = require("./testDbConnection");
 const notesService = require("./src/services/notesService");
+
 
 const authenRoutes = require('./src/routes/authenRoutes');
 const chatRoutes = require('./src/routes/chatRoutes');
@@ -38,10 +41,10 @@ const PORT = process.env.PORT || 5000;
 
 
 // Initialize Socket.IO
-socket.init(server);
+// socket.init(server);
 
-// Make io accessible in routes if needed
-app.set("io", socket.getIO());
+// // Make io accessible in routes if needed
+// app.set("io", socket.getIO());
 
 module.exports = server;
 
@@ -87,8 +90,8 @@ app.use('/api/admin/teachers/search', require('./src/routes/TeachersearchRoutes'
 app.use('/api/admin/parents/search', require('./src/routes/ParentsearchRoutes'));
 
 //socket.io
-const io = socketConfig(server);
-setupSocket(io);
+// const io = socketConfig(server);
+// setupSocket(io);
 
 //chats
 app.use('/api/chats', chatRoutes);
@@ -97,10 +100,6 @@ app.use('/api/admin/addteacher',require('./src/routes/addTeacherRoutes'))
 app.use('/api/timetable', timetableRoutes);
 app.use('/api/notes', notesRoutes);
 notesService.initializeNotesForNewStudents();
-<<<<<<< HEAD
-
-=======
->>>>>>> sara
 
 // Test endpoint
 app.get("/", (req, res) => {

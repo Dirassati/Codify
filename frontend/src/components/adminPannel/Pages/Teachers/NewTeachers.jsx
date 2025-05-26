@@ -1,3 +1,4 @@
+
 "use client"
 
 
@@ -43,10 +44,10 @@ function NewTeachers() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-   //  if (!formData.photo) {
-      // alert("Please upload a photo");
-      // return;
-    // }
+  //  if (!formData.photo) {
+  //    alert("Please upload a photo");
+    //  return;
+    //}
 
     setLoading(true);
 
@@ -240,9 +241,9 @@ function NewTeachers() {
                 required
               >
                 <option value="">Select Level</option>
-                <option value="junior">primaire</option>
-                <option value="mid">moyen</option>
-                <option value="senior">lycee</option>
+                <option value="junior">Junior</option>
+                <option value="mid">Mid</option>
+                <option value="senior">Senior</option>
               </select>
             </div>
             <div className="form-group">

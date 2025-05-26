@@ -4,7 +4,6 @@ const uploadToCloudinary = require('../utils/uploadToCloudinary');
 
 const addTeacher = async (teacherData) => {
     const {
-      photo,
       email,
       password,
       matricule,
@@ -36,9 +35,9 @@ const addTeacher = async (teacherData) => {
     // Reuse existing createAccount function
     return await createAccount(
       email,
+      matricule,
       password,
       'enseignant',// Hardcoded role
-      matricule, 
       {
         last_name,
         first_name,
@@ -49,7 +48,7 @@ const addTeacher = async (teacherData) => {
         field,
         level,
         employment_date,
-      },
+      }
       
     );
   };

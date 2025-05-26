@@ -4,7 +4,7 @@ const NotificationController = require("../controllers/notificationController");
 const authController = require("../controllers/authController");
 
 router.get(
-  "/",
+  "/:userId",
   // authController.protect,
   NotificationController.getNotifications
 );

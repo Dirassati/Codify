@@ -15,7 +15,7 @@ const AllClasses = () => {
   const [grades, setGrades] = useState({});
   const [loading, setLoading] = useState(false);
   // const { user } = useAuth();
-  const teacherId = 6;
+  const teacherId = 160;
 
   useEffect(() => {
 
@@ -33,6 +33,7 @@ const AllClasses = () => {
     const subjectData = await subjectRes.json();
     const groupData = await groupRes.json();
 
+    console.log(subjectData.data.subjects)
         setSubjects(subjectData.data.subjects);
         setGroups(groupData.data);
 
@@ -65,14 +66,15 @@ const AllClasses = () => {
         );
         if (!res.ok) throw new Error("Failed to fetch grades");
 
-        console.log(res.data);
+       
         const data = await res.json();
-        // setStudents(data.data.students);
+         console.log(data);
+        setStudents(data.data);
         // setGroupInfo(data.data.groupInfo);
         // setSubjectInfo(data.data.subjectInfo);
         setError(null);
 
-        setGrades(initialGrades);
+       
       } catch (err) {
         console.error(err);
         setError("Failed to load students.");

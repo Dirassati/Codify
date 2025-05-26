@@ -25,13 +25,14 @@ function ParentHome() {
     // },
   ]);
   // const [children, setChildren] = useState(null);
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  const idParent=132;
   useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/parents/${user.id}/children`
+          `http://localhost:5000/api/parents/${idParent}/children`
         );
         console.log(response.data);
 

@@ -18,7 +18,7 @@ const createTeacher = async (req, res) => {
         id: teacher.id,
         email: teacher.email,
         matricule: teacher.matricule,
-        role: 'enseignant',
+        user_role: 'enseignant',
         details: {
           last_name: teacher.last_name,
           first_name: teacher.first_name,

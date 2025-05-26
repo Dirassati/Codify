@@ -40,7 +40,7 @@ const date = getCurrentDate();
 const timing = getCurrentTiming();
 
   try {
-    const res = await axios.post("YOUR_API_URL_HERE", {
+    const res = await axios.post("http://localhost:5000/api/absences/report", {
       studentId:student.id,
       groupId: groupId,
       teacherId: teacherId,
@@ -49,7 +49,7 @@ const timing = getCurrentTiming();
       timing: timing
     });
 
-    console.log(res.data.message); // Optional: show success
+    console.log(res); // Optional: show success
   } catch (error) {
     console.error("Error reporting absence:", error);
   }
@@ -62,11 +62,11 @@ const timing = getCurrentTiming();
         
             <td className='id'>{student.last_name}</td>
             <td className='id'>{student.first_name}</td>
-            <td className='id'>{student.class}</td>
+            <td className='id'>{student.grade_level}</td>
             <td className='attendence'>
                 <div>
                   
-                    <button className='absent' onClick={()=>{handleAbsence}}>Absent</button>
+                    <button className='absent' onClick={handleAbsence}>Absent</button>
                 </div>
             </td>
 

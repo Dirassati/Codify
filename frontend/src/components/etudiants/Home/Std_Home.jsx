@@ -3,26 +3,13 @@
 import { useState, useEffect } from "react"
 import SearchField from "../SearchField"
 import "./Std_Home.css"
-import { useAuth } from "../../../contexts/AuthContext"
 
 const Std_Home = () => {
-  const [studentId, setStudentId] = useState(189)
+  const [studentId, setStudentId] = useState(159)
   const [scheduleData, setScheduleData] = useState(null)
   const [filteredSchedule, setFilteredSchedule] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-<<<<<<< HEAD
-const {user}=useAuth();
-  // Get student ID from localStorage
-  useEffect(() => {
-    const idFromStorage = localStorage.getItem("studentId")
-    if (idFromStorage) {
-      setStudentId(idFromStorage)
-    } else {
-      setLoading(false)
-    }
-  }, [])
-=======
 
  // useEffect(() => {
   //  const idFromStorage = localStorage.getItem("studentId")
@@ -32,7 +19,6 @@ const {user}=useAuth();
     //  setLoading(false)
     //}
   //}, [])
->>>>>>> sara
 
   const parseTimeslot = (timeslotString) => {
     try {
