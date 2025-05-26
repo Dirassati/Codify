@@ -1,3 +1,4 @@
+//link succesful
 import './newpassword.css'
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
@@ -15,7 +16,7 @@ function NewPassword() {
     const [password2, setPassword2] = useState("");
     const [shown2, setShown2] = useState(false);
     const [message,setMessage]=useState("");
-const token=localStorage.getItem("token");
+    const token=localStorage.getItem("token");
     // const maskePassword = (password) => {
     //     return password.replace(/./g, "*"); // Replace every character with '*'
     // };
@@ -29,8 +30,14 @@ async function handleClick() {
     }
 else{
     try {
+<<<<<<< HEAD
         const res =axios.post('http://localhost:5000/api/auth/reset-password',{token,password1});
         console.log(res.message)
+=======
+        const res =await axios.post('http://localhost:5000/api/auth/reset-password',{token, newPassword:password1});
+        console.log(res.data);
+        navigate('/success'); // Redirect to success page
+>>>>>>> 152174caf62beb2dd08e25a292aea013d2b13289
     } catch (error) {
         console.log(error.response?.data?.message || "failed");
     }

@@ -1,3 +1,4 @@
+//link succesful
 import { useState } from 'react';
 import './forgotpassword.css'
 import axios from 'axios'
@@ -11,11 +12,20 @@ function ForgotPassword() {
   async  function handleClick() {
    
 try {
+<<<<<<< HEAD
     const res=axios.post('http://localhost:5000/api/auth/forgot-password',{email});
         console.log(res.resetToken);
         navigate('/verification');
         localStorage.setItem("resetToken",res.resetToken);
         
+=======
+    const res=await axios.post('http://localhost:5000/api/auth/forgot-password',{email});
+        console.log(res.data);
+        localStorage.setItem("email", email);
+        localStorage.setItem("resetToken", res.data.resetToken); // Store the JWT
+        console.log(res.data.resetToken);
+        navigate('/verification'); // Redirect to verification page
+>>>>>>> 152174caf62beb2dd08e25a292aea013d2b13289
 } catch (error) {
     console.log(error.response?.data?.message||"failed");
 }

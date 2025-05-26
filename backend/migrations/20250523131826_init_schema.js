@@ -1,4 +1,4 @@
-exports.up = async function(knex) {
+/*exports.up = async function(knex) {
   await knex.schema.alterTable('grade_subjects_specialization', (table) => {
     table.decimal('coefficient', 3, 1).notNullable().defaultTo(1.0);
   });
@@ -36,4 +36,4 @@ exports.down = async function(knex) {
   await knex.schema.alterTable('grade_subjects_specialization', (table) => {
     table.dropColumn('coefficient');
   });
-};
+};*/

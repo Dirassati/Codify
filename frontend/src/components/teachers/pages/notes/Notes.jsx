@@ -1,64 +1,119 @@
-import "./Notes.css"
-import { FaSearch } from 'react-icons/fa';
-import { FaEye } from 'react-icons/fa';
-
-
+import "./Notes.css";
+import { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 const Notes = () => {
-  // Static data for the table
-  const students = [
-    { id: 1, name: "Rahul Sharma", mark: "05/20", status: "Fail" },
-    { id: 2, name: "Rahul Sharma", mark: "15/20", status: "Pass" },
-    { id: 3, name: "Rahul Sharma", mark: "05/20", status: "Fail" },
-    { id: 4, name: "Rahul Sharma", mark: "15/20", status: "Pass" },
-    { id: 5, name: "Rahul Sharma", mark: "05/20", status: "Fail" },
-    { id: 6, name: "Rahul Sharma", mark: "15/20", status: "Pass" },
-    { id: 7, name: "Rahul Sharma", mark: "05/20", status: "Fail" },
-    { id: 8, name: "Rahul Sharma", mark: "15/20", status: "Pass" },
-    { id: 9, name: "Rahul Sharma", mark: "05/20", status: "Fail" },
-    { id: 10, name: "Rahul Sharma", mark: "15/20", status: "Pass" },
-    { id: 11, name: "Rahul Sharma", mark: "05/20", status: "Fail" },
-    { id: 12, name: "Rahul Sharma", mark: "15/20", status: "Pass" },
-    { id: 13, name: "Rahul Sharma", mark: "05/20", status: "Fail" },
-    { id: 14, name: "Rahul Sharma", mark: "/20", status: "Pending" },
-    { id: 15, name: "Rahul Sharma", mark: "/20", status: "Pending" },
-    { id: 16, name: "Rahul Sharma", mark: "/20", status: "Pending" },
-  ]
+  const [students, setStudents] = useState([]);
+  const [groupInfo, setGroupInfo] = useState(null);
+  const [subjectInfo, setSubjectInfo] = useState(null);
+  const [error, setError] = useState(null);
+
+  const [selectedGroupId, setSelectedGroupId] = useState(1); // Default groupId
+  const subjectId = 1;
+  const trimestre = 1;
+
+  const groups = [
+    { id: 1, label: "Group 1" },
+    { id: 2, label: "Group 2" },
+    { id: 3, label: "Group 3" }
+  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/notes/${selectedGroupId}/${subjectId}/${trimestre}`);
+        if (!res.ok) throw new Error("Network response was not ok");
+        const json = await res.json();
+
+        setStudents(json.data.students);
+        setGroupInfo(json.data.groupInfo);
+        setSubjectInfo(json.data.subjectInfo);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching student grades:", err);
+        setError("Could not load student data.");
+        setStudents([]);
+        setGroupInfo(null);
+        setSubjectInfo(null);
+      }
+    };
+
+    fetchData();
+  }, [selectedGroupId]); // <- re-fetch whenever selected group changes
+
+  const getStatus = (moyenne) => {
+    if (moyenne === null || moyenne === undefined || moyenne === 0) return "Pending";
+    if (moyenne >= 10) return "Pass";
+    return "Fail";
+  };
 
   return (
-    <div className="notes-container">
-      <h1 className="notes-title">Notes</h1>
+    <div className="notes-section">
+      <h1 className="notes-section-title">Student Notes</h1>
 
-      <div className="search-container">
-        <input type="text" placeholder="selecte class" className="search-input" />
-        <span className="search-icon"> <FaSearch /></span>
+      {/* Group Selector */}
+      <div className="notes-group-selector">
+        <label htmlFor="group-select">Select Group:</label>
+        <select
+          id="group-select"
+          value={selectedGroupId}
+          onChange={(e) => setSelectedGroupId(Number(e.target.value))}
+        >
+          {groups.map((group) => (
+            <option key={group.id} value={group.id}>
+              {group.label}
+            </option>
+          ))}
+        </select>
       </div>
 
-      <div className="table-container">
-        <div className="table-header">
-          <div className="header-name">Name</div>
-          <div className="header-mark">Mark</div>
-          <div className="header-status">Status</div>
-          <div className="header-action">Action</div>
+      {/* Info */}
+      {groupInfo && subjectInfo && (
+        <div className="notes-info">
+          <p>
+            <strong>Group:</strong> {groupInfo.gradeName} - {groupInfo.level} ({groupInfo.specializationName})
+          </p>
+          <p>
+            <strong>Subject:</strong> {subjectInfo.name}
+          </p>
+        </div>
+      )}
+
+      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+
+      <div className="notes-table-wrapper">
+        <div className="notes-table-header">
+          <div className="notes-col-name">Name</div>
+          <div className="notes-col-cc">CC</div>
+          <div className="notes-col-devoir">Devoir</div>
+          <div className="notes-col-exam">Exam</div>
+          <div className="notes-col-moyenne">Moyenne</div>
+          <div className="notes-col-status">Status</div>
         </div>
 
-        <div className="table-body">
-          {students.map((student) => (
-            <div key={student.id} className="table-row">
-              <div className="cell-name">
-                <span className="bullet">•</span> {student.name}
+        <div className="notes-table-body">
+          {students.map((student) => {
+            const moyenne = parseFloat(student.moyenne_matiere) || 0;
+            const status = getStatus(moyenne);
+
+            return (
+              <div key={student.id} className="notes-table-row">
+                <div className="notes-cell-name">
+                  <span className="notes-bullet">•</span>
+                  {student.first_name} {student.last_name}
+                </div>
+                <div className="notes-cell-cc">{student.note_cc}</div>
+                <div className="notes-cell-devoir">{student.note_devoir}</div>
+                <div className="notes-cell-exam">{student.note_examen}</div>
+                <div className="notes-cell-moyenne">{moyenne.toFixed(2)}</div>
+                <div className={`notes-cell-status ${status.toLowerCase()}`}>{status}</div>
               </div>
-              <div className="cell-mark">{student.mark}</div>
-              <div className={`cell-status ${student.status.toLowerCase()}`}>{student.status}</div>
-              <div className="cell-action">
-                <span className="eye-icon">  <FaEye /></span> Complete Result
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Notes
+export default Notes;

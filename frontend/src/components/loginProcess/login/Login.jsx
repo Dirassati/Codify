@@ -52,11 +52,21 @@ function Login() {
 
         console.log(response);
         // Redirect to dashboard, etc.
+<<<<<<< HEAD
         if (response.data.user.user_role === "enseignant") {
+=======
+        if (response.data.user_role === "enseignant") {
+          localStorage.setItem("teacherId", response.data.user.id); // Store teacher ID
+>>>>>>> 152174caf62beb2dd08e25a292aea013d2b13289
           navigate("/teacher");
         } else if (response.data.user.user_role === "parents") {
           navigate("/parent");
+<<<<<<< HEAD
         } else if (response.data.user.user_role === "eleve") {
+=======
+        } else if (response.data.user_role === "eleve") {
+          localStorage.setItem("studentId", response.data.user.id);// Store student ID
+>>>>>>> 152174caf62beb2dd08e25a292aea013d2b13289
           navigate("/student");
         } else {
           navigate("/adminpannel/dashboard");
