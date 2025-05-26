@@ -4,33 +4,43 @@ import { FaSearch } from "react-icons/fa";
 
 const Notes = () => {
   const [students, setStudents] = useState([]);
+  const [groupInfo, setGroupInfo] = useState(null);
+  const [subjectInfo, setSubjectInfo] = useState(null);
   const [error, setError] = useState(null);
 
-  const groupId = 1;      // Example groupId
-  const subjectId = 2;    // Example subjectId
-  const trimestre = 1;    // Example trimestre
+  const [selectedGroupId, setSelectedGroupId] = useState(1); // Default groupId
+  const subjectId = 1;
+  const trimestre = 1;
+
+  const groups = [
+    { id: 1, label: "Group 1" },
+    { id: 2, label: "Group 2" },
+    { id: 3, label: "Group 3" }
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/notes/${groupId}/${subjectId}/${trimestre}`);
+        const res = await fetch(`http://localhost:5000/api/notes/${selectedGroupId}/${subjectId}/${trimestre}`);
         if (!res.ok) throw new Error("Network response was not ok");
         const json = await res.json();
+
         setStudents(json.data.students);
+        setGroupInfo(json.data.groupInfo);
+        setSubjectInfo(json.data.subjectInfo);
+        setError(null);
       } catch (err) {
         console.error("Error fetching student grades:", err);
         setError("Could not load student data.");
-        // Fallback data
-        setStudents([
-          { id: 1, first_name: "Rahul", last_name: "Sharma", note_cc: "08", note_devoir: "10", note_examen: "12", moyenne_matiere: "10" }
-        ]);
+        setStudents([]);
+        setGroupInfo(null);
+        setSubjectInfo(null);
       }
     };
 
     fetchData();
-  }, []);
+  }, [selectedGroupId]); // <- re-fetch whenever selected group changes
 
-  // Function to get status based on moyenne_matiere
   const getStatus = (moyenne) => {
     if (moyenne === null || moyenne === undefined || moyenne === 0) return "Pending";
     if (moyenne >= 10) return "Pass";
@@ -41,10 +51,33 @@ const Notes = () => {
     <div className="notes-section">
       <h1 className="notes-section-title">Student Notes</h1>
 
-      <div className="notes-search-wrapper">
-        <input type="text" placeholder="Select class" className="notes-search-input" />
-        <span className="notes-search-icon"><FaSearch /></span>
+      {/* Group Selector */}
+      <div className="notes-group-selector">
+        <label htmlFor="group-select">Select Group:</label>
+        <select
+          id="group-select"
+          value={selectedGroupId}
+          onChange={(e) => setSelectedGroupId(Number(e.target.value))}
+        >
+          {groups.map((group) => (
+            <option key={group.id} value={group.id}>
+              {group.label}
+            </option>
+          ))}
+        </select>
       </div>
+
+      {/* Info */}
+      {groupInfo && subjectInfo && (
+        <div className="notes-info">
+          <p>
+            <strong>Group:</strong> {groupInfo.gradeName} - {groupInfo.level} ({groupInfo.specializationName})
+          </p>
+          <p>
+            <strong>Subject:</strong> {subjectInfo.name}
+          </p>
+        </div>
+      )}
 
       {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
 

@@ -9,10 +9,10 @@ const Notes = () => {
   const [activeSemester, setActiveSemester] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("")
 
-  const studentId = localStorage.getItem("studentId")
-
-  const totalSemesters = 3 // You can change this or make it dynamic
+  const studentId = localStorage.getItem("studentId") || "1"
+  const totalSemesters = 3
 
   useEffect(() => {
     const fetchAllSemesters = async () => {
@@ -30,16 +30,23 @@ const Notes = () => {
           semesterPromises.push(
             fetch(`http://localhost:5000/api/notes/summary/${studentId}/${sem}`).then(async (res) => {
               if (!res.ok) throw new Error(`Failed to fetch semester ${sem}`)
+
               const json = await res.json()
+              console.log(`Semester ${sem} response:`, json)
+
+              const subjects = Array.isArray(json.data?.subjects)
+                ? json.data.subjects.map(subject => ({
+                    name: subject.subject_name,
+                    continuousAssessment: subject.note_cc ?? "-",
+                    assignment: subject.note_devoir ?? "-",
+                    exam: subject.note_examen ?? "-",
+                    average: subject.moyenne_matiere ?? "-"
+                  }))
+                : []
+
               return {
                 name: `Semester ${sem < 10 ? `0${sem}` : sem}`,
-                subjects: json.data.map(subject => ({
-                  name: subject.name,
-                  continuousAssessment: subject.continuousAssessment || "-",
-                  assignment: subject.assignment || "-",
-                  exam: subject.exam || "-",
-                  average: subject.average || "-"
-                }))
+                subjects
               }
             })
           )
@@ -58,7 +65,9 @@ const Notes = () => {
     fetchAllSemesters()
   }, [studentId])
 
-  const currentSemesterSubjects = semesters[activeSemester]?.subjects || []
+  const currentSemesterSubjects = (semesters[activeSemester]?.subjects || []).filter(subject =>
+    subject.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
   if (loading) {
     return (
@@ -87,7 +96,7 @@ const Notes = () => {
   return (
     <div className="notes-container_teacher">
       <div className="search-wrappe">
-        <SearchField />
+        <SearchField value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       </div>
 
       <div className="semester-tabs">
@@ -127,7 +136,7 @@ const Notes = () => {
             ) : (
               <tr>
                 <td colSpan={5} className="no-data">
-                  No subjects found for this semester
+                  No matching subjects found for this semester
                 </td>
               </tr>
             )}

@@ -49,3 +49,13 @@
 {"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-25T23:45:07.914Z"}
 {"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-25T23:46:34.948Z"}
 {"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-25T23:46:34.959Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:21:08.305Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:21:08.321Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:41:18.044Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:41:18.062Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:41:21.920Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:41:21.922Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:41:48.313Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:41:48.314Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:42:32.623Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:42:32.625Z"}

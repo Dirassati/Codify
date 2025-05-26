@@ -16,6 +16,14 @@
   margin-bottom: 30px;
 }
 
+/* Group and Subject info */
+.notes-info {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #1a3b5d;
+  font-weight: 600;
+}
+
 /* Search Bar */
 .notes-search-wrapper {
   position: relative;
@@ -120,12 +128,16 @@
 
 .notes-cell-status.pending {
   color: #2196f3;
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
-=======
+.notes-group-selector {
+  margin-bottom: 20px;
+  text-align: center;
 }
->>>>>>> bb01749a2851a6296f33cd546f1455a62b323670
-=======
+
+.notes-group-selector select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-left: 10px;
 }
->>>>>>> 6457b501fe2ae073c39a5d59023ebc392efab704
