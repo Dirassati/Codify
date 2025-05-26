@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import SearchField from "../SearchField"
 import "./Std_Home.css"
+import { useAuth } from "../../../contexts/AuthContext"
 
 const Std_Home = () => {
   const [studentId, setStudentId] = useState(null)
@@ -10,7 +11,7 @@ const Std_Home = () => {
   const [filteredSchedule, setFilteredSchedule] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
+const {user}=useAuth();
   // Get student ID from localStorage
   useEffect(() => {
     const idFromStorage = localStorage.getItem("studentId")

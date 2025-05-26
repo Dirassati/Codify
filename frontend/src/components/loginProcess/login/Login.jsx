@@ -52,13 +52,13 @@ function Login() {
 
         console.log(response);
         // Redirect to dashboard, etc.
-        if (response.data.user_role === "enseignant") {
-          localStorage.setItem("teacherId", response.data.user.id); // Store teacher ID
+        if (response.data.user.user_role === "enseignant") {
+          localStorage.setItem("teacherId", response.data.user.user.id); // Store teacher ID
           navigate("/teacher");
         } else if (response.data.user.user_role === "parents") {
           navigate("/parent");
-        } else if (response.data.user_role === "eleve") {
-          localStorage.setItem("studentId", response.data.user.id);// Store student ID
+        } else if (response.data.user.user_role === "eleve") {
+          localStorage.setItem("studentId", response.data.user.user.id);// Store student ID
           navigate("/student");
         } else {
           navigate("/adminpannel/dashboard");
