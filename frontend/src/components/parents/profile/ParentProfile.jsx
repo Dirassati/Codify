@@ -24,14 +24,13 @@ const {user}=useAuth();
 
   // Form states
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
+    first_name: "",
+    last_name: "",
+    phone_number: "",
     email: "",
     address: "",
     profession: "",
-    civilStatus: "",
-    childsNumber: "",
+    etat_civil: "",
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
@@ -43,12 +42,11 @@ const {user}=useAuth();
       setLoading(true)
       try {
 
-      const response =await axios .get(`http://localhost:5000/api/inscription/parents/${user.id}`);
+      const response =await axios .get(`http://localhost:5000/api/parents/${user.id}`);
       
 console.log(response.data)
-        setProfileData(response.data)
         setFormData({
-          ...response.data,
+          ...response.data.data,
           currentPassword: "",
           newPassword: "",
           confirmPassword: "",
@@ -62,7 +60,7 @@ console.log(response.data)
     }
 
     fetchProfileData()
-  }, [])
+  }, [true])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -190,7 +188,7 @@ alert("Password updated successfully!")
   <SearchHeader />
 </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete={"off"}>
         {/* General Information Section */}
         <section className="profile-section">
           <h2 className="section-title">General</h2>
@@ -202,7 +200,7 @@ alert("Password updated successfully!")
                 type="text"
                 id="firstName"
                 name="firstName"
-                value={formData.firstName}
+                value={formData.first_name}
                 onChange={handleInputChange}
                 required
               />
@@ -214,7 +212,7 @@ alert("Password updated successfully!")
                 type="text"
                 id="lastName"
                 name="lastName"
-                value={formData.lastName}
+                value={formData.last_name}
                 onChange={handleInputChange}
                 required
               />
@@ -224,7 +222,7 @@ alert("Password updated successfully!")
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="phone">Phone Number*</label>
-              <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} required />
+              <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phone_number} onChange={handleInputChange} required />
             </div>
 
             <div className="form-group">
@@ -236,6 +234,7 @@ alert("Password updated successfully!")
                 value={formData.email}
                 onChange={handleInputChange}
                 required
+                 autoComplete={"off"}
               />
             </div>
           </div>
@@ -253,24 +252,11 @@ alert("Password updated successfully!")
 
             <div className="form-group">
               <label htmlFor="field">civilStatus</label>
-              <input type="text" id="civilStatus" name="civilStatus" value={formData.civilStatus} onChange={handleInputChange} />
+              <input type="text" id="civilStatus" name="civilStatus" value={formData.etat_civil} onChange={handleInputChange} />
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="childsNumber">Number of registered children </label>
-              <input
-                type="text"
-                id="childsNumber"
-                name="childsNumber"
-                value={formData.childsNumber}
-                onChange={handleInputChange}
-              />
-            </div>
-
-
-          </div>
+   
         </section>
 
         <hr className="section-divider" />
@@ -289,6 +275,7 @@ alert("Password updated successfully!")
                   name="currentPassword"
                   value={formData.currentPassword}
                   onChange={handleInputChange}
+                   autoComplete={"new-password"}
                 />
                 <button
                   type="button"

@@ -48,14 +48,14 @@ function Login() {
         // Store the token in localStorage (or context)
         localStorage.setItem("token", response.data.token);
         // Store the user infos  in  context
-        setUser(response.data);
+        setUser(response.data.user);
 
         // Redirect to dashboard, etc.
-        if (response.data.user_role === "enseignant") {
+        if (response.data.user.user_role === "enseignant") {
           navigate("/teacher");
-        } else if (response.data.user_role === "parents") {
+        } else if (response.data.user.user_role === "parents") {
           navigate("/parent");
-        } else if (response.data.user_role === "eleve") {
+        } else if (response.data.user.user_role === "eleve") {
           navigate("/student");
         } else {
           navigate("/adminpannel/dashboard");
