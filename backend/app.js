@@ -17,6 +17,7 @@ const timetableRoutes = require("./src/routes/timetableRoutes");
 const reinscriptionRoutes = require("./src/routes/re-inscriptionRoutes");
 const notesRoutes = require('./src/routes/notesRoutes');
 const inactivateOldReinscriptions = require("./src/utils/inactivateOldReinscriptions");
+
 const errorMiddleware = require("./src/middleware/errorMiddleware");
 const { testConnection } = require("./testDbConnection");
 const notesService = require("./src/services/notesService");
@@ -96,7 +97,10 @@ app.use('/api/admin/addteacher',require('./src/routes/addTeacherRoutes'))
 app.use('/api/timetable', timetableRoutes);
 app.use('/api/notes', notesRoutes);
 notesService.initializeNotesForNewStudents();
+<<<<<<< HEAD
 
+=======
+>>>>>>> sara
 
 // Test endpoint
 app.get("/", (req, res) => {

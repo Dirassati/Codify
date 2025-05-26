@@ -9,22 +9,29 @@ const Users = () => {
   const [groupId, setGroupId] = useState('');
 
   const generateTimetable = async () => {
-    setLoading(true);
-    setError(null);
     try {
-      const response = await fetch('http://localhost:5000/api/timetable/generate/all');
-      const data = await response.json();
-      
-      if (data.success) {
-        setTimetable(data.timetable);
-      } else {
-        setError('Failed to generate timetable');
+      const response = await fetch('http://localhost:5000/api/timetable/generate/all', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Handle HTTP errors explicitly
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("text/html")) {
+          throw new Error("Server returned an HTML page. Possibly a 404 or server misconfiguration.");
+        } else {
+          throw new Error(`Server error: ${response.status} ${response.statusText}`);
+        }
       }
+
+      const data = await response.json();
+      return data;
     } catch (err) {
-      setError('Error connecting to server');
-      console.error(err);
-    } finally {
-      setLoading(false);
+      console.error('Timetable generation error:', err);
+      return { success: false, message: err.message || 'Error connecting to server' };
     }
   };
 
@@ -39,7 +46,7 @@ const Users = () => {
     try {
       const response = await fetch(`http://localhost:5000/api/timetable/${groupId}`);
       const data = await response.json();
-      
+
       if (data.success) {
         setTimetable(data.timetable);
       } else {
@@ -76,7 +83,19 @@ const Users = () => {
       <div className="actions-container">
         <button 
           className="action-button generate-button"
-          onClick={generateTimetable}
+          onClick={async () => {
+            setLoading(true);
+            setError(null);
+            setTimetable(null);
+            const result = await generateTimetable();
+            setLoading(false);
+
+            if (result.success) {
+              setError('Timetable generated successfully. Enter a group ID to view a timetable.');
+            } else {
+              setError(result.message || 'Failed to generate timetable');
+            }
+          }}
           disabled={loading}
         >
           {loading ? <Loader2 className="spin-icon" size={18} /> : <Calendar size={18} />}
@@ -110,7 +129,7 @@ const Users = () => {
       {timetable && (
         <div className="timetable-content">
           <h2 className="timetable-heading">Weekly Schedule</h2>
-          
+
           <div className="days-container">
             {days.map(day => (
               <div key={day} className="day-column">

@@ -14,16 +14,15 @@ const Dashboardd = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // You'll need to replace this with the actual teacher ID
   const teacherId = 160
 
   const toggleNotifications = () => {
-    setShowNotifications(!showNotifications)
+    setShowNotifications((prev) => !prev)
     setShowProfile(false)
   }
 
   const toggleProfile = () => {
-    setShowProfile(!showProfile)
+    setShowProfile((prev) => !prev)
     setShowNotifications(false)
   }
 
@@ -32,26 +31,20 @@ const Dashboardd = () => {
   }
 
   const addProfileInfo = (info) => {
-    //http requests
+    // Add profile update HTTP call here
   }
 
   const changePassword = (info) => {
-    //http requests
+    // Add password change HTTP call here
   }
 
-  // Fetch timetable data from API
   useEffect(() => {
     const fetchTimetable = async () => {
       try {
         setLoading(true)
-        const response = await fetch( ` http://localhost:5000/api/timetable/teacher/${teacherId}`)
-
-        if (!response.ok) {
-         
-          throw new Error("Failed to fetch timetable data")
-        }
-
-        const data = await response.json()
+        const res = await fetch(`http://localhost:5000/api/timetable/teacher/${teacherId}`)
+        if (!res.ok) throw new Error("Failed to fetch timetable")
+        const data = await res.json()
 
         if (data.success) {
           setTimetableData(data.timetable)
@@ -59,8 +52,8 @@ const Dashboardd = () => {
           throw new Error("API returned unsuccessful response")
         }
       } catch (err) {
+        console.error(err)
         setError(err.message)
-        console.error("Error fetching timetable:", err)
       } finally {
         setLoading(false)
       }
@@ -69,7 +62,6 @@ const Dashboardd = () => {
     fetchTimetable()
   }, [teacherId])
 
-  // Map French day names to display format
   const dayMapping = {
     Dimanche: { number: "1/1", name: "(Sun)" },
     Lundi: { number: "1/2", name: "(Mon)" },
@@ -80,90 +72,66 @@ const Dashboardd = () => {
     Samedi: { number: "1/7", name: "(Sat)" },
   }
 
-  // Time slots for the grid
   const timeSlots = ["08:00", "09:00", "10:00", "11:00", "12:00", "Break", "13:00", "14:00", "15:00", "16:00"]
 
-  // Function to get class info for a specific day and time slot
-  const getClassForTimeSlot = (day, timeSlotIndex) => {
+  const getClassForTimeSlot = (day, index) => {
     if (!timetableData || !timetableData[day]) return null
+    if (index === 5) return null // Break
 
-    const dayClasses = timetableData[day]
+    const slotHour = 8 + (index < 5 ? index : index - 1)
+    const classes = timetableData[day]
 
-    // Find a class that matches this time slot
-    for (const classInfo of dayClasses) {
-      const [startTime] = classInfo.timeslot.split("-")
-      const startHour = Number.parseInt(startTime.split(":")[0])
-      const startMinute = Number.parseInt(startTime.split(":")[1])
+    for (const cls of classes) {
+      const [start] = cls.timeslot.split("-")
+      const [hour, minute] = start.split(":").map(Number)
+      const durationHours = Math.floor(cls.duration / 60)
 
-      // Map time slot index to actual hours
-      let slotHour
-      if (timeSlotIndex === 5) return null // Break slot
-      if (timeSlotIndex < 5) {
-        slotHour = 8 + timeSlotIndex
-      } else {
-        slotHour = 8 + timeSlotIndex // Accounting for break
-      }
-
-      // Check if this class starts at this time slot
-      if (
-        startHour === slotHour ||
-        (startHour < slotHour && startHour + Math.floor(classInfo.duration / 60) > slotHour)
-      ) {
-        return {
-          group: classInfo.group,
-          classroom: classInfo.classroom,
-          subject: classInfo.subject,
-        }
+      if (hour === slotHour || (hour < slotHour && hour + durationHours > slotHour)) {
+        return cls
       }
     }
 
     return null
   }
 
-  // Render schedule rows
   const renderScheduleRows = () => {
-    const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+    const days = Object.keys(dayMapping)
 
-    return days.map((day) => {
-      const dayInfo = dayMapping[day]
-
-      return (
-        <div key={day} className="schedule-row">
-          <div className="day-label">
-            <div className="day-number">{dayInfo.number}</div>
-            <div className="day-name">{dayInfo.name}</div>
-          </div>
-          {timeSlots.map((timeSlot, index) => {
-            if (timeSlot === "Break") {
-              return <div key={index} className="class-cell empty"></div>
-            }
-
-            const classInfo = getClassForTimeSlot(day, index)
-
-            return (
-              <div key={index} className={`class-cell ${!classInfo ? "empty" : ""}`}>
-                {classInfo && (
-                  <>
-                    <div className="class-info">{classInfo.group}</div>
-                    <div className="class-room">{classInfo.classroom}</div>
-                  </>
-                )}
-              </div>
-            )
-          })}
+    return days.map((day) => (
+      <div key={day} className="schedule-row">
+        <div className="day-label">
+          <div className="day-number">{dayMapping[day].number}</div>
+          <div className="day-name">{dayMapping[day].name}</div>
         </div>
-      )
-    })
+        {timeSlots.map((time, idx) => {
+          if (time === "Break") return <div key={idx} className="class-cell empty break">Break</div>
+
+          const cls = getClassForTimeSlot(day, idx)
+
+          return (
+            <div key={idx} className={`class-cell ${cls ? "" : "empty"}`}>
+              {cls && (
+                <>
+                  <div className="class-info">{cls.group}</div>
+                  <div className="class-room">{cls.classroom}</div>
+                  <div className="class-subject">{cls.subject}</div>
+                </>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    ))
   }
 
-  UseClickOutside(notificationsRef, () => {
-    setShowNotifications(false)
-  })
+  UseClickOutside(notificationsRef, () => setShowNotifications(false))
+  UseClickOutside(profileRef, () => setShowProfile(false))
 
   return (
     <div className="dashboard-container">
       <div className="header-icons">
         <div className="notification-icon" onClick={toggleNotifications} ref={notificationsRef}>
+<<<<<<< HEAD
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -193,11 +161,19 @@ const Dashboardd = () => {
 
         <div className="profile-icon" onClick={toggleProfile}>
           <div className="avatar"></div>
+=======
+          🔔
+        </div>
+        <div className="message-icon">💬</div>
+        <div className="profile-icon" onClick={toggleProfile}>
+          <div className="avatar" />
+>>>>>>> sara
         </div>
       </div>
 
       {showNotifications && (
         <div className="notification-dropdown" ref={notificationsRef}>
+<<<<<<< HEAD
           <h2 className="notification-title">Notification</h2>
           <div className="notification-subtitle">Home Work</div>
           <div className="notification-card">
@@ -269,6 +245,11 @@ const Dashboardd = () => {
               <p className="notification-description">Description Course: Axxxxxx</p>
             </div>
           </div>
+=======
+          <h2>Notifications</h2>
+          <div className="notification-card">📌 Notification 1 - Homework</div>
+          <div className="notification-card">📌 Notification 2 - Meeting</div>
+>>>>>>> sara
         </div>
       )}
 
@@ -280,6 +261,7 @@ const Dashboardd = () => {
 
       <h1 className="dashboard-title">Dashboard</h1>
 
+<<<<<<< HEAD
       <div className="stats-container">
         <div className="stat-card">
           <div className="stat-icon students-icon">
@@ -353,8 +335,14 @@ const Dashboardd = () => {
         <div className="schedule-header">
           <h2 className="schedule-title">Weekly Schedule</h2>
         </div>
+=======
+      {loading && <p>Loading timetable...</p>}
+      {error && <p className="error">{error}</p>}
+>>>>>>> sara
 
+      {!loading && !error && (
         <div className="schedule-grid">
+<<<<<<< HEAD
           <div className="time-slots">
             <div className="day-label"></div>
             {timeSlots.map((slot, index) => (
@@ -373,8 +361,17 @@ const Dashboardd = () => {
           ) : (
             renderScheduleRows()
           )}
+=======
+          <div className="schedule-header">
+            <div className="day-label-header">Day</div>
+            {timeSlots.map((slot, idx) => (
+              <div key={idx} className="time-slot-header">{slot}</div>
+            ))}
+          </div>
+          {renderScheduleRows()}
+>>>>>>> sara
         </div>
-      </div>
+      )}
     </div>
   )
 }

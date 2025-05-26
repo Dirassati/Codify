@@ -1,5 +1,5 @@
-/* Main container */
 .dashboard-container {
+<<<<<<< HEAD
     font-family: Arial, sans-serif;
     background-color: #f0f2f9;
     padding: 20px;
@@ -297,61 +297,93 @@
     font-size: 14px;
     color: #8a94a6;
   }
+=======
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+>>>>>>> sara
 
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .dashboard-container {
-      padding: 10px;
-    }
-    
-    .stats-container {
-      flex-direction: column;
-      gap: 20px;
-    }
-    
-    .schedule-grid {
-      overflow-x: auto;
-    }
-    
-    .time-slots,
-    .schedule-row {
-      min-width: 800px;
-    }
-    
-    .notification-dropdown {
-      width: 280px;
-      right: 10px;
-    }
-  }
+.header-icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
 
-  /* Loading and error states */
-  .loading-state,
-  .error-state {
-    padding: 40px 20px;
-    text-align: center;
-    color: #8a94a6;
-    font-size: 16px;
-  }
+.avatar {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 50%;
+}
 
-  .error-state {
-    color: #ff7a59;
-  }
+.notification-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 100px;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 10;
+  width: 250px;
+}
 
-  /* Enhanced class cells for better data display */
-  .class-cell.has-class {
-    background-color: #f8f9ff;
-    border-color: #0099ff;
-  }
+.notification-card {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
 
-  .class-cell.has-class:hover {
-    background-color: #f0f4ff;
-    transform: translateY(-2px);
-    transition: all 0.2s ease;
-  }
+.schedule-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 100px repeat(10, 1fr);
+  gap: 1px;
+  background: #ccc;
+}
 
+<<<<<<< HEAD
   /* Subject indicator */
   .class-subject {
     font-size: 11px;
     color: #0099ff;
     margin-top: 2px;
   }
+=======
+.schedule-header, .schedule-row {
+  display: contents;
+}
+
+.day-label, .day-label-header {
+  background: #f0f0f0;
+  padding: 10px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-slot-header {
+  background: #e0e0e0;
+  padding: 10px;
+  text-align: center;
+}
+
+.class-cell {
+  background: #fff;
+  padding: 10px;
+  min-height: 60px;
+  text-align: center;
+}
+
+.class-cell.empty {
+  background: #f9f9f9;
+  color: #aaa;
+}
+
+.class-cell.break {
+  background: #f0f0f0;
+  font-style: italic;
+  color: #666;
+}
+>>>>>>> sara

@@ -1,0 +1,88 @@
+/* Activities.css */
+
+.activities {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.activities__loading {
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.activities__trimester {
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 1rem;
+}
+
+.activities__trimester-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #1a73e8;
+  border-left: 4px solid #1a73e8;
+  padding-left: 0.5rem;
+}
+
+.activities__level-group {
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid #666;
+}
+
+.activities__level-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.activities__groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.activities__group-card {
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+  flex: 1 1 300px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.activities__group-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #222;
+}
+
+.activities__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.activities__table th,
+.activities__table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.activities__table th {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  font-weight: 600;
+}
+
+.activities__table tbody tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.activities__table tbody tr:hover {
+  background-color: #dbeafe;
+}

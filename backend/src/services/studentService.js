@@ -226,6 +226,7 @@ exports.getStudentDetails = async (studentId) => {
   return result;
 };
 
+<<<<<<< HEAD
 exports.getParentByStudentId = async (studentId) => {
   const { rows } = await pool.query(
     `
@@ -246,3 +247,31 @@ exports.getParentByStudentId = async (studentId) => {
   // Return the first row as a plain object
   return rows[0];
 };
+=======
+exports.listStudentSubjects = async (studentId) => {
+  const query = `
+    SELECT 
+      s.id,
+      s.name,
+      s.description,
+      gss.weekly_hours,
+      gss.is_double_session,
+      gss.coefficient
+    FROM eleve e
+    JOIN grade_subjects_specialization gss ON 
+      e.grade_id = gss.grade_id AND 
+      (e.specialization_id = gss.specialization_id OR gss.specialization_id IS NULL)
+    JOIN subjects s ON gss.subject_id = s.id
+    WHERE e.id = $1
+    ORDER BY s.name ASC
+  `;
+
+  const { rows } = await pool.query(query, [studentId]);
+  
+  if (rows.length === 0) {
+    throw new Error("Étudiant non trouvé ou aucune matière associée");
+  }
+  
+  return rows;
+};
+>>>>>>> sara

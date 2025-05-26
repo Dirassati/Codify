@@ -11,7 +11,7 @@ const Notes = () => {
   const [error, setError] = useState(null)
   const [searchTerm, setSearchTerm] = useState("")
 
-  const studentId = localStorage.getItem("studentId") || "1"
+  const studentId = localStorage.getItem("studentId") || "189"
   const totalSemesters = 3
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Notes = () => {
                 : []
 
               return {
-                name: `Semester ${sem < 10 ? `0${sem}` : sem}`,
+                name: `Trimestre ${sem < 10 ? `0${sem}` : sem}`,
                 subjects
               }
             })

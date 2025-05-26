@@ -56,6 +56,7 @@
 {"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-24T09:14:03.403Z"}
 {"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-24T09:14:08.190Z"}
 {"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-24T09:14:08.237Z"}
+<<<<<<< HEAD
 {"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-25T00:36:50.000Z"}
 {"level":"error","message":"Error in notes initialization: relation \"notes\" does not exist","timestamp":"2025-05-25T00:36:50.036Z"}
 {"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-25T00:36:54.476Z"}
@@ -142,3 +143,109 @@
 {"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:41:48.314Z"}
 {"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T08:42:32.623Z"}
 {"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T08:42:32.625Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T11:18:34.807Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T11:18:34.850Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T11:18:39.106Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T11:18:39.144Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T11:22:09.344Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T11:22:09.379Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T11:22:13.675Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T11:22:13.707Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T11:22:34.470Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T11:22:34.502Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T11:22:38.975Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T11:22:38.992Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T13:33:54.984Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T13:33:55.022Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T13:33:59.585Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T13:33:59.612Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T13:39:09.089Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T13:39:09.090Z"}
+{"level":"error","message":"Error in saveOrUpdateNote: Error: Invalid note type","timestamp":"2025-05-26T13:39:22.585Z"}
+{"level":"error","message":"Failed to save grade: Error: Invalid note type","timestamp":"2025-05-26T13:39:22.586Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:40.697Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:40.703Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:40.716Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:40.721Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:40.725Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:40.726Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:42.762Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:42.762Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:42.764Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:42.766Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:42.880Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:42.881Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:52.865Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:52.866Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:53.004Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:53.005Z"}
+{"level":"error","message":"Error in getStudentGradesSummary: Error: Student not found","timestamp":"2025-05-26T14:06:53.016Z"}
+{"level":"error","message":"Failed to fetch student grades summary: Error: Student not found","timestamp":"2025-05-26T14:06:53.017Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:33:54.674Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:33:54.698Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:50:14.982Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:50:15.020Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:50:19.245Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:50:19.255Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:50:26.929Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:50:26.978Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:50:31.013Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:50:31.038Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:50:54.542Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:50:54.573Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:50:58.938Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:50:58.960Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:52:00.933Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:52:00.969Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T14:52:05.423Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T14:52:05.465Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T15:52:00.491Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T15:52:00.533Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T16:52:00.535Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T16:52:00.558Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T17:38:32.640Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T17:38:32.681Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T17:38:37.022Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T17:38:37.039Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T17:44:06.508Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T17:44:06.542Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T17:44:10.965Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T17:44:11.013Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T17:47:24.865Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T17:47:24.909Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T17:47:29.085Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T17:47:29.109Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:25:23.159Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:25:23.205Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:25:27.542Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:25:27.566Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:41:17.781Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:41:17.826Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:41:22.085Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:41:22.096Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:51:17.303Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:51:17.343Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:51:21.749Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:51:21.771Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T18:52:24.267Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T18:52:24.269Z"}
+{"level":"error","message":"Error in getStudentsForGrading: Error: No students found for this group","timestamp":"2025-05-26T18:52:29.099Z"}
+{"level":"error","message":"Failed to fetch students grades: Error: No students found for this group","timestamp":"2025-05-26T18:52:29.100Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:55:26.129Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:55:26.163Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:55:30.581Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:55:30.589Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:59:20.491Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:59:20.530Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T18:59:24.911Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T18:59:24.921Z"}
+=======
+>>>>>>> 8275847e6153040f4d1e07659e5ba6efac363622
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T19:21:33.090Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T19:21:33.127Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T19:21:37.411Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T19:21:37.421Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T19:23:22.681Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T19:23:22.736Z"}
+{"level":"info","message":"Starting automatic notes initialization...","timestamp":"2025-05-26T19:23:27.119Z"}
+{"level":"info","message":"Automatic notes initialization completed","timestamp":"2025-05-26T19:23:27.143Z"}

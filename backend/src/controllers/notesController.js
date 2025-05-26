@@ -66,6 +66,7 @@ class NotesController {
         data
       });
       console.log(data)
+
     } catch (error) {
       logger.error(`Failed to fetch student grades summary: ${error}`);
       const statusCode = error.message.includes('not found') ? 404 : 400;

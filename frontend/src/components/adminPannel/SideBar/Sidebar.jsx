@@ -60,9 +60,17 @@ const {page,setPage}=usePageContext();
                     <img className='icon' src={user} alt="user" />
                     <div className="name">Users</div>
                 </Link>
+<<<<<<< HEAD
                 <Link to='LatestActivities' onClick={() => { setPage(8) }} className={`link ${page === 8 ? 'clicked' : ''}`}>
+=======
+                <Link to='Groupes' onClick={() => { setIndex(8) }} className={`link ${index === 8 ? 'clicked' : ''}`}>
+                    <img className='icon' src={user} alt="user" />
+                    <div className="name">Groupes</div>
+                </Link>
+                <Link to='LatestActivities' onClick={() => { setIndex(9) }} className={`link ${index === 9 ? 'clicked' : ''}`}>
+>>>>>>> sara
                     <img className='icon' src={activity} alt="activity" />
-                    <div className="name">Latest Activities</div>
+                    <div className="name">Gradebook</div>
                 </Link>
             </div>
 
