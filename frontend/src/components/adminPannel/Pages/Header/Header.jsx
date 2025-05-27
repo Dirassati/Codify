@@ -14,7 +14,7 @@ function Header(props) {
                 <div className="icon"><img src={parametre} alt="parameters" /></div>
 
                 <div className="info">
-                    <h5>Nabila .A</h5>
+                    <h5>{props.name}</h5>
                     <p>{props.role}</p>
 
                 </div>
