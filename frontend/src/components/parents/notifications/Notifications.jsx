@@ -10,23 +10,27 @@ function Notifications() {
   const idParent=132;
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      setLoading(true)
-      try {
-        const res = await axios.get(`http://localhost:5000/api/notifications/${idParent}`);
-        console.log(res.data);
+    // const fetchProfileData = async () => {
+    //   setLoading(true)
+    //   try {
+    //     const res = await axios.get(`http://localhost:5000/api/notifications/${idParent}`);
+    //     console.log(res.data);
 
-        setnotifications(res.data.data);
+    //     setnotifications(res.data.data);
 
-        setLoading(false)
-      } catch (err) {
-        console.error("Error fetching profile data:", err)
-        setError("Failed to load profile data. Please try again later.")
-        setLoading(false)
-      }
-    }
+    //     setLoading(false)
+    //   } catch (err) {
+    //     console.error("Error fetching profile data:", err)
+    //     setError("Failed to load profile data. Please try again later.")
+    //     setLoading(false);
+    //   }
+    // }
 
-    fetchProfileData()
+    // fetchProfileData()
+    setnotifications([
+      {},{},{},{}
+    ]);
+    setLoading(false)
   }, [])
 
 

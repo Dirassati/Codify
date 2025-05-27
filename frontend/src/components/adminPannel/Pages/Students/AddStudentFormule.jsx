@@ -15,7 +15,7 @@ function AddStudentFormule() {
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [error,setError]=useState(null);
+  const [error, setError] = useState(null);
   const [birthCertificateFile, setBirthCertificateFile] = useState(null);
   const [proofOfResidenceFile, setProofOfResidenceFile] = useState(null);
   const [previousSchoolRecords, setPreviousSchoolRecords] = useState(null);
@@ -23,7 +23,7 @@ function AddStudentFormule() {
   const [message, setMessage] = useState("");
   const [parentExist, setParentExist] = useState(true);
   const [addChild, setAddChild] = useState(false);
-  const [parentCardId,setParentCardId]=useState("");
+  const [parentCardId, setParentCardId] = useState("");
   const [parentData, setParentData] = useState({
     parent_id: 0,
     parent_firstName: "",
@@ -175,21 +175,21 @@ function AddStudentFormule() {
     setIsLoading(true);
     try {
 
-      const response = await axios.post("http://localhost:5000/api/inscription/parent", parentInfo);
+      //   const response = await axios.post("http://localhost:5000/api/inscription/parent", parentInfo);
 
-      console.log(response.data);//supposing data is parent id
-     
-     //get parent
-      try {
-        const res = await axios.get(`http://localhost:5000/api/inscription/parents/${response.data}`);
-        console.log(res.data);
-        setParentData(response.data);//// changble according to backend
-      } catch (error) {
-        console.error(err);
-      setMessage(err.response?.data?.message || "adding parent  failed");
-      console.log(err.response?.data?.message || "adding parent  failed")
-      }
-     
+      //   console.log(response.data);//supposing data is parent id
+
+      //  //get parent
+      //   try {
+      //     const res = await axios.get(`http://localhost:5000/api/inscription/parents/${response.data}`);
+      //     console.log(res.data);
+      //     setParentData(response.data);//// changble according to backend
+      //   } catch (error) {
+      //     console.error(err);
+      //   setMessage(err.response?.data?.message || "adding parent  failed");
+      //   console.log(err.response?.data?.message || "adding parent  failed")
+      //   }
+      setIsLoading(false);
 
 
     }
@@ -200,11 +200,35 @@ function AddStudentFormule() {
     }
   }
 
+  function getTodayAsText() {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1; // Months are zero-based
+    const year = today.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  }
+
+
 
   async function createStudentAcc() {
     console.log(studentInfo);
     console.log(parentInfo);
     setIsLoading(true);
+
+    const birthDate = new Date(studentInfo.student_dateOfBirth);
+    const datePart = birthDate.toISOString().split("T")[0].replace(/-/g, "");
+    const randomPart = String(Math.floor(Math.random() * 1000)).padStart(
+      3,
+      "0"
+    );
+    const matricule = `${datePart}${randomPart}`;
+    const fakeEmail = `${student.student_last_name.toLowerCase()}${matricule}@dirassati.com`;
+    const passwordEleve = Array.from({ length: 12 }, () =>
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}[]".charAt(
+        Math.floor(Math.random() * 88)
+      )
+    ).join("");
 
     const formData = new FormData();
     formData.append("student_last_name", studentInfo.student_lastName);
@@ -234,15 +258,33 @@ function AddStudentFormule() {
 
     try {
 
+      const date = getTodayAsText();
+      const res = await axios.post(`http://localhost:5000/api/register`, {
+        email: fakeEmail,
+        password: passwordEleve,
+        matricule: matricule,
+        user_role: 'eleve',
+        last_name: formData.student_last_name,
+        first_name: formData.student_first_name,
+        address: studentInfo.student_address,
+        grade: studentInfo.student_degree,
+        gender: studentInfo.gender,
+        nationality: studentInfo.student_address,
+        birth_date: studentInfo.student_dateOfBirth,
+        blood_type: studentInfo.student_bloodType,
+        allergies: studentInfo.student_allergies,
+        chronic_illnesses: studentInfo.student_chronicIllness,
+        date_inscription: date,
+        parent_id: parentData.parent_id,
 
-      const res = await axios.post(`http://localhost:5000/api/inscription/${parentData.parent_id}/students`, formData,
+      },
         {
           headers: { "Content-Type": "multipart/form-data", }
         },
       );
 
-      console.log(res.data.student);
-      navigate('/addchild?')
+      console.log(res.data);
+      navigate('/addchild')
 
     } catch (err) {
       console.error(err);
@@ -268,13 +310,13 @@ function AddStudentFormule() {
 
     if (!parentData.parent_firstName) {
       if (parentCardId) {
-         //http request output=parentData
-         setAddChild(true);
+        //http request output=parentData
+        setAddChild(true);
       }
-     else{
-      alert("FILL the fields")
-     }
-      
+      else {
+        alert("FILL the fields")
+      }
+
     }
     else {
       console.log("parent data already here");
@@ -320,41 +362,41 @@ function AddStudentFormule() {
             {
               parentExist
                 ?
-                
+
                 <div>
-                <form >
-                  {
-                    !parentData.parent_firstName
-                    &&
-                    <div className='input-container'>
-                      <label>Enter Card Id if parent Account exist *</label>
-                      <input type="text" name="parent_card_id" placeholder="Enter Card Id" required  onChange={(e)=>{setParentCardId(e.target.value)}}/>
-                    </div>
-                  }
+                  <form >
+                    {
+                      !parentData.parent_firstName
+                      &&
+                      <div className='input-container'>
+                        <label>Enter Card Id if parent Account exist *</label>
+                        <input type="text" name="parent_card_id" placeholder="Enter Card Id" required onChange={(e) => { setParentCardId(e.target.value) }} />
+                      </div>
+                    }
 
-                  {
-                    parentData.parent_firstName
-                    &&
-                    <div className='input-container'>
-                      <label>First Name *</label>
-                      <input type="text" name="parent_firstName" value={parentData.parent_firstName} placeholder="Enter First Name" required />
-                    </div>
-                  }
-                  {
-                    parentData.parent_lastName
-                    &&
-                    <div className='input-container'>
-                      <label>Last Name *</label>
-                      <input type="text" name="lastName" value={parentData.parent_lastName} placeholder="Enter Last Name" required />
-                    </div>
-                  }
+                    {
+                      parentData.parent_firstName
+                      &&
+                      <div className='input-container'>
+                        <label>First Name *</label>
+                        <input type="text" name="parent_firstName" value={parentData.parent_firstName} placeholder="Enter First Name" required />
+                      </div>
+                    }
+                    {
+                      parentData.parent_lastName
+                      &&
+                      <div className='input-container'>
+                        <label>Last Name *</label>
+                        <input type="text" name="lastName" value={parentData.parent_lastName} placeholder="Enter Last Name" required />
+                      </div>
+                    }
 
 
 
-                  
-                </form>
-                <div className="btns">
-                    <button className='submit'  onClick={getParentData}>Next</button>
+
+                  </form>
+                  <div className="btns">
+                    <button className='submit' onClick={getParentData}>Next</button>
                     <button className='cancel' onClick={() => {
                       setParentExist(false);
                       setAddChild(false)

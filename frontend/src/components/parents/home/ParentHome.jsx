@@ -12,21 +12,33 @@ function ParentHome() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [children, setChildren] = useState([
-    // {
-    //   email: "",
-    //   first_name: "",
-    //   grade_level: "",
-    //   grade_year: "",
-    //   group_name: "",
-    //   id: null,
-    //   last_name: "",
-    //   matricule: "",
-    //   specialization_name: "",
-    // },
   ]);
+
+  const [notificationCount,setNotificationCount]=useState(0);
+
+useEffect(()=>{
+    const fetchNotificationsCount = async () => {
+      setLoading(true)
+      try {
+        const res = await axios.get(`http://localhost:5000/api/notifications/unread-count/${idParent}`);
+        console.log(res.data);
+
+        setNotificationCount(res.data.count);
+
+        setLoading(false)
+      } catch (err) {
+        console.error("Error fetching  notifs:", err)
+        setError("Failed to load page {notifications count}. Please try again later.")
+        setLoading(false);
+      }
+    }
+
+    fetchNotificationsCount()
+},[true])
+
   // const [children, setChildren] = useState(null);
   // const { user } = useAuth();
-  const idParent=132;
+  const idParent = 132;
   useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true);
@@ -84,13 +96,14 @@ function ParentHome() {
             <FaSearch className="ssearch-icon" />
             <input type="text" placeholder="Search" className="ssearch-input" />
           </div>
-          <button
-            className="notification-button "
-            onClick={() => {
-              navigate("/parent/Notifications");
-            }}
-          >
-            <FaBell />
+
+          <button className="notification-button" onClick={() => navigate('/parent/Notifications')}>
+            <div className="icon-wrapper">
+              <FaBell />
+              {notificationCount > 0 && (
+                <span className="notification-badge">{notificationCount}</span>
+              )}
+            </div>
           </button>
         </div>
 

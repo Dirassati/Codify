@@ -50,7 +50,7 @@ function handleAddChild() {
 
 
             <button className="submit-btn" style={{ width: "", flexGrow: "1" ,margin:0}}  onClick={handleAddChild}>Add Child</button>
-            <button  className="submit-btn" style={{ width: "", flexGrow: "1",margin:"0" }}    >Finish</button>
+            <button  className="submit-btn" style={{ width: "", flexGrow: "1",margin:"0" }}   onClick={()=>{navigate('/')}} >Finish</button>
         </div>
 
 

@@ -1,23 +1,86 @@
-import './singlenotification.css'
+import './singlenotification.css';
+import { useState } from 'react';
+import axios from 'axios';
 
-function SingleNotification({info}) {
-    return (
-        <div className='single-notification'>
+function SingleNotification({ info }) {
+    const [motif, setMotif] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [motifFile, setMotifFile] = useState(null);
+    const handleJustificationSubmit = async () => {
+        console.log(motif);
 
-           
-                <div className='icon'>!</div>
-                <span className='report'>{info.type} Report:</span>  
-                  Your son  {info.student_first_name}  was absent on {info.date}, from 9:00 AM to 12:00 PM.
-                {info.type==="absence"
-                ? 
-                <div className='action-link'>Click Here to upload justification</div>
-            :
-            <div className='action-link'>Click Here for more details</div>
+
+        if (motif || motifFile) {
+            try {
+                setLoading(true);
+                await axios.post(`http://localhost:5000/api/absences/justify`, {
+                    absenceId: info.related_entity_id,
+                    parentId: info.user_id,
+                    justificationText: motif,
+                    filePath: null
+                });
+                alert('justification sent with success ');
+                setMotif('');
+            } catch (error) {
+                console.error('Failed to send justification:', error);
+                alert('Failed to mark as read');
             }
-          
-           
+
+        }
+
+        else {
+            try {
+                setLoading(true);
+                await axios.patch(`http://localhost:5000/api/notifications/${info.id}/${info.user_id}`);
+                alert('notification marked as read successfully');
+                setMotif('');
+            } catch (error) {
+                console.error('Failed to mark as read:', error);
+                alert('Failed to mark as read');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+
+    };
+
+    return (
+        <div className="single-notification">
+            <div className="icon">!</div>
+            <span className="report">{info.type} </span>
+            {info.message}
+
+            <div className="action-link-input">
+                <input
+                    type="text"
+                    placeholder="Enter justification"
+                    value={motif}
+                    onChange={(e) => setMotif(e.target.value)}
+                />
+
+                {/* Styled File Input */}
+                <label className="file-upload-btn">
+                    {motifFile ? motifFile.name : "Upload File"}
+
+                    <input
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={(e) => setMotifFile(e.target.files[0])}
+                    />
+                </label>
+
+                <button onClick={handleJustificationSubmit} disabled={loading}>
+                    {motif
+                        ? 'Send Motif'
+                        : loading
+                            ? 'Sending...'
+                            : 'Mark as Seen'}
+                </button>
+            </div>
         </div>
-    )
+
+    );
 }
 
-export default SingleNotification
+export default SingleNotification;

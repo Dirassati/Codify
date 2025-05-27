@@ -23,7 +23,6 @@ import Dashboard from './components/adminPannel/Pages/Dashboard/Dashboard'
 
 import Students from './components/adminPannel/Pages/Students/Students'
 import Teachers from './components/adminPannel/Pages/Teachers/Teachers'
-import Events from './components/adminPannel/Pages/Events/Events'
 import Food from './components/adminPannel/Pages/Food/Food'
 import Finance from './components/adminPannel/Pages/Finance/Finance'
 import Users from './components/adminPannel/Pages/User/Users'
@@ -53,6 +52,7 @@ import ParentProfile from './components/parents/profile/ParentProfile'
 import Reregistration from './components/parents/reregistration/Reregistration'
 import ParentAddChild from './components/parents/addChild/ParentAddChild'
 import Notifications from './components/parents/notifications/Notifications'
+import AllAbsences from './components/adminPannel/Pages/Events/AllAbsences'
 
 
 function App() {
@@ -85,7 +85,7 @@ function App() {
           </Route>
           <Route path='Teachers/add' element={<NewTeachers />} />
 
-          <Route path='Events' element={<Events />}></Route>
+          <Route path='Absences' element={<AllAbsences />}></Route>
           <Route path='Food' element={<Food />}></Route>
           <Route path='Finance' element={<Finance />}></Route>
           <Route path='Users' element={<Users />}></Route>
@@ -93,7 +93,7 @@ function App() {
           <Route path='LatestActivities' element={<Activities />}></Route>
 
         </Route>
-    
+
 
         <Route path='/student' element={<Student />}>
           <Route path='Home' element={< Homes />} />
@@ -111,9 +111,9 @@ function App() {
           <Route path='Notifications' element={<Notifications />} />
           <Route path="payment" element={<Payment />} />
 
-      <Route path="payment/Success" element={<SuccessPayment />} />
+          <Route path="payment/Success" element={<SuccessPayment />} />
           <Route path="payment/summary" element={<PaymentSummary />} />
-           <Route path="payment/Form" element={<PForm />} />
+          <Route path="payment/Form" element={<PForm />} />
 
         </Route>
 

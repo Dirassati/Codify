@@ -44,9 +44,9 @@ const {page,setPage}=usePageContext();
                     <img className='icon' src={Teacher} alt="teacher" />
                     <div className="name">Teachers</div>
                 </Link>
-                <Link to='Events' onClick={() => { setPage(4) }} className={`link ${page === 4 ? 'clicked' : ''}`}>
+                <Link to='Absences' onClick={() => { setPage(4) }} className={`link ${page === 4 ? 'clicked' : ''}`}>
                     <img className='icon' src={event} alt="event" />
-                    <div className="name">Events</div>
+                    <div className="name">Absences</div>
                 </Link>
                 <Link to='Finance' onClick={() => { setPage(5) }} className={`link ${page === 5 ? 'clicked' : ''}`}>
                     <img className='icon' src={finance} alt="finance" />
