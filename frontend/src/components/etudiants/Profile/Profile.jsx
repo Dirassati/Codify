@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Eye, EyeOff, Upload } from "lucide-react"
 import "./profile.css"
 import SearchField from '../SearchField'
+
 const Profile = () => {
   const [profileData, setProfileData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -32,38 +33,36 @@ const Profile = () => {
     confirmPassword: "",
   })
 
-  // Fetch profile data
+  // Fetch profile data from API and map to formData
   useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true)
       try {
-        // In a real app, this would be a fetch call to your API
-        // const response = await fetch('/api/profile')
-        // const data = await response.json()
+        const studentId = 19 // Replace with dynamic id if needed
+        const response = await fetch(`http://localhost:5000/api/students/${studentId}/details`)
+        const json = await response.json()
 
-        // Simulating API response delay
-        await new Promise((resolve) => setTimeout(resolve, 800))
+        if (json.success && json.data) {
+          const data = json.data
+          setProfileData(data)
 
-        // Sample data that would come from the API
-        const data = {
-          firstName: "malak",
-          lastName: "saadi",
-          age: "16",
-          nationality: "Algeria",
-          address: "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
-          grade: "2 AS",
-          field: "Science",
-          dateOfBirth: "29/02/2006",
-          placeOfBirth: "oran",
+          setFormData({
+            firstName: data.first_name || "",
+            lastName: data.last_name || "",
+            age: "", // Not available in API response
+            nationality: "", // Not available in API response
+            address: "", // Not available in API response
+            grade: data.grade ? data.grade.name : "",
+            field: data.specialization || "",
+            dateOfBirth: "", // Not available in API response
+            placeOfBirth: "", // Not available in API response
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          })
+        } else {
+          setError("Failed to load profile data.")
         }
-
-        setProfileData(data)
-        setFormData({
-          ...data,
-          currentPassword: "",
-          newPassword: "",
-          confirmPassword: "",
-        })
         setLoading(false)
       } catch (err) {
         console.error("Error fetching profile data:", err)
@@ -91,33 +90,25 @@ const Profile = () => {
 
   const handlePasswordChange = async (e) => {
     e.preventDefault()
-    // Validate passwords
     if (formData.newPassword !== formData.confirmPassword) {
       alert("New password and confirm password do not match!")
       return
     }
-    // In a real app, you would send the password update to your API
     alert("Password updated successfully!")
   }
 
   const handleFileSelect = (file) => {
-    // Check if file is an accepted type
     const acceptedTypes = ["image/jpeg", "image/png", "image/svg+xml"]
     if (!acceptedTypes.includes(file.type)) {
       alert("Please select a JPG, PNG, or SVG file.")
       return
     }
-
-    // Check file size (optional)
-    const maxSize = 5 * 1024 * 1024 // 5MB
+    const maxSize = 5 * 1024 * 1024
     if (file.size > maxSize) {
       alert("File is too large. Please select a file under 5MB.")
       return
     }
-
     setSelectedFile(file)
-
-    // Create a preview URL
     const reader = new FileReader()
     reader.onload = (e) => {
       setSelectedImage(e.target.result)
@@ -130,26 +121,11 @@ const Profile = () => {
       alert("Please select an image to upload")
       return
     }
-
     setLoading(true)
-
     try {
-      // In a real app, you would upload the file to your server
-      // const formData = new FormData();
-      // formData.append('image', selectedFile);
-      // const response = await fetch('/api/profile/image', {
-      //   method: 'POST',
-      //   body: formData
-      // });
-
-      // Simulate API delay
+      // Simulate API upload delay
       await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Success message
       alert("Profile image uploaded successfully!")
-
-      // In a real app, you might get back the URL of the uploaded image
-      // and update the profile data
       setLoading(false)
     } catch (err) {
       console.error("Error uploading image:", err)
@@ -183,11 +159,10 @@ const Profile = () => {
   }
 
   return (
-    
     <div className="profile-container">
-     <div className="search-wrapper">
-  <SearchField />
-</div>
+      <div className="search-wrapper">
+        <SearchField />
+      </div>
 
       <form onSubmit={handleSubmit}>
         {/* General Information Section */}
@@ -345,7 +320,7 @@ const Profile = () => {
             </div>
 
             <button type="button" className="save-button" onClick={handlePasswordChange}>
-              Save Changes
+              Save Password
             </button>
           </div>
         </section>
@@ -354,74 +329,43 @@ const Profile = () => {
 
         {/* Profile Image Section */}
         <section className="profile-section">
-          <h2 className="section-title">Profile image</h2>
+          <h2 className="section-title">Profile Image</h2>
 
-          <div className="image-upload-container">
-            <div
-              className="upload-area"
-              onDragOver={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-              }}
-              onDrop={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-
-                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-                  const file = e.dataTransfer.files[0]
-                  handleFileSelect(file)
-                }
-              }}
-              onClick={() => document.getElementById("file-input").click()}
-            >
+          <div className="upload-wrapper">
+            <div className="upload-container">
               {selectedImage ? (
-                <div className="image-preview-container">
-                  <img src={selectedImage || "/placeholder.svg"} alt="Profile preview" className="image-preview" />
-                  <button
-                    type="button"
-                    className="remove-image-button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      setSelectedImage(null)
-                      setSelectedFile(null)
-                    }}
-                  >
-                    Remove
-                  </button>
-                </div>
+                <img src={selectedImage} alt="Selected profile" className="profile-image-preview" />
               ) : (
-                <>
-                  <Upload size={24} />
-                  <p>Drag And Drop Files Here Or Upload</p>
-                  <p className="file-info">Accepted file types: JPG, SVG, PNG 120 x 120 (px)</p>
-                </>
+                <p>No image selected</p>
               )}
-            </div>
-            <input
-              type="file"
-              id="file-input"
-              accept="image/jpeg,image/png,image/svg+xml"
-              style={{ display: "none" }}
-              onChange={(e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                  handleFileSelect(e.target.files[0])
-                }
-              }}
-            />
-            <button type="button" className="upload-button" onClick={handleImageUpload} disabled={!selectedFile}>
-              Upload
-            </button>
-          </div>
 
-          <div className="form-actions">
-            <button type="button" className="cancel-button">
-              Cancel
-            </button>
-            <button type="submit" className="save-button">
-              Save
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png,.svg"
+                id="profileImage"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0])
+                  }
+                }}
+              />
+              <label htmlFor="profileImage" className="upload-label">
+                <Upload size={20} />
+                Choose a file
+              </label>
+            </div>
+            <button type="button" className="upload-button" onClick={handleImageUpload}>
+              Upload Image
             </button>
           </div>
         </section>
+
+        <hr className="section-divider" />
+
+        <button type="submit" className="save-button">
+          Save Changes
+        </button>
       </form>
     </div>
   )

@@ -9,13 +9,20 @@ import schoolcalendar from '../../../../assets/images/schoolcalendar.svg'
 import unpaiedstudents from '../../../../assets/images/unpaidstudent.svg'
 import { useNavigate } from 'react-router-dom'
 import { usePageContext } from '../../../../contexts/PageContext'
+import { useAuth } from "../../../../contexts/AuthContext";
 
 function Dashboard() {
 const navigate=useNavigate();
 const {setPage}=usePageContext();
 
+ //const { user } = useAuth()
+ // <Header title="Dashboard"  name={user.id}/>
+
+
   return (
     <div className='dashboard'>
+    
+     
       <Header title="Dashboard" />
       <div className="dashboard-container">
         <div className="left-bar">

@@ -17,6 +17,7 @@
     "@mui/material": "^6.4.6",
     "@mui/styled-engine-sc": "^6.4.6",
     "axios": "^1.8.1",
+    "firebase": "^11.8.1",
     "lucide-react": "^0.511.0",
     "navid-react-captcha-generator": "^1.0.2",
     "react": "^19.0.0",
