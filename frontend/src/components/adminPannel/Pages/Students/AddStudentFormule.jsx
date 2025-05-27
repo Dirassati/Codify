@@ -24,12 +24,12 @@ function AddStudentFormule() {
   const [parentExist, setParentExist] = useState(true);
   const [addChild, setAddChild] = useState(false);
   const [parentCardId, setParentCardId] = useState("");
-  const [parentData, setParentData] = useState({
-    parent_id: 0,
-    parent_firstName: "",
-    parent_lastName: "",
-  });
-const parentId=useState(null)
+  // const [parentData, setParentData] = useState({
+  //   parent_id: 0,
+  //   parent_firstName: "",
+  //   parent_lastName: "",
+  // });
+  const [parentId,setParentId] = useState(0);
 
 
   const [parentInfo, setParentInfo] = useState({
@@ -304,24 +304,22 @@ const parentId=useState(null)
 
 
 
-  function getParentData(e) {
+  async function getParentData(e) {
     e.preventDefault();
 
 
-    if (!parentData.parent_firstName) {
-      if (parentCardId) {
-        //http request output=parentData
-        setAddChild(true);
-      }
-      else {
-        alert("FILL the fields")
-      }
 
+    if (parentCardId) {
+      const res =axios.get(`http://localhost:5000/api/parents/cardId/${parentCardId}`)
+      setAddChild(true);
+      setParentId(res.parentId);
     }
     else {
-      console.log("parent data already here");
-      setAddChild(true);
+      alert("FILL the fields")
     }
+
+
+
   }
 
 
@@ -366,7 +364,7 @@ const parentId=useState(null)
                 <div>
                   <form >
                     {
-                      !parentData.parent_firstName
+                      parentId!==0
                       &&
                       <div className='input-container'>
                         <label>Enter Card Id if parent Account exist *</label>
@@ -375,21 +373,14 @@ const parentId=useState(null)
                     }
 
                     {
-                      parentData.parent_firstName
+                      parentId ===0
                       &&
                       <div className='input-container'>
-                        <label>First Name *</label>
-                        <input type="text" name="parent_firstName" value={parentData.parent_firstName} placeholder="Enter First Name" required />
+                        <label>id</label>
+                        <input type="text" name="parent_firstName" value={parentId} placeholder="Enter id" required />
                       </div>
                     }
-                    {
-                      parentData.parent_lastName
-                      &&
-                      <div className='input-container'>
-                        <label>Last Name *</label>
-                        <input type="text" name="lastName" value={parentData.parent_lastName} placeholder="Enter Last Name" required />
-                      </div>
-                    }
+
 
 
 

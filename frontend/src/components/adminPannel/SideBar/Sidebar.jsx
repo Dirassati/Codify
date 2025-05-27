@@ -52,10 +52,7 @@ const {page,setPage}=usePageContext();
                     <img className='icon' src={finance} alt="finance" />
                     <div className="name">Finance</div>
                 </Link>
-                <Link to='Food' onClick={() => { setPage(6) }} className={`link ${page === 6 ? 'clicked' : ''}`}>
-                    <img className='icon' src={food} alt="food" />
-                    <div className="name">Food</div>
-                </Link>
+          
                 <Link to='Users' onClick={() => { setPage(7) }} className={`link ${page === 7 ? 'clicked' : ''}`}>
                     <img className='icon' src={user} alt="user" />
                     <div className="name">Users</div>

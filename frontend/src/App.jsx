@@ -23,7 +23,6 @@ import Dashboard from './components/adminPannel/Pages/Dashboard/Dashboard'
 
 import Students from './components/adminPannel/Pages/Students/Students'
 import Teachers from './components/adminPannel/Pages/Teachers/Teachers'
-import Food from './components/adminPannel/Pages/Food/Food'
 import Finance from './components/adminPannel/Pages/Finance/Finance'
 import Users from './components/adminPannel/Pages/User/Users'
 import Groupes from './components/adminPannel/Pages/Groupes/Groupes'
@@ -86,7 +85,6 @@ function App() {
           <Route path='Teachers/add' element={<NewTeachers />} />
 
           <Route path='Absences' element={<AllAbsences />}></Route>
-          <Route path='Food' element={<Food />}></Route>
           <Route path='Finance' element={<Finance />}></Route>
           <Route path='Users' element={<Users />}></Route>
           <Route path='Groupes' element={<Groupes />}></Route>
