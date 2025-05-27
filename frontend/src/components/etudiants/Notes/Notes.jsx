@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import "./notes.css"
 import SearchField from "../SearchField"
+import { useAuth } from "../../../contexts/AuthContext"
 
 const Notes = () => {
   const [semesters, setSemesters] = useState([])
@@ -10,8 +11,8 @@ const Notes = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [searchTerm, setSearchTerm] = useState("")
+    const {user:studentId }= useAuth();
 
-  const studentId = localStorage.getItem("studentId") || "189"
   const totalSemesters = 3
 
   useEffect(() => {

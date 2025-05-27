@@ -1,12 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react"
-
+import { useAuth } from "../../../contexts/AuthContext";
 import "./Subjects.css"
 
 export default function Subjects() {
   
-  const studentId = 189;
+     const {user:studentId }= useAuth();
+
 
   const [subjects, setSubjects] = useState([])
   const [loading, setLoading] = useState(true)

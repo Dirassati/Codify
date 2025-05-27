@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Eye, EyeOff, Upload } from "lucide-react"
 import "./profile.css"
 import SearchField from '../SearchField'
-
+import { useAuth } from "../../../contexts/AuthContext"
 const Profile = () => {
   const [profileData, setProfileData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -16,6 +16,7 @@ const Profile = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const {user:studentId }= useAuth();
 
   // Form states
   const [formData, setFormData] = useState({
@@ -38,7 +39,7 @@ const Profile = () => {
     const fetchProfileData = async () => {
       setLoading(true)
       try {
-        const studentId = 19 // Replace with dynamic id if needed
+       
         const response = await fetch(`http://localhost:5000/api/students/${studentId}/details`)
         const json = await response.json()
 

@@ -11,7 +11,8 @@ function AllAbsences() {
   const [allAbsences, setAllAbsences] = useState([]);
   const [messageInputs, setMessageInputs] = useState(""); // Store refusal messages by absence ID
 
-  const adminId = 1;
+  
+    const {user:adminId }= useAuth();
 
   useEffect(() => {
     const fetchAbsences = async () => {

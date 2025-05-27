@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react"
 import SearchField from "../SearchField"
 import "./Std_Home.css"
+import { useAuth } from "../../../contexts/AuthContext"
 
 const Std_Home = () => {
-  const [studentId, setStudentId] = useState(159)
+    const {user:studentId }= useAuth();
+  
   const [scheduleData, setScheduleData] = useState(null)
   const [filteredSchedule, setFilteredSchedule] = useState(null)
   const [loading, setLoading] = useState(true)

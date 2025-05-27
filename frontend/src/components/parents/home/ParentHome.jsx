@@ -38,7 +38,7 @@ useEffect(()=>{
 
   // const [children, setChildren] = useState(null);
   // const { user } = useAuth();
-  const idParent = 132;
+  const {user:idParent }= useAuth();
   useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true);

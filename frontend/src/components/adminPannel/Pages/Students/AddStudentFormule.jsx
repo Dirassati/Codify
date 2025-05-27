@@ -29,7 +29,7 @@ function AddStudentFormule() {
     parent_firstName: "",
     parent_lastName: "",
   });
-
+const parentId=useState(null)
 
 
   const [parentInfo, setParentInfo] = useState({
